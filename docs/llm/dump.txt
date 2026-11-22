@@ -7,17 +7,17 @@
 
 DUMP METADATA
 ═════════════════════════════════════════════════════════════════════════════════
-  Generated at   : 2026-11-22T10:39:16-05:00
+  Generated at   : 2026-11-22T10:41:55-05:00
   Generator      : export.sh
 
 REPOSITORY METADATA
 ═════════════════════════════════════════════════════════════════════════════════
   Repository root: /home/kushal/src/dotnet/MyWeatherStudio
   Branch         : main
-  Commit (full)  : f5c18feda9d9f8d5f169132f03b3b513cfb17c2f
-  Commit (short) : f5c18fe
-  Commit date    : 2026-11-22 10:39:12 -0500
-  Commit message : update to use dotnet 11
+  Commit (full)  : 7394c7c73860514b17ebf7ab3273824e7a76dfbf
+  Commit (short) : 7394c7c
+  Commit date    : 2026-11-22 10:41:53 -0500
+  Commit message : test removing comment
   Remote origin  : none
   Files included : 119
   Withheld paths : docs/llm/, docs/progress/
@@ -1510,16 +1510,14 @@ Thumbs.db
 
 --- METADATA ---
   Relative path:         weather/Directory.Packages.props
-  Size:                  5.1 KiB (5210 bytes)
-  SHA-256:               d39f318dbcc2a2f1d970a3be9bd29cbcb7a684c5eae46958845fe01a985d5851
+  Size:                  2.2 KiB (2251 bytes)
+  SHA-256:               381faa0f65f1fed4456edb63796a85c7b326ad0b494ff12c18947e111dcd0caf
 
 --- CONTENT ---
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
-
-    <!-- Shared version variables to keep families aligned. -->
     <AspireVersion>17.0.0</AspireVersion>
     <OpenTelemetryVersion>1.21.0</OpenTelemetryVersion>
   </PropertyGroup>
@@ -1561,64 +1559,6 @@ Thumbs.db
   </ItemGroup>
 
 </Project>
-
-
-<!-- 
-
-Project `Weather.Api` has the following updates to its packages
-   [net10.0]: 
-   Top-level Package                   Requested   Resolved   Latest
-   > Microsoft.AspNetCore.OpenApi      10.0.0      10.0.0     11.0.0
-
-Project `Weather.AppHost` has the following updates to its packages
-   [net10.0]: 
-   Top-level Package             Requested   Resolved   Latest
-   > Aspire.Hosting.AppHost      9.5.1       9.5.1      17.0.0
-
-The given project `Weather.Core` has no updates given the current sources.
-Project `Weather.Infrastructure` has the following updates to its packages
-   [net10.0]: 
-   Top-level Package                           Requested   Resolved   Latest 
-   > Dapper                                    2.1.66      2.1.66     2.1.100
-   > Microsoft.Data.Sqlite                     10.0.0      10.0.0     11.0.0 
-   > Microsoft.Extensions.Hosting              10.0.0      10.0.0     11.0.0 
-   > Microsoft.Extensions.Http.Resilience      9.10.0      9.10.0     11.0.1 
-   > System.Threading.RateLimiting             10.0.0      10.0.0     11.0.0 
-
-Project `Weather.ServiceDefaults` has the following updates to its packages
-   [net10.0]: 
-   Top-level Package                                   Requested   Resolved   Latest
-   > Microsoft.Extensions.Http.Resilience              9.10.0      9.10.0     11.0.1
-   > Microsoft.Extensions.ServiceDiscovery             9.5.1       9.5.1      11.0.1
-   > OpenTelemetry.Exporter.OpenTelemetryProtocol      1.10.0      1.10.0     1.21.0
-   > OpenTelemetry.Extensions.Hosting                  1.10.0      1.10.0     1.21.0
-   > OpenTelemetry.Instrumentation.AspNetCore          1.10.1      1.10.1     1.21.0
-   > OpenTelemetry.Instrumentation.Http                1.10.0      1.10.0     1.21.0
-   > OpenTelemetry.Instrumentation.Runtime             1.10.0      1.10.0     1.21.0
-
-The given project `Weather.Web` has no updates given the current sources.
-Project `Weather.Api.Tests` has the following updates to its packages
-   [net10.0]: 
-   Top-level Package                       Requested   Resolved   Latest 
-   > Microsoft.AspNetCore.Mvc.Testing      10.0.0      10.0.0     11.0.0 
-   > TUnit                                 0.25.0      0.25.0     1.87.12
-
-Project `Weather.Core.Tests` has the following updates to its packages
-   [net10.0]: 
-   Top-level Package      Requested   Resolved   Latest 
-   > TUnit                0.25.0      0.25.0     1.87.12
-
-Project `Weather.Infrastructure.Tests` has the following updates to its packages
-   [net10.0]: 
-   Top-level Package      Requested   Resolved   Latest 
-   > NSubstitute          5.3.0       5.3.0      6.2.0  
-   > TUnit                0.25.0      0.25.0     1.87.12
-
-Project `Weather.Web.Tests` has the following updates to its packages
-   [net10.0]: 
-   Top-level Package      Requested   Resolved   Latest 
-   > TUnit                0.25.0      0.25.0     1.87.12
-
 
 ################################################################################
 # FILE: weather/LICENSE
@@ -9303,9 +9243,9 @@ public sealed class SkyPaletteTests
 # DUMP SUMMARY
 ################################################################################
   Files dumped   : 119
-  Total size     : 264.1 KiB (270409 bytes)
+  Total size     : 261.2 KiB (267450 bytes)
   Output file    : /home/kushal/src/dotnet/MyWeatherStudio/docs/llm/dump.txt
-  Completed at   : 2026-11-22T10:39:17-05:00
+  Completed at   : 2026-11-22T10:41:57-05:00
 ################################################################################
 # END OF DUMP
 ################################################################################
