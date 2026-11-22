@@ -7,17 +7,17 @@
 
 DUMP METADATA
 ═════════════════════════════════════════════════════════════════════════════════
-  Generated at   : 2026-11-22T10:41:55-05:00
+  Generated at   : 2026-11-22T10:42:47-05:00
   Generator      : export.sh
 
 REPOSITORY METADATA
 ═════════════════════════════════════════════════════════════════════════════════
   Repository root: /home/kushal/src/dotnet/MyWeatherStudio
   Branch         : main
-  Commit (full)  : 7394c7c73860514b17ebf7ab3273824e7a76dfbf
-  Commit (short) : 7394c7c
-  Commit date    : 2026-11-22 10:41:53 -0500
-  Commit message : test removing comment
+  Commit (full)  : 9c215ce2ace3790091c9f1e47a6d16e2ca9f3316
+  Commit (short) : 9c215ce
+  Commit date    : 2026-11-22 10:42:44 -0500
+  Commit message : run scripts
   Remote origin  : none
   Files included : 119
   Withheld paths : docs/llm/, docs/progress/
@@ -1511,7 +1511,7 @@ Thumbs.db
 --- METADATA ---
   Relative path:         weather/Directory.Packages.props
   Size:                  2.2 KiB (2251 bytes)
-  SHA-256:               381faa0f65f1fed4456edb63796a85c7b326ad0b494ff12c18947e111dcd0caf
+  SHA-256:               3280c09ef0e817f7b1c73453c116c431ba84039208d5fbd1e0a65a7c1d7d98b6
 
 --- CONTENT ---
 <Project>
@@ -1531,7 +1531,7 @@ Thumbs.db
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="11.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="11.0.1" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="11.0.1" />
-    <PackageVersion Include="System.Threading.RateLimiting" Version="10.0.0" />
+    <PackageVersion Include="System.Threading.RateLimiting" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup Label="ASP.NET Core add-ons (first-party)">
@@ -1555,7 +1555,7 @@ Thumbs.db
     <PackageVersion Include="Shouldly" Version="4.3.0" />
     <PackageVersion Include="NSubstitute" Version="6.2.0 " />
     <PackageVersion Include="bunit.web" Version="1.40.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="11.0.0" />
   </ItemGroup>
 
 </Project>
@@ -9245,7 +9245,7 @@ public sealed class SkyPaletteTests
   Files dumped   : 119
   Total size     : 261.2 KiB (267450 bytes)
   Output file    : /home/kushal/src/dotnet/MyWeatherStudio/docs/llm/dump.txt
-  Completed at   : 2026-11-22T10:41:57-05:00
+  Completed at   : 2026-11-22T10:42:49-05:00
 ################################################################################
 # END OF DUMP
 ################################################################################

@@ -1,3 +1,11 @@
+fi
+REPOSITORY_ROOT="$(git -C "$SCRIPT_DIRECTORY" rev-parse --show-toplevel 2>/dev/null)" || exit 0
+
+GENERATED_DIRECTORIES=("docs/llm")
+
+ARCHIVED_DIRECTORIES=("docs/progress")
+
+ELIDED_FILES=("LICENSE")
 
 EXCLUDED_FILES=("$SCRIPT_NAME")
 EXCLUDED_FILES_DISPLAY="$(printf '%s, ' "${EXCLUDED_FILES[@]}")"
@@ -347,17 +355,17 @@ cat "$OUTPUT_FILE"
 
 DUMP METADATA
 ═════════════════════════════════════════════════════════════════════════════════
-  Generated at   : 2026-11-22T10:41:55-05:00
+  Generated at   : 2026-11-22T10:42:47-05:00
   Generator      : export.sh
 
 REPOSITORY METADATA
 ═════════════════════════════════════════════════════════════════════════════════
   Repository root: /home/kushal/src/dotnet/MyWeatherStudio
   Branch         : main
-  Commit (full)  : 7394c7c73860514b17ebf7ab3273824e7a76dfbf
-  Commit (short) : 7394c7c
-  Commit date    : 2026-11-22 10:41:53 -0500
-  Commit message : test removing comment
+  Commit (full)  : 9c215ce2ace3790091c9f1e47a6d16e2ca9f3316
+  Commit (short) : 9c215ce
+  Commit date    : 2026-11-22 10:42:44 -0500
+  Commit message : run scripts
   Remote origin  : none
   Files included : 119
   Withheld paths : docs/llm/, docs/progress/
@@ -1851,7 +1859,7 @@ Thumbs.db
 --- METADATA ---
   Relative path:         weather/Directory.Packages.props
   Size:                  2.2 KiB (2251 bytes)
-  SHA-256:               381faa0f65f1fed4456edb63796a85c7b326ad0b494ff12c18947e111dcd0caf
+  SHA-256:               3280c09ef0e817f7b1c73453c116c431ba84039208d5fbd1e0a65a7c1d7d98b6
 
 --- CONTENT ---
 <Project>
@@ -1871,7 +1879,7 @@ Thumbs.db
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="11.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="11.0.1" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="11.0.1" />
-    <PackageVersion Include="System.Threading.RateLimiting" Version="10.0.0" />
+    <PackageVersion Include="System.Threading.RateLimiting" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup Label="ASP.NET Core add-ons (first-party)">
@@ -1895,7 +1903,7 @@ Thumbs.db
     <PackageVersion Include="Shouldly" Version="4.3.0" />
     <PackageVersion Include="NSubstitute" Version="6.2.0 " />
     <PackageVersion Include="bunit.web" Version="1.40.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="11.0.0" />
   </ItemGroup>
 
 </Project>
@@ -9585,14 +9593,14 @@ public sealed class SkyPaletteTests
   Files dumped   : 119
   Total size     : 261.2 KiB (267450 bytes)
   Output file    : /home/kushal/src/dotnet/MyWeatherStudio/docs/llm/dump.txt
-  Completed at   : 2026-11-22T10:41:57-05:00
+  Completed at   : 2026-11-22T10:42:49-05:00
 ################################################################################
 # END OF DUMP
 ################################################################################
 
-real	0m1.649s
-user	0m0.791s
-sys	0m1.125s
+real	0m1.666s
+user	0m0.812s
+sys	0m1.123s
 .NET SDK:
  Version:           11.0.100-rc.3.26522.148
  Commit:            5254d8bcf5
@@ -9641,154 +9649,154 @@ Learn more:
 Download .NET:
   https://aka.ms/dotnet/download
 
-real	0m0.013s
-user	0m0.008s
-sys	0m0.005s
+real	0m0.014s
+user	0m0.007s
+sys	0m0.007s
     info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
 
 Build succeeded in 0.2s
 
-real	0m0.358s
-user	0m0.096s
-sys	0m0.035s
-Restore succeeded with 1 warning(s) in 2.0s
+real	0m0.305s
+user	0m0.098s
+sys	0m0.042s
+Restore succeeded with 1 warning(s) in 0.5s
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/Weather.Web.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.2.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
 
-Build succeeded with 1 warning(s) in 2.0s
+Build succeeded with 1 warning(s) in 0.5s
 
-real	0m2.147s
-user	0m0.303s
-sys	0m0.044s
+real	0m0.720s
+user	0m0.148s
+sys	0m0.049s
 Restore succeeded with 1 warning(s) in 0.2s
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/Weather.Web.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.2.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
     info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
-  Weather.Core net11.0 succeeded (1.6s) → src/Weather.Core/bin/Debug/net11.0/Weather.Core.dll
-  Weather.ServiceDefaults net11.0 succeeded (1.6s) → src/Weather.ServiceDefaults/bin/Debug/net11.0/Weather.ServiceDefaults.dll
-  Weather.Infrastructure net11.0 succeeded with 4 warning(s) (0.5s) → src/Weather.Infrastructure/bin/Debug/net11.0/Weather.Infrastructure.dll
+  Weather.Core net11.0 succeeded (0.2s) → src/Weather.Core/bin/Debug/net11.0/Weather.Core.dll
+  Weather.ServiceDefaults net11.0 succeeded (0.2s) → src/Weather.ServiceDefaults/bin/Debug/net11.0/Weather.ServiceDefaults.dll
+  Weather.Infrastructure net11.0 succeeded with 4 warning(s) (0.4s) → src/Weather.Infrastructure/bin/Debug/net11.0/Weather.Infrastructure.dll
     /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Infrastructure/Services/NeighborhoodWarmer.cs(37,13): warning CA1873: Evaluation of this argument may be expensive and unnecessary if logging is disabled (array creation) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1873)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Infrastructure/Services/NeighborhoodWarmingBackgroundService.cs(91,21): warning CA1873: Evaluation of this argument may be expensive and unnecessary if logging is disabled (array creation) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1873)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Infrastructure/Nws/NwsApiClient.cs(41,17): warning CA1873: Evaluation of this argument may be expensive and unnecessary if logging is disabled (array creation) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1873)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Infrastructure/Nws/NwsApiClient.cs(114,21): warning CA1873: Evaluation of this argument may be expensive and unnecessary if logging is disabled (array creation) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1873)
-  Weather.Core.Tests net11.0 succeeded with 32 warning(s) (0.7s) → tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs(8,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridNeighborhoodTests.Surrounding_returns_eight_cells_for_radius_one() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs(59,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridPointTests.Records_with_the_same_values_are_equal() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/WeatherTelemetryTests.cs(9,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.WeatherTelemetryTests.Names_match_the_constants_registered_with_opentelemetry() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+  Weather.Core.Tests net11.0 succeeded with 32 warning(s) (0.4s) → tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs(55,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridPointTests.ToString_is_office_slash_x_comma_y() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/WeatherTelemetryTests.cs(16,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.WeatherTelemetryTests.ActivitySource_uses_the_published_name() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs(16,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridNeighborhoodTests.Surrounding_excludes_the_origin() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs(12,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.ForecastFetchResultTests.Success_carries_forecast_etag_and_maxage() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(20,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.Constructor_accepts_boundary_values(double, double) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs(59,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridPointTests.Records_with_the_same_values_are_equal() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(8,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.Constructor_accepts_valid_coordinates() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs(67,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridPointTests.With_expression_replaces_a_single_index() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs(12,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.ForecastFetchResultTests.Success_carries_forecast_etag_and_maxage() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs(63,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridPointTests.Records_with_different_values_are_not_equal() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs(8,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridNeighborhoodTests.Surrounding_returns_eight_cells_for_radius_one() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs(67,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridPointTests.With_expression_replaces_a_single_index() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs(16,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridNeighborhoodTests.Surrounding_excludes_the_origin() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(20,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.Constructor_accepts_boundary_values(double, double) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs(25,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.ForecastFetchResultTests.NotModified_carries_no_forecast() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs(36,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.ForecastFetchResultTests.NotFound_is_a_terminal_outcome_with_no_payload() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/WeatherTelemetryTests.cs(9,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.WeatherTelemetryTests.Names_match_the_constants_registered_with_opentelemetry() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/WeatherTelemetryTests.cs(16,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.WeatherTelemetryTests.ActivitySource_uses_the_published_name() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs(24,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridNeighborhoodTests.Surrounding_returns_the_expected_ring() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs(44,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.ForecastFetchResultTests.Unavailable_is_a_terminal_outcome_with_no_payload() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs(47,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridNeighborhoodTests.Surrounding_drops_cells_with_negative_indices() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs(39,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridNeighborhoodTests.Surrounding_preserves_the_grid_id() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(31,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.Constructor_rejects_out_of_range_latitude(double, double) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(41,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.Constructor_rejects_NaN() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(37,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.Constructor_rejects_out_of_range_longitude(double, double) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(53,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.IsValid_matches_constructor_acceptance(double, double, bool) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs(47,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridNeighborhoodTests.Surrounding_drops_cells_with_negative_indices() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs(63,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridNeighborhoodTests.Surrounding_with_radius_two_returns_twenty_four_cells() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(57,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.IsValid_rejects_NaN() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(64,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.Rounded_reduces_precision_to_four_decimals() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(41,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.Constructor_rejects_NaN() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(53,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.IsValid_matches_constructor_acceptance(double, double, bool) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs(74,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GridNeighborhoodTests.Surrounding_rejects_non_positive_radius(int) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(87,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.ToApiString_uses_invariant_decimal_point() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(75,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.Rounded_collapses_nearby_coordinates_to_the_same_value() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(95,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.ToApiString_trims_trailing_zeros_to_four_places() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(103,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.ToApiString_is_culture_independent() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(119,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.ToCacheKey_equals_api_string() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(57,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.IsValid_rejects_NaN() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/WeatherTelemetryTests.cs(24,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.WeatherTelemetryTests.Cache_hit_and_miss_are_recorded_with_cache_and_result_tags() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/WeatherTelemetryTests.cs(67,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.WeatherTelemetryTests.Nws_request_duration_is_recorded_in_the_histogram() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-  Weather.Infrastructure.Tests net11.0 succeeded with 34 warning(s) (0.5s) → tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(64,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.Rounded_reduces_precision_to_four_decimals() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(75,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.Rounded_collapses_nearby_coordinates_to_the_same_value() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(87,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.ToApiString_uses_invariant_decimal_point() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(95,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.ToApiString_trims_trailing_zeros_to_four_places() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(119,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.ToCacheKey_equals_api_string() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs(103,17): warning CA1707: Remove the underscores from member name Weather.Core.Tests.GeoCoordinateTests.ToApiString_is_culture_independent() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+  Weather.Infrastructure.Tests net11.0 succeeded with 34 warning(s) (0.6s) → tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/NeighborhoodWarmerTests.cs(19,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.NeighborhoodWarmerTests.RequestWarming_enqueues_the_origin_for_the_reader() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(25,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetPointMetadata_parses_grid_and_location() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(44,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetPointMetadata_requests_the_rounded_coordinate_path() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqlitePointMetadataCacheTests.cs(21,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqlitePointMetadataCacheTests.Upsert_then_get_round_trips_the_metadata() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqliteForecastCacheTests.cs(26,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqliteForecastCacheTests.Upsert_then_get_round_trips_the_forecast() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqliteForecastCacheTests.cs(50,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqliteForecastCacheTests.Get_returns_null_for_a_missing_grid() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(58,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetPointMetadata_returns_null_when_uncovered() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(44,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetPointMetadata_requests_the_rounded_coordinate_path() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(55,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetForecast_on_full_miss_fetches_stores_and_schedules_warming() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqliteForecastCacheTests.cs(50,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqliteForecastCacheTests.Get_returns_null_for_a_missing_grid() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/NeighborhoodWarmerTests.cs(29,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.NeighborhoodWarmerTests.BackgroundService_warms_all_eight_neighbours() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqlitePointMetadataCacheTests.cs(43,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqlitePointMetadataCacheTests.Nearby_coordinates_collapse_onto_one_row() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqliteForecastCacheTests.cs(59,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqliteForecastCacheTests.Expired_entry_is_returned_but_reports_not_fresh() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(58,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetPointMetadata_returns_null_when_uncovered() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(72,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetForecast_with_fresh_metadata_does_not_call_points() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(71,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetPointMetadata_returns_null_on_server_error() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqlitePointMetadataCacheTests.cs(62,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqlitePointMetadataCacheTests.Get_returns_null_for_an_unknown_coordinate() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(72,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetForecast_with_fresh_metadata_does_not_call_points() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqliteForecastCacheTests.cs(74,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqliteForecastCacheTests.Upsert_overwrites_an_existing_entry_for_the_same_grid() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqlitePointMetadataCacheTests.cs(71,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqlitePointMetadataCacheTests.Upsert_overwrites_metadata_for_the_same_key() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqliteForecastCacheTests.cs(59,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqliteForecastCacheTests.Expired_entry_is_returned_but_reports_not_fresh() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(84,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetForecast_with_fresh_forecast_does_not_call_forecast() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqlitePointMetadataCacheTests.cs(71,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqlitePointMetadataCacheTests.Upsert_overwrites_metadata_for_the_same_key() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Caching/SqliteForecastCacheTests.cs(74,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Caching.SqliteForecastCacheTests.Upsert_overwrites_an_existing_entry_for_the_same_grid() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(82,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetForecast_success_maps_periods_etag_and_maxage() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/NeighborhoodWarmerTests.cs(48,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.NeighborhoodWarmerTests.BackgroundService_skips_cells_that_are_already_fresh() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(118,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetForecast_requests_the_grid_forecast_path() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(97,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetForecast_stale_then_not_modified_renews_ttl_and_returns_cached() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/NeighborhoodWarmerTests.cs(48,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.NeighborhoodWarmerTests.BackgroundService_skips_cells_that_are_already_fresh() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(131,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetForecast_sends_conditional_header_and_maps_304() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(155,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetForecast_without_etag_sends_no_conditional_header() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(168,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetForecast_maps_404_to_NotFound() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(118,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetForecast_stale_then_unavailable_serves_stale_without_upsert() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(178,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetForecast_maps_429_to_Unavailable() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(134,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetForecast_not_found_without_cache_returns_null() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(188,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetForecast_maps_500_to_Unavailable() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(168,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetForecast_maps_404_to_NotFound() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(145,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetForecast_with_unresolvable_metadata_and_no_cache_returns_null() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(188,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetForecast_maps_500_to_Unavailable() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(178,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetForecast_maps_429_to_Unavailable() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs(198,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Nws.NwsApiClientTests.GetForecast_maps_transport_failure_to_Unavailable() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(175,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetNeighborhood_returns_only_already_fresh_neighbors() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(159,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetForecast_with_unresolvable_metadata_but_stale_cache_serves_stale_metadata() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(175,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetNeighborhood_returns_only_already_fresh_neighbors() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(197,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetNeighborhood_without_metadata_returns_null() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs(207,23): warning CA1707: Remove the underscores from member name Weather.Infrastructure.Tests.Services.WeatherServiceTests.GetForecastByGrid_does_not_schedule_warming() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-  Weather.Api net11.0 succeeded (0.9s) → src/Weather.Api/bin/Debug/net11.0/Weather.Api.dll
-  Weather.Web net11.0 succeeded (1.5s) → src/Weather.Web/bin/Debug/net11.0/Weather.Web.dll
-  Weather.Api.Tests net11.0 failed with 1 error(s) and 4 warning(s) (0.5s)
+  Weather.Api net11.0 succeeded (0.6s) → src/Weather.Api/bin/Debug/net11.0/Weather.Api.dll
+  Weather.Web net11.0 succeeded (1.0s) → src/Weather.Web/bin/Debug/net11.0/Weather.Web.dll
+  Weather.Api.Tests net11.0 failed with 1 error(s) and 4 warning(s) (0.3s)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/WeatherApiFactory.cs(35,17): error CS1061: 'IWebHostBuilder' does not contain a definition for 'ConfigureTestServices' and no accessible extension method 'ConfigureTestServices' accepting a first argument of type 'IWebHostBuilder' could be found (are you missing a using directive or an assembly reference?)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs(11,23): warning CA1707: Remove the underscores from member name Weather.Api.Tests.ForecastEndpointsTests.GetForecast_with_valid_coordinates_returns_200_and_a_forecast() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs(28,23): warning CA1707: Remove the underscores from member name Weather.Api.Tests.ForecastEndpointsTests.GetForecast_with_invalid_latitude_returns_400() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs(38,23): warning CA1707: Remove the underscores from member name Weather.Api.Tests.ForecastEndpointsTests.GetForecast_for_an_uncovered_location_returns_404() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs(49,23): warning CA1707: Remove the underscores from member name Weather.Api.Tests.ForecastEndpointsTests.GetNeighborhood_with_valid_coordinates_returns_200() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-  Weather.Web.Tests net11.0 succeeded with 17 warning(s) (0.5s) → tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs(11,23): warning CA1707: Remove the underscores from member name Weather.Api.Tests.ForecastEndpointsTests.GetForecast_with_valid_coordinates_returns_200_and_a_forecast() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs(28,23): warning CA1707: Remove the underscores from member name Weather.Api.Tests.ForecastEndpointsTests.GetForecast_with_invalid_latitude_returns_400() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+  Weather.AppHost net11.0 succeeded with 3 warning(s) (0.3s) → src/Weather.AppHost/bin/Debug/net11.0/Weather.AppHost.dll
+    /home/kushal/.nuget/packages/aspire.apphost.sdk/17.0.0/Sdk/Sdk.targets(63,5): warning ASPIRE012: Weather.AppHost uses the Aspire.AppHost.Sdk, which is obsolete but remains available for staged migration. Switch the project's Sdk attribute to Microsoft.NET.Sdk, add explicit PackageReference items for Aspire.Hosting.AppHost and Aspire.Hosting.Dotnet, and migrate C# resource ProjectReference items to AddDotnetProject calls. See https://aka.ms/aspire/diagnostics/aspire012 for migration guidance.
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.AppHost/Program.cs(7,11): warning CS0618: 'ProjectResourceBuilderExtensions.AddProject<TProject>(IDistributedApplicationBuilder, string)' is obsolete: 'Use AddDotnetProject(name, path) from the Aspire.Hosting.Dotnet package instead. There is no generic AddDotnetProject<TProject>; pass the project path instead of the TProject type.'
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.AppHost/Program.cs(9,1): warning CS0618: 'ProjectResourceBuilderExtensions.AddProject<TProject>(IDistributedApplicationBuilder, string)' is obsolete: 'Use AddDotnetProject(name, path) from the Aspire.Hosting.Dotnet package instead. There is no generic AddDotnetProject<TProject>; pass the project path instead of the TProject type.'
+  Weather.Web.Tests net11.0 succeeded with 17 warning(s) (0.4s) → tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/Weather.Web.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.2.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/Fakes/FakeGeolocationService.cs(25,44): warning CS8625: Cannot convert null literal to non-nullable reference type.
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/SkyPaletteTests.cs(26,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.SkyPaletteTests.ForPeriod_maps_short_forecast_to_a_sky_state(string, bool, string) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/SkyPaletteTests.cs(34,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.SkyPaletteTests.ForPeriod_is_case_insensitive() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/SkyPaletteTests.cs(44,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.SkyPaletteTests.ForPeriod_defaults_to_clear_when_text_is_missing(string?) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/SkyPaletteTests.cs(48,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.SkyPaletteTests.ForPeriod_always_produces_non_empty_colours() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/SkyPaletteTests.cs(59,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.SkyPaletteTests.ForPeriod_uses_distinct_gradients_for_day_and_night() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/SkyPaletteTests.cs(26,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.SkyPaletteTests.ForPeriod_maps_short_forecast_to_a_sky_state(string, bool, string) (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/SkyPaletteTests.cs(68,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.SkyPaletteTests.Thunderstorms_take_precedence_over_rain_keywords() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/SkyPaletteTests.cs(76,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.SkyPaletteTests.Snow_takes_precedence_over_shower_keywords() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/HomePageTests.cs(33,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.HomePageTests.When_permission_denied_the_manual_entry_form_is_shown() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/SkyPaletteTests.cs(34,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.SkyPaletteTests.ForPeriod_is_case_insensitive() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/HomePageTests.cs(58,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.HomePageTests.When_location_and_api_succeed_the_forecast_is_rendered() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/HomePageTests.cs(46,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.HomePageTests.When_position_unavailable_the_manual_entry_form_is_shown() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/HomePageTests.cs(72,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.HomePageTests.When_the_api_reports_no_coverage_the_not_covered_state_is_shown() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/HomePageTests.cs(46,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.HomePageTests.When_position_unavailable_the_manual_entry_form_is_shown() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/HomePageTests.cs(84,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.HomePageTests.When_the_api_throws_the_error_state_is_shown() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/HomePageTests.cs(96,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.HomePageTests.While_geolocation_is_pending_the_locating_state_is_shown_then_resolves() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/HomePageTests.cs(112,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.HomePageTests.Manual_submission_loads_the_forecast() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/HomePageTests.cs(130,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.HomePageTests.Use_sample_button_requests_the_sample_coordinates() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
-  Weather.AppHost net11.0 succeeded with 3 warning(s) (0.7s) → src/Weather.AppHost/bin/Debug/net11.0/Weather.AppHost.dll
-    /home/kushal/.nuget/packages/aspire.apphost.sdk/17.0.0/Sdk/Sdk.targets(63,5): warning ASPIRE012: Weather.AppHost uses the Aspire.AppHost.Sdk, which is obsolete but remains available for staged migration. Switch the project's Sdk attribute to Microsoft.NET.Sdk, add explicit PackageReference items for Aspire.Hosting.AppHost and Aspire.Hosting.Dotnet, and migrate C# resource ProjectReference items to AddDotnetProject calls. See https://aka.ms/aspire/diagnostics/aspire012 for migration guidance.
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.AppHost/Program.cs(7,11): warning CS0618: 'ProjectResourceBuilderExtensions.AddProject<TProject>(IDistributedApplicationBuilder, string)' is obsolete: 'Use AddDotnetProject(name, path) from the Aspire.Hosting.Dotnet package instead. There is no generic AddDotnetProject<TProject>; pass the project path instead of the TProject type.'
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.AppHost/Program.cs(9,1): warning CS0618: 'ProjectResourceBuilderExtensions.AddProject<TProject>(IDistributedApplicationBuilder, string)' is obsolete: 'Use AddDotnetProject(name, path) from the Aspire.Hosting.Dotnet package instead. There is no generic AddDotnetProject<TProject>; pass the project path instead of the TProject type.'
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/HomePageTests.cs(33,17): warning CA1707: Remove the underscores from member name Weather.Web.Tests.HomePageTests.When_permission_denied_the_manual_entry_form_is_shown() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
 
-Build failed with 1 error(s) and 95 warning(s) in 4.0s
+Build failed with 1 error(s) and 95 warning(s) in 1.9s
 
-real	0m4.140s
-user	0m0.404s
-sys	0m0.043s
+real	0m2.061s
+user	0m0.355s
+sys	0m0.052s
 Restore succeeded with 1 warning(s) in 0.2s
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/Weather.Web.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.2.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
-  Weather.Web.Tests net11.0 succeeded with 1 warning(s) (0.1s)
-    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/Weather.Web.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.2.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
-  Weather.Api.Tests net11.0 failed with 1 error(s) and 4 warning(s) (0.4s)
+  Weather.Api.Tests net11.0 failed with 1 error(s) and 4 warning(s) (0.3s)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/WeatherApiFactory.cs(35,17): error CS1061: 'IWebHostBuilder' does not contain a definition for 'ConfigureTestServices' and no accessible extension method 'ConfigureTestServices' accepting a first argument of type 'IWebHostBuilder' could be found (are you missing a using directive or an assembly reference?)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs(11,23): warning CA1707: Remove the underscores from member name Weather.Api.Tests.ForecastEndpointsTests.GetForecast_with_valid_coordinates_returns_200_and_a_forecast() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs(28,23): warning CA1707: Remove the underscores from member name Weather.Api.Tests.ForecastEndpointsTests.GetForecast_with_invalid_latitude_returns_400() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs(38,23): warning CA1707: Remove the underscores from member name Weather.Api.Tests.ForecastEndpointsTests.GetForecast_for_an_uncovered_location_returns_404() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs(49,23): warning CA1707: Remove the underscores from member name Weather.Api.Tests.ForecastEndpointsTests.GetNeighborhood_with_valid_coordinates_returns_200() (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707)
+  Weather.Web.Tests net11.0 succeeded with 1 warning(s) (0.1s)
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/Weather.Web.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.2.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
 Build failed with exit code: 1.
 
-real	0m1.031s
-user	0m0.147s
-sys	0m0.041s
-Restore succeeded with 1 warning(s) in 0.2s
+real	0m0.898s
+user	0m0.176s
+sys	0m0.052s
+Restore succeeded with 1 warning(s) in 0.1s
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/Weather.Web.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.2.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
 
 Build succeeded with 1 warning(s) in 0.2s
@@ -9811,7 +9819,7 @@ Project 'Weather.Infrastructure' has the following package references
    > Microsoft.Data.Sqlite                     11.0.0      11.0.0  
    > Microsoft.Extensions.Hosting              11.0.0      11.0.0  
    > Microsoft.Extensions.Http.Resilience      11.0.1      11.0.1  
-   > System.Threading.RateLimiting             10.0.0      10.0.0  
+   > System.Threading.RateLimiting             11.0.0      11.0.0  
 
 Project 'Weather.ServiceDefaults' has the following package references
    [net11.0]: 
@@ -9832,7 +9840,7 @@ Project 'Weather.Web' has the following package references
 Project 'Weather.Api.Tests' has the following package references
    [net11.0]: 
    Top-level Package                       Requested   Resolved
-   > Microsoft.AspNetCore.Mvc.Testing      10.0.0      10.0.0  
+   > Microsoft.AspNetCore.Mvc.Testing      11.0.0      11.0.0  
    > Shouldly                              4.3.0       4.3.0   
    > TUnit                                 1.87.12     1.87.12 
 
@@ -9858,10 +9866,10 @@ Project 'Weather.Web.Tests' has the following package references
 
 (A) : Auto-referenced package.
 
-real	0m1.815s
-user	0m1.273s
-sys	0m0.351s
-Restore succeeded with 1 warning(s) in 0.2s
+real	0m1.624s
+user	0m1.228s
+sys	0m0.313s
+Restore succeeded with 1 warning(s) in 0.1s
     /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/Weather.Web.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.2.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
 
 Build succeeded with 1 warning(s) in 0.2s
@@ -9872,23 +9880,15 @@ The following sources were used:
 The given project `Weather.Api` has no updates given the current sources.
 The given project `Weather.AppHost` has no updates given the current sources.
 The given project `Weather.Core` has no updates given the current sources.
-Project `Weather.Infrastructure` has the following updates to its packages
-   [net11.0]: 
-   Top-level Package                    Requested   Resolved   Latest
-   > System.Threading.RateLimiting      10.0.0      10.0.0     11.0.0
-
+The given project `Weather.Infrastructure` has no updates given the current sources.
 The given project `Weather.ServiceDefaults` has no updates given the current sources.
 The given project `Weather.Web` has no updates given the current sources.
-Project `Weather.Api.Tests` has the following updates to its packages
-   [net11.0]: 
-   Top-level Package                       Requested   Resolved   Latest
-   > Microsoft.AspNetCore.Mvc.Testing      10.0.0      10.0.0     11.0.0
-
+The given project `Weather.Api.Tests` has no updates given the current sources.
 The given project `Weather.Core.Tests` has no updates given the current sources.
 The given project `Weather.Infrastructure.Tests` has no updates given the current sources.
 The given project `Weather.Web.Tests` has no updates given the current sources.
 
-real	0m2.742s
-user	0m2.416s
-sys	0m0.366s
+real	0m2.536s
+user	0m2.293s
+sys	0m0.350s
 kushal@fedora:~/src/dotnet/MyWeatherStudio/weather$ 
