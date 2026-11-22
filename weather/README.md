@@ -66,7 +66,7 @@ path. Details in [`src/Weather.Web/README.md`](src/Weather.Web/README.md).
 
 ## Prerequisites
 
-- **.NET 10 SDK** (the repo pins the `10.0.x` feature band in
+- **.NET 11 SDK** (the repo pins the `11.0.x` feature band in
   [`global.json`](global.json)).
 - For the Aspire run experience, the **.NET Aspire** tooling/workload as
   described in the [Aspire docs](https://learn.microsoft.com/dotnet/aspire/).
