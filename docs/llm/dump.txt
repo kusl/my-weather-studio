@@ -7,19 +7,19 @@
 
 DUMP METADATA
 ═════════════════════════════════════════════════════════════════════════════════
-  Generated at   : 2026-11-22T11:35:27-05:00
+  Generated at   : 2026-11-22T11:43:26-05:00
   Generator      : export.sh
 
 REPOSITORY METADATA
 ═════════════════════════════════════════════════════════════════════════════════
   Repository root: /home/kushal/src/dotnet/MyWeatherStudio
   Branch         : main
-  Commit (full)  : 6a57f541b9909dc6b9998f0e4b936bc1cbcfa874
-  Commit (short) : 6a57f54
-  Commit date    : 2026-11-22 11:35:05 -0500
-  Commit message : run scripts
+  Commit (full)  : 6150c8648e5fe8985881e5b30ba7de27ddf02a43
+  Commit (short) : 6150c86
+  Commit date    : 2026-11-22 11:43:12 -0500
+  Commit message : add prompt
   Remote origin  : none
-  Files included : 129
+  Files included : 130
   Withheld paths : docs/llm/, docs/progress/
   Excluded files : export.sh
   Elided files   : LICENSE (metadata and SHA-256 only)
@@ -431,7 +431,7 @@ trap - EXIT
 cat "$OUTPUT_FILE"
 
 ################################################################################
-# FILE TREE  (129 included files)
+# FILE TREE  (130 included files)
 ################################################################################
 .
 ├── .editorconfig
@@ -474,7 +474,8 @@ cat "$OUTPUT_FILE"
 │   │   │   └── launchSettings.json
 │   │   ├── README.md
 │   │   ├── Weather.AppHost.csproj
-│   │   └── appsettings.json
+│   │   ├── appsettings.json
+│   │   └── aspire.config.json
 │   ├── Weather.Core
 │   │   ├── Abstractions
 │   │   │   ├── IForecastCache.cs
@@ -2186,6 +2187,22 @@ dashboard with no extra configuration.
       "Microsoft.AspNetCore": "Warning",
       "Aspire.Hosting.Dcp": "Warning"
     }
+  }
+}
+
+################################################################################
+# FILE: src/Weather.AppHost/aspire.config.json
+################################################################################
+
+--- METADATA ---
+  Relative path:         src/Weather.AppHost/aspire.config.json
+  Size:                  60 B (60 bytes)
+  SHA-256:               b24daddf02709d994a1ca7c0152328a0c7b57dbaef46045dc679d51cb2858660
+
+--- CONTENT ---
+{
+  "appHost": {
+    "path": "Weather.AppHost.csproj"
   }
 }
 
@@ -8876,10 +8893,10 @@ public sealed class SkyPaletteTests
 ################################################################################
 # DUMP SUMMARY
 ################################################################################
-  Files dumped   : 129
-  Total size     : 235.9 KiB (241579 bytes)
+  Files dumped   : 130
+  Total size     : 236.0 KiB (241639 bytes)
   Output file    : /home/kushal/src/dotnet/MyWeatherStudio/docs/llm/dump.txt
-  Completed at   : 2026-11-22T11:35:29-05:00
+  Completed at   : 2026-11-22T11:43:27-05:00
 ################################################################################
 # END OF DUMP
 ################################################################################

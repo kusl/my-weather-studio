@@ -1,4 +1,859 @@
-kushal@fedora:~/src/bash$ cd /home/kushal/src/dotnet/MyWeatherStudio; git status; git remote show; time bash export.sh; cd weather; time dotnet --info; time dotnet clean; time dotnet restore; time dotnet build; time dotnet test; time dotnet list package; time dotnet list package --outdated;
+        result!.Periods[0].ShortForecast.ShouldBe("Sunny");
+        await h.ForecastCache.Received(1).UpsertAsync(
+            Arg.Is<CachedForecast>(c =>
+                c.ETag == "\"e2\"" &&
+                c.RetrievedAtUtc == Now &&
+                c.ExpiresAtUtc == Now.AddMinutes(20)),
+            Arg.Any<CancellationToken>());
+    }
+
+    [Test]
+    public async Task GetForecast_stale_then_unavailable_serves_stale_without_upsert()
+    {
+        var h = new Harness();
+        h.MetadataCache.GetAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>()).Returns(FreshMeta());
+        h.ForecastCache.GetAsync(Grid, Arg.Any<CancellationToken>()).Returns(StaleForecast(Grid));
+        h.Nws.GetForecastAsync(Arg.Any<GridPoint>(), Arg.Any<string?>(), Arg.Any<CancellationToken>())
+            .Returns(new ForecastFetchResult.Unavailable());
+
+        var result = await h.Service.GetForecastAsync(Coord);
+
+        result.ShouldNotBeNull();
+        result!.Grid.ShouldBe(Grid);
+        await h.ForecastCache.DidNotReceive().UpsertAsync(Arg.Any<CachedForecast>(), Arg.Any<CancellationToken>());
+    }
+
+    [Test]
+    public async Task GetForecast_not_found_without_cache_returns_null()
+    {
+        var h = new Harness();
+        h.MetadataCache.GetAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>()).Returns(FreshMeta());
+        h.Nws.GetForecastAsync(Arg.Any<GridPoint>(), Arg.Any<string?>(), Arg.Any<CancellationToken>())
+            .Returns(new ForecastFetchResult.NotFound());
+
+        (await h.Service.GetForecastAsync(Coord)).ShouldBeNull();
+    }
+
+    [Test]
+    public async Task GetForecast_with_unresolvable_metadata_and_no_cache_returns_null()
+    {
+        var h = new Harness();
+        // metadata cache empty + NWS resolve returns null
+        h.Nws.GetPointMetadataAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>())
+            .Returns((PointMetadata?)null);
+
+        var result = await h.Service.GetForecastAsync(Coord);
+
+        result.ShouldBeNull();
+        await h.Nws.DidNotReceive().GetForecastAsync(Arg.Any<GridPoint>(), Arg.Any<string?>(), Arg.Any<CancellationToken>());
+    }
+
+    [Test]
+    public async Task GetForecast_with_unresolvable_metadata_but_stale_cache_serves_stale_metadata()
+    {
+        var h = new Harness();
+        h.MetadataCache.GetAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>()).Returns(StaleMeta());
+        h.Nws.GetPointMetadataAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>())
+            .Returns((PointMetadata?)null);
+        h.Nws.GetForecastAsync(Arg.Any<GridPoint>(), Arg.Any<string?>(), Arg.Any<CancellationToken>())
+            .Returns(new ForecastFetchResult.Fetched(ForecastFor(Grid), "\"e\"", TimeSpan.FromMinutes(30)));
+
+        var result = await h.Service.GetForecastAsync(Coord);
+
+        result.ShouldNotBeNull();
+        await h.Nws.Received(1).GetPointMetadataAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>());
+    }
+
+    [Test]
+    public async Task GetNeighborhood_returns_only_already_fresh_neighbors()
+    {
+        var h = new Harness();
+        var neighborA = new GridPoint("AKQ", 82, 61);
+        var neighborB = new GridPoint("AKQ", 84, 61);
+
+        h.MetadataCache.GetAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>()).Returns(FreshMeta());
+        h.ForecastCache.GetAsync(Grid, Arg.Any<CancellationToken>()).Returns(FreshForecast(Grid));
+        h.ForecastCache.GetAsync(neighborA, Arg.Any<CancellationToken>()).Returns(FreshForecast(neighborA));
+        h.ForecastCache.GetAsync(neighborB, Arg.Any<CancellationToken>()).Returns(FreshForecast(neighborB));
+        // every other surrounding cell returns null (the NSubstitute default)
+
+        var result = await h.Service.GetNeighborhoodForecastAsync(Coord);
+
+        result.ShouldNotBeNull();
+        result!.Primary.Grid.ShouldBe(Grid);
+        result.Neighbors.Count.ShouldBe(2);
+        result.Neighbors.Select(n => n.Grid).ShouldBe(new[] { neighborA, neighborB }, ignoreOrder: true);
+        h.Warmer.Received(1).RequestWarming(Grid);
+    }
+
+    [Test]
+    public async Task GetNeighborhood_without_metadata_returns_null()
+    {
+        var h = new Harness();
+        h.Nws.GetPointMetadataAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>())
+            .Returns((PointMetadata?)null);
+
+        (await h.Service.GetNeighborhoodForecastAsync(Coord)).ShouldBeNull();
+    }
+
+    [Test]
+    public async Task GetForecastByGrid_does_not_schedule_warming()
+    {
+        var h = new Harness();
+        h.Nws.GetForecastAsync(Arg.Any<GridPoint>(), Arg.Any<string?>(), Arg.Any<CancellationToken>())
+            .Returns(new ForecastFetchResult.Fetched(ForecastFor(Grid), "\"e\"", TimeSpan.FromMinutes(30)));
+
+        var result = await h.Service.GetForecastByGridAsync(Grid);
+
+        result.ShouldNotBeNull();
+        h.Warmer.DidNotReceive().RequestWarming(Arg.Any<GridPoint>());
+    }
+}
+
+################################################################################
+# FILE: tests/Weather.Infrastructure.Tests/Weather.Infrastructure.Tests.csproj
+################################################################################
+
+--- METADATA ---
+  Relative path:         tests/Weather.Infrastructure.Tests/Weather.Infrastructure.Tests.csproj
+  Size:                  447 B (447 bytes)
+  SHA-256:               f036c665d83774a694afec940b6b3ac09208782a134dd0949d30ca14a2198419
+
+--- CONTENT ---
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TUnit" />
+    <PackageReference Include="Shouldly" />
+    <PackageReference Include="NSubstitute" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Weather.Infrastructure\Weather.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
+
+################################################################################
+# FILE: tests/Weather.Web.Tests/Fakes/FakeGeolocationService.cs
+################################################################################
+
+--- METADATA ---
+  Relative path:         tests/Weather.Web.Tests/Fakes/FakeGeolocationService.cs
+  Size:                  861 B (861 bytes)
+  SHA-256:               26b0e7bf91b08b5df77cd7ec755083bce6042f6356009333229a00d3a79dd9d6
+
+--- CONTENT ---
+namespace Weather.Web.Tests.Fakes;
+
+internal sealed class FakeGeolocationService : IGeolocationService
+{
+    private readonly Func<ValueTask<GeolocationResult>> _respond;
+
+    private FakeGeolocationService(Func<ValueTask<GeolocationResult>> respond) => _respond = respond;
+
+    public static FakeGeolocationService Returning(GeolocationResult result) => new(() => ValueTask.FromResult(result));
+
+    public static (FakeGeolocationService Service, TaskCompletionSource<GeolocationResult> Gate) Gated()
+    {
+        var gate = new TaskCompletionSource<GeolocationResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+        return (new FakeGeolocationService(() => new ValueTask<GeolocationResult>(gate.Task)), gate);
+    }
+
+    public ValueTask<GeolocationResult> GetCurrentPositionAsync(CancellationToken cancellationToken = default) => _respond();
+}
+
+################################################################################
+# FILE: tests/Weather.Web.Tests/Fakes/FakeWeatherApiClient.cs
+################################################################################
+
+--- METADATA ---
+  Relative path:         tests/Weather.Web.Tests/Fakes/FakeWeatherApiClient.cs
+  Size:                  1.4 KiB (1434 bytes)
+  SHA-256:               83d4951f2f097f0be1e0700985d0a0f27e77914b57ca6d5215399761a7765d57
+
+--- CONTENT ---
+namespace Weather.Web.Tests.Fakes;
+
+/// <summary>
+/// Test double for <see cref="IWeatherApiClient"/>. Returns a configured
+/// forecast (or <c>null</c> for "no coverage"), or throws to simulate a network
+/// error. Records the last coordinates it was asked about.
+/// </summary>
+internal sealed class FakeWeatherApiClient : IWeatherApiClient
+{
+    private readonly ForecastDto? _forecast;
+    private readonly Exception? _toThrow;
+
+    private FakeWeatherApiClient(ForecastDto? forecast, Exception? toThrow)
+    {
+        _forecast = forecast;
+        _toThrow = toThrow;
+    }
+
+    public double? LastLatitude { get; private set; }
+
+    public double? LastLongitude { get; private set; }
+
+    public static FakeWeatherApiClient Returning(ForecastDto? forecast) => new(forecast, null);
+
+    public static FakeWeatherApiClient Throwing(Exception toThrow) => new(null, toThrow);
+
+    public Task<ForecastDto?> GetForecastAsync(
+        double latitude, double longitude, CancellationToken cancellationToken = default)
+    {
+        LastLatitude = latitude;
+        LastLongitude = longitude;
+
+        return _toThrow is not null
+            ? Task.FromException<ForecastDto?>(_toThrow)
+            : Task.FromResult(_forecast);
+    }
+
+    public Task<NeighborhoodDto?> GetNeighborhoodAsync(
+        double latitude, double longitude, CancellationToken cancellationToken = default) =>
+        Task.FromResult<NeighborhoodDto?>(null);
+}
+
+################################################################################
+# FILE: tests/Weather.Web.Tests/GlobalUsings.cs
+################################################################################
+
+--- METADATA ---
+  Relative path:         tests/Weather.Web.Tests/GlobalUsings.cs
+  Size:                  83 B (83 bytes)
+  SHA-256:               70bd3aba674654aa8ae5fb80a199dec41bb67b7a653b436457c9ced97b039cab
+
+--- CONTENT ---
+global using Shouldly;
+global using TUnit.Core;
+global using Weather.Web.Services;
+
+################################################################################
+# FILE: tests/Weather.Web.Tests/HomePageTests.cs
+################################################################################
+
+--- METADATA ---
+  Relative path:         tests/Weather.Web.Tests/HomePageTests.cs
+  Size:                  6.8 KiB (6919 bytes)
+  SHA-256:               9a1c91e02ca0b16ed3c6c205875ad6e65a64ba73096d737c6568b6f9cbb51770
+
+--- CONTENT ---
+using Bunit;
+using Microsoft.Extensions.DependencyInjection;
+using Weather.Web.Components.Pages;
+using Weather.Web.Tests.Fakes;
+
+namespace Weather.Web.Tests;
+
+public sealed class HomePageTests
+{
+    private static ForecastDto SampleForecast() => new(
+        "AKQ", 83, 61, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow,
+        [
+            new ForecastPeriodDto(1, "This Afternoon", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(4),
+                true, 90, "F", 3, "5 mph", "S", "Sunny", "Sunny, with a high near 90.", "icon-day"),
+            new ForecastPeriodDto(2, "Tonight", DateTimeOffset.UtcNow.AddHours(4), DateTimeOffset.UtcNow.AddHours(16),
+                false, 74, "F", null, "12 mph", "S", "Mostly Clear", "Mostly clear.", "icon-night"),
+        ]);
+
+    private static GeolocationResult Success() =>
+        new(true, 37.0879, -76.4505, 12, GeolocationError.None);
+
+    private static BunitContext CreateContext(IGeolocationService geo, IWeatherApiClient api)
+    {
+        var ctx = new BunitContext();
+        ctx.Services.AddSingleton(geo);
+        ctx.Services.AddSingleton(api);
+        return ctx;
+    }
+
+    [Test]
+    public void When_permission_denied_the_manual_entry_form_is_shown()
+    {
+        using var ctx = CreateContext(
+            FakeGeolocationService.Returning(GeolocationResult.Failed(GeolocationError.PermissionDenied)),
+            FakeWeatherApiClient.Returning(SampleForecast()));
+
+        var cut = ctx.Render<Home>();
+
+        cut.WaitForAssertion(() => cut.Find("[data-testid=state-denied]"));
+        cut.FindAll("[data-testid=manual-entry]").ShouldNotBeEmpty();
+    }
+
+    [Test]
+    public void When_position_unavailable_the_manual_entry_form_is_shown()
+    {
+        using var ctx = CreateContext(
+            FakeGeolocationService.Returning(GeolocationResult.Failed(GeolocationError.PositionUnavailable)),
+            FakeWeatherApiClient.Returning(SampleForecast()));
+
+        var cut = ctx.Render<Home>();
+
+        cut.WaitForAssertion(() => cut.Find("[data-testid=state-unavailable]"));
+    }
+
+    [Test]
+    public void When_location_and_api_succeed_the_forecast_is_rendered()
+    {
+        using var ctx = CreateContext(
+            FakeGeolocationService.Returning(Success()),
+            FakeWeatherApiClient.Returning(SampleForecast()));
+
+        var cut = ctx.Render<Home>();
+
+        cut.WaitForAssertion(() => cut.Find("[data-testid=forecast]"));
+        cut.Find("[data-testid=hero-temp]").TextContent.ShouldContain("90");
+        cut.Markup.ShouldContain("AKQ");
+    }
+
+    [Test]
+    public void When_the_api_reports_no_coverage_the_not_covered_state_is_shown()
+    {
+        using var ctx = CreateContext(
+            FakeGeolocationService.Returning(Success()),
+            FakeWeatherApiClient.Returning(null));
+
+        var cut = ctx.Render<Home>();
+
+        cut.WaitForAssertion(() => cut.Find("[data-testid=state-not-covered]"));
+    }
+
+    [Test]
+    public void When_the_api_throws_the_error_state_is_shown()
+    {
+        using var ctx = CreateContext(
+            FakeGeolocationService.Returning(Success()),
+            FakeWeatherApiClient.Throwing(new HttpRequestException("boom")));
+
+        var cut = ctx.Render<Home>();
+
+        cut.WaitForAssertion(() => cut.Find("[data-testid=state-error]"));
+    }
+
+    [Test]
+    public void While_geolocation_is_pending_the_locating_state_is_shown_then_resolves()
+    {
+        var (geo, gate) = FakeGeolocationService.Gated();
+        using var ctx = CreateContext(geo, FakeWeatherApiClient.Returning(SampleForecast()));
+
+        var cut = ctx.Render<Home>();
+
+        cut.WaitForAssertion(() => cut.Find("[data-testid=state-locating]"));
+
+        gate.SetResult(Success());
+        cut.WaitForAssertion(() => cut.Find("[data-testid=forecast]"));
+    }
+
+    [Test]
+    public void Manual_submission_loads_the_forecast()
+    {
+        using var ctx = CreateContext(
+            FakeGeolocationService.Returning(GeolocationResult.Failed(GeolocationError.PermissionDenied)),
+            FakeWeatherApiClient.Returning(SampleForecast()));
+
+        var cut = ctx.Render<Home>();
+        cut.WaitForAssertion(() => cut.Find("[data-testid=manual-entry]"));
+
+        cut.FindAll("[data-testid=manual-entry] input")[0].Input("37.0879");
+        cut.FindAll("[data-testid=manual-entry] input")[1].Input("-76.4505");
+        cut.FindAll("[data-testid=manual-entry] button")[0].Click();
+
+        cut.WaitForAssertion(() => cut.Find("[data-testid=forecast]"));
+    }
+
+    [Test]
+    public void Use_sample_button_requests_the_sample_coordinates()
+    {
+        var api = FakeWeatherApiClient.Returning(SampleForecast());
+        using var ctx = CreateContext(
+            FakeGeolocationService.Returning(GeolocationResult.Failed(GeolocationError.PermissionDenied)),
+            api);
+
+        var cut = ctx.Render<Home>();
+        cut.WaitForAssertion(() => cut.Find("[data-testid=manual-entry]"));
+
+        cut.FindAll("[data-testid=manual-entry] button")[1].Click();
+
+        cut.WaitForAssertion(() => cut.Find("[data-testid=forecast]"));
+        api.LastLatitude.ShouldBe(37.0879);
+        api.LastLongitude.ShouldBe(-76.4505);
+    }
+
+    [Test]
+    public void When_the_page_is_not_a_secure_context_the_insecure_state_is_shown()
+    {
+        using var ctx = CreateContext(
+            FakeGeolocationService.Returning(GeolocationResult.Failed(GeolocationError.InsecureContext)),
+            FakeWeatherApiClient.Returning(SampleForecast()));
+
+        var cut = ctx.Render<Home>();
+
+        cut.WaitForAssertion(() => cut.Find("[data-testid=state-insecure]"));
+        cut.FindAll("[data-testid=manual-entry]").ShouldNotBeEmpty();
+    }
+
+    [Test]
+    public void Upcoming_periods_are_rendered_as_cards()
+    {
+        using var ctx = CreateContext(
+            FakeGeolocationService.Returning(Success()),
+            FakeWeatherApiClient.Returning(SampleForecast()));
+
+        var cut = ctx.Render<Home>();
+
+        cut.WaitForAssertion(() => cut.Find("[data-testid=upcoming]"));
+        cut.FindAll("[data-testid=upcoming] .card").Count.ShouldBe(1);
+        cut.Find("[data-testid=upcoming] .card").TextContent.ShouldContain("Tonight");
+    }
+
+    [Test]
+    public void Invalid_manual_input_shows_a_validation_message()
+    {
+        using var ctx = CreateContext(
+            FakeGeolocationService.Returning(GeolocationResult.Failed(GeolocationError.PermissionDenied)),
+            FakeWeatherApiClient.Returning(SampleForecast()));
+
+        var cut = ctx.Render<Home>();
+        cut.WaitForAssertion(() => cut.Find("[data-testid=manual-entry]"));
+
+        cut.FindAll("[data-testid=manual-entry] input")[0].Input("north");
+        cut.FindAll("[data-testid=manual-entry] input")[1].Input("-76.4505");
+        cut.FindAll("[data-testid=manual-entry] button")[0].Click();
+
+        cut.WaitForAssertion(() => cut.Find("[role=alert]").TextContent.ShouldContain("Enter numbers"));
+    }
+}
+
+################################################################################
+# FILE: tests/Weather.Web.Tests/SkyPaletteTests.cs
+################################################################################
+
+--- METADATA ---
+  Relative path:         tests/Weather.Web.Tests/SkyPaletteTests.cs
+  Size:                  2.7 KiB (2775 bytes)
+  SHA-256:               1781e3c9b7d878e8af36d625d12343e75b56491af76d68140607fd26503b7f5f
+
+--- CONTENT ---
+namespace Weather.Web.Tests;
+
+public sealed class SkyPaletteTests
+{
+    [Test]
+    [Arguments("Sunny", true, "Clear")]
+    [Arguments("Mostly Sunny", true, "Clear")]
+    [Arguments("Clear", false, "Clear")]
+    [Arguments("Fair", true, "Clear")]
+    [Arguments("Partly Cloudy", true, "Cloudy")]
+    [Arguments("Mostly Cloudy", true, "Cloudy")]
+    [Arguments("Cloudy", true, "Cloudy")]
+    [Arguments("Overcast", false, "Cloudy")]
+    [Arguments("Chance Showers And Thunderstorms", true, "Storms")]
+    [Arguments("Showers And Thunderstorms", false, "Storms")]
+    [Arguments("Severe Tstorms", true, "Storms")]
+    [Arguments("Rain Showers", true, "Rain")]
+    [Arguments("Light Rain", false, "Rain")]
+    [Arguments("Drizzle", true, "Rain")]
+    [Arguments("Patchy Fog", true, "Fog")]
+    [Arguments("Areas Of Fog", false, "Fog")]
+    [Arguments("Haze", true, "Fog")]
+    [Arguments("Snow", true, "Snow")]
+    [Arguments("Chance Snow Showers", false, "Snow")]
+    [Arguments("Wintry Mix", true, "Snow")]
+    public void ForPeriod_maps_short_forecast_to_a_sky_state(string shortForecast, bool isDaytime, string expectedLabel)
+    {
+        var theme = SkyPalette.ForPeriod(isDaytime, shortForecast);
+
+        theme.Label.ShouldBe(expectedLabel);
+    }
+
+    [Test]
+    public void ForPeriod_is_case_insensitive()
+    {
+        SkyPalette.ForPeriod(true, "RAIN").Label.ShouldBe("Rain");
+        SkyPalette.ForPeriod(true, "sUnNy").Label.ShouldBe("Clear");
+    }
+
+    [Test]
+    [Arguments((string?)null)]
+    [Arguments("")]
+    [Arguments("   ")]
+    public void ForPeriod_defaults_to_clear_when_text_is_missing(string? shortForecast) =>
+        SkyPalette.ForPeriod(true, shortForecast).Label.ShouldBe("Clear");
+
+    [Test]
+    public void ForPeriod_always_produces_non_empty_colours()
+    {
+        var theme = SkyPalette.ForPeriod(true, "Sunny");
+
+        theme.From.ShouldNotBeNullOrWhiteSpace();
+        theme.To.ShouldNotBeNullOrWhiteSpace();
+        theme.Foreground.ShouldNotBeNullOrWhiteSpace();
+        theme.Accent.ShouldNotBeNullOrWhiteSpace();
+    }
+
+    [Test]
+    public void ForPeriod_uses_distinct_gradients_for_day_and_night()
+    {
+        var day = SkyPalette.ForPeriod(true, "Clear");
+        var night = SkyPalette.ForPeriod(false, "Clear");
+
+        day.From.ShouldNotBe(night.From);
+    }
+
+    [Test]
+    public void Thunderstorms_take_precedence_over_rain_keywords()
+    {
+        // "Showers And Thunderstorms" contains both "shower" and "thunder";
+        // the stormier reading must win.
+        SkyPalette.ForPeriod(true, "Showers And Thunderstorms").Label.ShouldBe("Storms");
+    }
+
+    [Test]
+    public void Snow_takes_precedence_over_shower_keywords()
+    {
+        SkyPalette.ForPeriod(false, "Snow Showers").Label.ShouldBe("Snow");
+    }
+}
+
+################################################################################
+# FILE: tests/Weather.Web.Tests/Weather.Web.Tests.csproj
+################################################################################
+
+--- METADATA ---
+  Relative path:         tests/Weather.Web.Tests/Weather.Web.Tests.csproj
+  Size:                  419 B (419 bytes)
+  SHA-256:               1c7f4bcf840d1e1c2098bb722a940603d83a73cb150e0532403d5831d5566a6f
+
+--- CONTENT ---
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TUnit" />
+    <PackageReference Include="Shouldly" />
+    <PackageReference Include="bunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Weather.Web\Weather.Web.csproj" />
+  </ItemGroup>
+
+</Project>
+
+################################################################################
+# FILE: weather.slnx
+################################################################################
+
+--- METADATA ---
+  Relative path:         weather.slnx
+  Size:                  1.1 KiB (1142 bytes)
+  SHA-256:               dfb9fcaefbf0fb4c8a6d2ddc05efe6fa31e88c1e1443212ad6077af3de4bc341
+
+--- CONTENT ---
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Weather.Core/Weather.Core.csproj" />
+    <Project Path="src/Weather.Infrastructure/Weather.Infrastructure.csproj" />
+    <Project Path="src/Weather.ServiceDefaults/Weather.ServiceDefaults.csproj" />
+    <Project Path="src/Weather.Api/Weather.Api.csproj" />
+    <Project Path="src/Weather.Web/Weather.Web.csproj" />
+    <Project Path="src/Weather.AppHost/Weather.AppHost.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Weather.Core.Tests/Weather.Core.Tests.csproj" />
+    <Project Path="tests/Weather.Infrastructure.Tests/Weather.Infrastructure.Tests.csproj" />
+    <Project Path="tests/Weather.Api.Tests/Weather.Api.Tests.csproj" />
+    <Project Path="tests/Weather.Web.Tests/Weather.Web.Tests.csproj" />
+  </Folder>
+</Solution>
+
+################################################################################
+# DUMP SUMMARY
+################################################################################
+  Files dumped   : 129
+  Total size     : 235.9 KiB (241579 bytes)
+  Output file    : /home/kushal/src/dotnet/MyWeatherStudio/docs/llm/dump.txt
+  Completed at   : 2026-11-22T11:35:29-05:00
+################################################################################
+# END OF DUMP
+################################################################################
+
+real	0m1.716s
+user	0m0.809s
+sys	0m1.182s
+bash: cd: weather: No such file or directory
+.NET SDK:
+ Version:           11.0.100-rc.3.26522.148
+ Commit:            5254d8bcf5
+ Workload version:  11.0.100-manifests.2c46f3cc
+ MSBuild version:   18.12.0-1.26522.148+5254d8bcf
+
+Runtime Environment:
+ OS Name:     fedora
+ OS Version:  45
+ OS Platform: Linux
+ RID:         fedora.45-x64
+ Base Path:   /usr/lib64/dotnet/sdk/11.0.100-rc.3.26522.148
+
+.NET workloads installed:
+There are no installed workloads to display.
+Configured to use workload sets when installing new manifests.
+No workload sets are installed. Run "dotnet workload restore" to install a workload set.
+
+Host:
+  Version:      11.0.0-rc.3.26522.148
+  Architecture: x64
+  Commit:       5254d8bcf5
+
+.NET SDKs installed:
+  10.0.113 [/usr/lib64/dotnet/sdk]
+  11.0.100-rc.3.26522.148 [/usr/lib64/dotnet/sdk]
+
+.NET runtimes installed:
+  Microsoft.AspNetCore.App 10.0.13 [/usr/lib64/dotnet/shared/Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 11.0.0-rc.3.26522.148 [/usr/lib64/dotnet/shared/Microsoft.AspNetCore.App]
+  Microsoft.NETCore.App 10.0.13 [/usr/lib64/dotnet/shared/Microsoft.NETCore.App]
+  Microsoft.NETCore.App 11.0.0-rc.3.26522.148 [/usr/lib64/dotnet/shared/Microsoft.NETCore.App]
+
+Other architectures found:
+  None
+
+Environment variables:
+  Not set
+
+global.json file:
+  /home/kushal/src/dotnet/MyWeatherStudio/global.json
+
+Learn more:
+  https://aka.ms/dotnet/info
+
+Download .NET:
+  https://aka.ms/dotnet/download
+
+real	0m0.013s
+user	0m0.004s
+sys	0m0.010s
+    info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
+
+Build succeeded in 0.2s
+
+real	0m0.278s
+user	0m0.100s
+sys	0m0.030s
+Restore complete (0.1s)
+
+Build succeeded in 0.2s
+
+real	0m0.298s
+user	0m0.101s
+sys	0m0.039s
+Restore complete (0.1s)
+    info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
+  Weather.Core net11.0 succeeded (0.1s) → src/Weather.Core/bin/Debug/net11.0/Weather.Core.dll
+  Weather.ServiceDefaults net11.0 succeeded (0.1s) → src/Weather.ServiceDefaults/bin/Debug/net11.0/Weather.ServiceDefaults.dll
+  Weather.AppHost net11.0 succeeded (0.1s) → src/Weather.AppHost/bin/Debug/net11.0/Weather.AppHost.dll
+  Weather.Core.Tests net11.0 succeeded (0.2s) → tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll
+  Weather.Infrastructure net11.0 succeeded (0.3s) → src/Weather.Infrastructure/bin/Debug/net11.0/Weather.Infrastructure.dll
+  Weather.Api net11.0 succeeded (0.3s) → src/Weather.Api/bin/Debug/net11.0/Weather.Api.dll
+  Weather.Infrastructure.Tests net11.0 succeeded (0.3s) → tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll
+  Weather.Web net11.0 succeeded (0.6s) → src/Weather.Web/bin/Debug/net11.0/Weather.Web.dll
+  Weather.Api.Tests net11.0 succeeded (0.2s) → tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll
+  Weather.Web.Tests net11.0 succeeded (0.2s) → tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll
+
+Build succeeded in 1.1s
+
+real	0m1.228s
+user	0m0.229s
+sys	0m0.037s
+Running tests from tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64)
+Running tests from tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64)
+Running tests from tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64)
+Running tests from tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64)
+failed ToApiString_is_culture_independent (17ms)
+  [Test Failure] CultureNotFoundException: Only the invariant culture is supported in globalization-invariant mode. See https://aka.ms/GlobalizationInvariantMode for more information. (Parameter 'name')
+de-DE is an invalid culture identifier.
+  from tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64)
+  TUnit.Engine.Exceptions.TestFailedException: [Test Failure] CultureNotFoundException: Only the invariant culture is supported in globalization-invariant mode. See https://aka.ms/GlobalizationInvariantMode for more information. (Parameter 'name')
+  de-DE is an invalid culture identifier.
+    at System.Globalization.CultureInfo..ctor(String name, Boolean useUserOverride)
+    at Weather.Core.Tests.GeoCoordinateTests.ToApiString_is_culture_independent() in tests/Weather.Core.Tests/GeoCoordinateTests.cs:109
+       --- TUnit internals omitted (run with --detailed-stacktrace for full trace) ---
+tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) failed with 1 error(s) [✓40/x1/↓0] (493ms)
+Exit code: 2
+tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (564ms)
+tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (792ms)
+tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (860ms)
+
+  In process file artifacts produced:
+    - TestResults/Weather.Core.Tests-linux-net11.0-report.html
+    - TestResults/Weather.Infrastructure.Tests-linux-net11.0-report.html
+    - TestResults/Weather.Web.Tests-linux-net11.0-report.html
+    - TestResults/Weather.Api.Tests-linux-net11.0-report.html
+
+Test run summary: Failed!
+  tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (860ms)
+  tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (792ms)
+  tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) failed with 1 error(s) [✓40/x1/↓0] (493ms)
+  tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (564ms)
+
+  total: 120
+  failed: 1
+  succeeded: 119
+  skipped: 0
+  duration: 1s 107ms
+Test run completed with non-success exit code: 2. At least one test failed. See: https://aka.ms/testingplatform/exitcodes
+
+real	0m2.379s
+user	0m6.527s
+sys	0m0.952s
+Restore complete (0.1s)
+
+Build succeeded in 0.2s
+Project 'Weather.Api' has the following package references
+   [net11.0]: 
+   Top-level Package                   Requested   Resolved
+   > Microsoft.AspNetCore.OpenApi      11.0.0      11.0.0  
+
+Project 'Weather.AppHost' has the following package references
+   [net11.0]: 
+   Top-level Package             Requested   Resolved
+   > Aspire.Hosting.AppHost      17.0.0      17.0.0  
+   > Aspire.Hosting.Dotnet       17.0.0      17.0.0  
+
+Project 'Weather.Core' has the following package references
+   [net11.0]: No packages were found for this framework.
+Project 'Weather.Infrastructure' has the following package references
+   [net11.0]: 
+   Top-level Package                           Requested   Resolved
+   > Dapper                                    2.1.100     2.1.100 
+   > Microsoft.Data.Sqlite                     11.0.0      11.0.0  
+   > Microsoft.Extensions.Http.Resilience      11.0.1      11.0.1  
+
+Project 'Weather.ServiceDefaults' has the following package references
+   [net11.0]: 
+   Top-level Package                                   Requested   Resolved
+   > Microsoft.Extensions.ServiceDiscovery             11.0.1      11.0.1  
+   > OpenTelemetry.Exporter.OpenTelemetryProtocol      1.21.0      1.21.0  
+   > OpenTelemetry.Extensions.Hosting                  1.21.0      1.21.0  
+   > OpenTelemetry.Instrumentation.AspNetCore          1.21.0      1.21.0  
+   > OpenTelemetry.Instrumentation.Http                1.21.0      1.21.0  
+
+Project 'Weather.Web' has the following package references
+   [net11.0]: 
+   Top-level Package                                  Requested                   Resolved             
+   > Microsoft.AspNetCore.App.Internal.Assets   (A)   [11.0.0-rc.3.26522.148, )   11.0.0-rc.3.26522.148
+   > Microsoft.Extensions.Http.Resilience             11.0.1                      11.0.1               
+
+Project 'Weather.Api.Tests' has the following package references
+   [net11.0]: 
+   Top-level Package                       Requested   Resolved
+   > Microsoft.AspNetCore.Mvc.Testing      11.0.0      11.0.0  
+   > Shouldly                              4.3.0       4.3.0   
+   > TUnit                                 1.87.12     1.87.12 
+
+Project 'Weather.Core.Tests' has the following package references
+   [net11.0]: 
+   Top-level Package      Requested   Resolved
+   > Shouldly             4.3.0       4.3.0   
+   > TUnit                1.87.12     1.87.12 
+
+Project 'Weather.Infrastructure.Tests' has the following package references
+   [net11.0]: 
+   Top-level Package      Requested   Resolved
+   > NSubstitute          6.2.0       6.2.0   
+   > Shouldly             4.3.0       4.3.0   
+   > TUnit                1.87.12     1.87.12 
+
+Project 'Weather.Web.Tests' has the following package references
+   [net11.0]: 
+   Top-level Package      Requested   Resolved
+   > bunit                2.15.2      2.15.2  
+   > Shouldly             4.3.0       4.3.0   
+   > TUnit                1.87.12     1.87.12 
+
+(A) : Auto-referenced package.
+
+real	0m1.451s
+user	0m1.051s
+sys	0m0.332s
+Restore complete (0.1s)
+
+Build succeeded in 0.2s
+
+The following sources were used:
+   https://api.nuget.org/v3/index.json
+
+The given project `Weather.Api` has no updates given the current sources.
+The given project `Weather.AppHost` has no updates given the current sources.
+The given project `Weather.Core` has no updates given the current sources.
+The given project `Weather.Infrastructure` has no updates given the current sources.
+The given project `Weather.ServiceDefaults` has no updates given the current sources.
+The given project `Weather.Web` has no updates given the current sources.
+The given project `Weather.Api.Tests` has no updates given the current sources.
+The given project `Weather.Core.Tests` has no updates given the current sources.
+The given project `Weather.Infrastructure.Tests` has no updates given the current sources.
+The given project `Weather.Web.Tests` has no updates given the current sources.
+
+real	0m2.349s
+user	0m2.118s
+sys	0m0.334s
+kushal@fedora:~/src/dotnet/MyWeatherStudio$ cd ~/src/dotnet/MyWeatherStudio/src/Weather.AppHost && aspire run
+bash: aspire: command not found...
+kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ time dotnet tool install -g Aspire.Cli
+Tools directory '/home/kushal/.dotnet/tools' is not currently on the PATH environment variable.
+If you are using bash, you can add it to your profile by running the following command:
+
+cat << \EOF >> ~/.bash_profile
+# Add .NET Core SDK tools
+export PATH="$PATH:/home/kushal/.dotnet/tools"
+EOF
+
+You can add it to the current session by running the following command:
+
+export PATH="$PATH:/home/kushal/.dotnet/tools"
+
+You can invoke the tool using the following command: aspire
+Tool 'aspire.cli' (version '17.0.0') was successfully installed.
+
+real	0m7.419s
+user	0m4.105s
+sys	0m1.029s
+kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ export PATH="$PATH:/home/kushal/.dotnet/tools"
+kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ cd ~/src/dotnet/MyWeatherStudio/src/Weather.AppHost && aspire run
+Weather.AppHost.csproj
+💾 Created settings file at 'aspire.config.json'.
+🚨 Developer certificates may not be fully trusted (trust exit code was: PartiallyFailedToTrustTheCertificate).
+
+     AppHost:  Weather.AppHost.csproj                                            
+                                                                                 
+   Dashboard:  http://localhost:15080/login?t=119d7b22552cdd578518fe618b5ae7eb   
+                                                                                 
+        Logs:  /home/kushal/.aspire/logs/cli_20261122T164050_1c6ca780.log        
+                                                            
+               Press CTRL+C to stop the AppHost and exit.   
+^C
+🛑 Stopping Aspire.
+kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ cd /home/kushal/src/dotnet/MyWeatherStudio; git status; git remote show; time bash export.sh; cd weather; time dotnet --info; time dotnet clean; time dotnet restore; time dotnet build; time dotnet test; time dotnet list package; time dotnet list package --outdated; dotnet 
 On branch main
 nothing to commit, working tree clean
 ################################################################################
@@ -10,19 +865,19 @@ nothing to commit, working tree clean
 
 DUMP METADATA
 ═════════════════════════════════════════════════════════════════════════════════
-  Generated at   : 2026-11-22T11:35:27-05:00
+  Generated at   : 2026-11-22T11:43:26-05:00
   Generator      : export.sh
 
 REPOSITORY METADATA
 ═════════════════════════════════════════════════════════════════════════════════
   Repository root: /home/kushal/src/dotnet/MyWeatherStudio
   Branch         : main
-  Commit (full)  : 6a57f541b9909dc6b9998f0e4b936bc1cbcfa874
-  Commit (short) : 6a57f54
-  Commit date    : 2026-11-22 11:35:05 -0500
-  Commit message : run scripts
+  Commit (full)  : 6150c8648e5fe8985881e5b30ba7de27ddf02a43
+  Commit (short) : 6150c86
+  Commit date    : 2026-11-22 11:43:12 -0500
+  Commit message : add prompt
   Remote origin  : none
-  Files included : 129
+  Files included : 130
   Withheld paths : docs/llm/, docs/progress/
   Excluded files : export.sh
   Elided files   : LICENSE (metadata and SHA-256 only)
@@ -434,7 +1289,7 @@ trap - EXIT
 cat "$OUTPUT_FILE"
 
 ################################################################################
-# FILE TREE  (129 included files)
+# FILE TREE  (130 included files)
 ################################################################################
 .
 ├── .editorconfig
@@ -477,7 +1332,8 @@ cat "$OUTPUT_FILE"
 │   │   │   └── launchSettings.json
 │   │   ├── README.md
 │   │   ├── Weather.AppHost.csproj
-│   │   └── appsettings.json
+│   │   ├── appsettings.json
+│   │   └── aspire.config.json
 │   ├── Weather.Core
 │   │   ├── Abstractions
 │   │   │   ├── IForecastCache.cs
@@ -2189,6 +3045,22 @@ dashboard with no extra configuration.
       "Microsoft.AspNetCore": "Warning",
       "Aspire.Hosting.Dcp": "Warning"
     }
+  }
+}
+
+################################################################################
+# FILE: src/Weather.AppHost/aspire.config.json
+################################################################################
+
+--- METADATA ---
+  Relative path:         src/Weather.AppHost/aspire.config.json
+  Size:                  60 B (60 bytes)
+  SHA-256:               b24daddf02709d994a1ca7c0152328a0c7b57dbaef46045dc679d51cb2858660
+
+--- CONTENT ---
+{
+  "appHost": {
+    "path": "Weather.AppHost.csproj"
   }
 }
 
@@ -8879,17 +9751,17 @@ public sealed class SkyPaletteTests
 ################################################################################
 # DUMP SUMMARY
 ################################################################################
-  Files dumped   : 129
-  Total size     : 235.9 KiB (241579 bytes)
+  Files dumped   : 130
+  Total size     : 236.0 KiB (241639 bytes)
   Output file    : /home/kushal/src/dotnet/MyWeatherStudio/docs/llm/dump.txt
-  Completed at   : 2026-11-22T11:35:29-05:00
+  Completed at   : 2026-11-22T11:43:27-05:00
 ################################################################################
 # END OF DUMP
 ################################################################################
 
-real	0m1.716s
-user	0m0.809s
-sys	0m1.182s
+real	0m1.713s
+user	0m0.830s
+sys	0m1.160s
 bash: cd: weather: No such file or directory
 .NET SDK:
  Version:           11.0.100-rc.3.26522.148
@@ -8940,44 +9812,44 @@ Download .NET:
   https://aka.ms/dotnet/download
 
 real	0m0.013s
-user	0m0.004s
-sys	0m0.010s
+user	0m0.006s
+sys	0m0.008s
     info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
 
 Build succeeded in 0.2s
 
-real	0m0.278s
+real	0m0.269s
 user	0m0.100s
-sys	0m0.030s
+sys	0m0.029s
 Restore complete (0.1s)
 
 Build succeeded in 0.2s
 
-real	0m0.298s
-user	0m0.101s
-sys	0m0.039s
+real	0m0.289s
+user	0m0.099s
+sys	0m0.035s
 Restore complete (0.1s)
     info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
   Weather.Core net11.0 succeeded (0.1s) → src/Weather.Core/bin/Debug/net11.0/Weather.Core.dll
   Weather.ServiceDefaults net11.0 succeeded (0.1s) → src/Weather.ServiceDefaults/bin/Debug/net11.0/Weather.ServiceDefaults.dll
   Weather.AppHost net11.0 succeeded (0.1s) → src/Weather.AppHost/bin/Debug/net11.0/Weather.AppHost.dll
   Weather.Core.Tests net11.0 succeeded (0.2s) → tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll
-  Weather.Infrastructure net11.0 succeeded (0.3s) → src/Weather.Infrastructure/bin/Debug/net11.0/Weather.Infrastructure.dll
+  Weather.Infrastructure net11.0 succeeded (0.2s) → src/Weather.Infrastructure/bin/Debug/net11.0/Weather.Infrastructure.dll
+  Weather.Web net11.0 succeeded (0.4s) → src/Weather.Web/bin/Debug/net11.0/Weather.Web.dll
+  Weather.Infrastructure.Tests net11.0 succeeded (0.2s) → tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll
   Weather.Api net11.0 succeeded (0.3s) → src/Weather.Api/bin/Debug/net11.0/Weather.Api.dll
-  Weather.Infrastructure.Tests net11.0 succeeded (0.3s) → tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll
-  Weather.Web net11.0 succeeded (0.6s) → src/Weather.Web/bin/Debug/net11.0/Weather.Web.dll
-  Weather.Api.Tests net11.0 succeeded (0.2s) → tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll
   Weather.Web.Tests net11.0 succeeded (0.2s) → tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll
+  Weather.Api.Tests net11.0 succeeded (0.2s) → tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll
 
-Build succeeded in 1.1s
+Build succeeded in 1.0s
 
-real	0m1.228s
-user	0m0.229s
-sys	0m0.037s
+real	0m1.099s
+user	0m0.141s
+sys	0m0.050s
 Running tests from tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64)
-Running tests from tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64)
 Running tests from tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64)
 Running tests from tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64)
+Running tests from tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64)
 failed ToApiString_is_culture_independent (17ms)
   [Test Failure] CultureNotFoundException: Only the invariant culture is supported in globalization-invariant mode. See https://aka.ms/GlobalizationInvariantMode for more information. (Parameter 'name')
 de-DE is an invalid culture identifier.
@@ -8987,11 +9859,11 @@ de-DE is an invalid culture identifier.
     at System.Globalization.CultureInfo..ctor(String name, Boolean useUserOverride)
     at Weather.Core.Tests.GeoCoordinateTests.ToApiString_is_culture_independent() in tests/Weather.Core.Tests/GeoCoordinateTests.cs:109
        --- TUnit internals omitted (run with --detailed-stacktrace for full trace) ---
-tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) failed with 1 error(s) [✓40/x1/↓0] (493ms)
+tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (587ms)
+tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) failed with 1 error(s) [✓40/x1/↓0] (727ms)
 Exit code: 2
-tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (564ms)
-tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (792ms)
-tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (860ms)
+tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (768ms)
+tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (854ms)
 
   In process file artifacts produced:
     - TestResults/Weather.Core.Tests-linux-net11.0-report.html
@@ -9000,21 +9872,21 @@ tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) pa
     - TestResults/Weather.Api.Tests-linux-net11.0-report.html
 
 Test run summary: Failed!
-  tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (860ms)
-  tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (792ms)
-  tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) failed with 1 error(s) [✓40/x1/↓0] (493ms)
-  tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (564ms)
+  tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (854ms)
+  tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (768ms)
+  tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (587ms)
+  tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) failed with 1 error(s) [✓40/x1/↓0] (727ms)
 
   total: 120
   failed: 1
   succeeded: 119
   skipped: 0
-  duration: 1s 107ms
+  duration: 1s 080ms
 Test run completed with non-success exit code: 2. At least one test failed. See: https://aka.ms/testingplatform/exitcodes
 
-real	0m2.379s
-user	0m6.527s
-sys	0m0.952s
+real	0m2.247s
+user	0m6.299s
+sys	0m0.900s
 Restore complete (0.1s)
 
 Build succeeded in 0.2s
@@ -9082,9 +9954,9 @@ Project 'Weather.Web.Tests' has the following package references
 
 (A) : Auto-referenced package.
 
-real	0m1.451s
-user	0m1.051s
-sys	0m0.332s
+real	0m1.436s
+user	0m1.015s
+sys	0m0.316s
 Restore complete (0.1s)
 
 Build succeeded in 0.2s
@@ -9103,43 +9975,20 @@ The given project `Weather.Core.Tests` has no updates given the current sources.
 The given project `Weather.Infrastructure.Tests` has no updates given the current sources.
 The given project `Weather.Web.Tests` has no updates given the current sources.
 
-real	0m2.349s
-user	0m2.118s
-sys	0m0.334s
-kushal@fedora:~/src/dotnet/MyWeatherStudio$ cd ~/src/dotnet/MyWeatherStudio/src/Weather.AppHost && aspire run
-bash: aspire: command not found...
-kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ time dotnet tool install -g Aspire.Cli
-Tools directory '/home/kushal/.dotnet/tools' is not currently on the PATH environment variable.
-If you are using bash, you can add it to your profile by running the following command:
+real	0m2.060s
+user	0m1.717s
+sys	0m0.305s
 
-cat << \EOF >> ~/.bash_profile
-# Add .NET Core SDK tools
-export PATH="$PATH:/home/kushal/.dotnet/tools"
-EOF
+Usage: dotnet [path-to-application]
+Usage: dotnet [commands]
 
-You can add it to the current session by running the following command:
+path-to-application:
+  The path to an application .dll file to execute.
 
-export PATH="$PATH:/home/kushal/.dotnet/tools"
+commands:
+  -h|--help                         Display help.
+  --info                            Display .NET information.
+  --list-runtimes [--arch <arch>]   Display the installed runtimes matching the host or specified architecture. Example architectures: arm64, x64, x86.
+  --list-sdks [--arch <arch>]       Display the installed SDKs matching the host or specified architecture. Example architectures: arm64, x64, x86.
+kushal@fedora:~/src/dotnet/MyWeatherStudio$ 
 
-You can invoke the tool using the following command: aspire
-Tool 'aspire.cli' (version '17.0.0') was successfully installed.
-
-real	0m7.419s
-user	0m4.105s
-sys	0m1.029s
-kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ export PATH="$PATH:/home/kushal/.dotnet/tools"
-kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ cd ~/src/dotnet/MyWeatherStudio/src/Weather.AppHost && aspire run
-Weather.AppHost.csproj
-💾 Created settings file at 'aspire.config.json'.
-🚨 Developer certificates may not be fully trusted (trust exit code was: PartiallyFailedToTrustTheCertificate).
-
-     AppHost:  Weather.AppHost.csproj                                            
-                                                                                 
-   Dashboard:  http://localhost:15080/login?t=119d7b22552cdd578518fe618b5ae7eb   
-                                                                                 
-        Logs:  /home/kushal/.aspire/logs/cli_20261122T164050_1c6ca780.log        
-                                                            
-               Press CTRL+C to stop the AppHost and exit.   
-^C
-🛑 Stopping Aspire.
-kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ 
