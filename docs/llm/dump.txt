@@ -7,17 +7,17 @@
 
 DUMP METADATA
 ═════════════════════════════════════════════════════════════════════════════════
-  Generated at   : 2026-11-22T11:44:20-05:00
+  Generated at   : 2026-11-22T12:04:47-05:00
   Generator      : export.sh
 
 REPOSITORY METADATA
 ═════════════════════════════════════════════════════════════════════════════════
   Repository root: /home/kushal/src/dotnet/MyWeatherStudio
   Branch         : main
-  Commit (full)  : e5bcec8cbe2726e3251c2ea818414f8d82e9be3e
-  Commit (short) : e5bcec8
-  Commit date    : 2026-11-22 11:44:08 -0500
-  Commit message : run scripts
+  Commit (full)  : 662051c099e2ed55fdeb2c74daa813df0fb3a62d
+  Commit (short) : 662051c
+  Commit date    : 2026-11-22 12:03:44 -0500
+  Commit message : add claude response
   Remote origin  : none
   Files included : 130
   Withheld paths : docs/llm/, docs/progress/
@@ -34,7 +34,7 @@ NOT EVERYTHING TRACKED IS BELOW
 
 GIT WORKING TREE STATUS (first 20 lines)
 ═════════════════════════════════════════════════════════════════════════════════
- M docs/llm/vendor/claude/prompts/output.txt
+?? docs/llm/vendor/claude/output.txt
 
 ################################################################################
 # FILE: export.sh  [THIS SCRIPT — included for full context]
@@ -6980,8 +6980,8 @@ public sealed class GridPointTests
 
 --- METADATA ---
   Relative path:         tests/Weather.Core.Tests/GeoCoordinateTests.cs
-  Size:                  3.7 KiB (3822 bytes)
-  SHA-256:               d171a8b9212a34a8acccab8ada9681e4a3f1619d59b76313054468e1d3ecb235
+  Size:                  3.9 KiB (3957 bytes)
+  SHA-256:               b0786fff64bd6c4d730c5b390ca72c3712e192e2e607b4fac29e9e96d95167c9
 
 --- CONTENT ---
 using System.Globalization;
@@ -7088,11 +7088,14 @@ public sealed class GeoCoordinateTests
     [Test]
     public void ToApiString_is_culture_independent()
     {
-        // Guard against a comma decimal separator leaking in under a non-US culture.
+        var commaDecimalCulture = (CultureInfo)CultureInfo.InvariantCulture.Clone();
+        commaDecimalCulture.NumberFormat.NumberDecimalSeparator = ",";
+        commaDecimalCulture.NumberFormat.NumberGroupSeparator = ".";
+
         var original = CultureInfo.CurrentCulture;
         try
         {
-            CultureInfo.CurrentCulture = new CultureInfo("de-DE");
+            CultureInfo.CurrentCulture = commaDecimalCulture;
             new GeoCoordinate(37.0879, -76.4505).ToApiString().ShouldBe("37.0879,-76.4505");
         }
         finally
@@ -8894,9 +8897,9 @@ public sealed class SkyPaletteTests
 # DUMP SUMMARY
 ################################################################################
   Files dumped   : 130
-  Total size     : 236.0 KiB (241639 bytes)
+  Total size     : 236.1 KiB (241774 bytes)
   Output file    : /home/kushal/src/dotnet/MyWeatherStudio/docs/llm/dump.txt
-  Completed at   : 2026-11-22T11:44:22-05:00
+  Completed at   : 2026-11-22T12:04:49-05:00
 ################################################################################
 # END OF DUMP
 ################################################################################
