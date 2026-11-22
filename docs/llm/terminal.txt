@@ -225,4 +225,216 @@ kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ cd ~/src/dotnet/
                Press CTRL+C to stop the AppHost and exit.   
 ^C
 🛑 Stopping Aspire.
-kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ 
+kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ cd /home/kushal/src/dotnet/MyWeatherStudio; git status; git remote show; time bash export.sh > docs/llm/vendor/claude/output.txt; cd weather; time dotnet --info; time dotnet clean; time dotnet restore; time dotnet build; time dotnet test; time dotnet list package; time dotnet list package --outdated;
+On branch main
+nothing to commit, working tree clean
+
+real	0m1.740s
+user	0m0.890s
+sys	0m1.116s
+bash: cd: weather: No such file or directory
+.NET SDK:
+ Version:           11.0.100-rc.3.26522.148
+ Commit:            5254d8bcf5
+ Workload version:  11.0.100-manifests.2c46f3cc
+ MSBuild version:   18.12.0-1.26522.148+5254d8bcf
+
+Runtime Environment:
+ OS Name:     fedora
+ OS Version:  45
+ OS Platform: Linux
+ RID:         fedora.45-x64
+ Base Path:   /usr/lib64/dotnet/sdk/11.0.100-rc.3.26522.148
+
+.NET workloads installed:
+There are no installed workloads to display.
+Configured to use workload sets when installing new manifests.
+No workload sets are installed. Run "dotnet workload restore" to install a workload set.
+
+Host:
+  Version:      11.0.0-rc.3.26522.148
+  Architecture: x64
+  Commit:       5254d8bcf5
+
+.NET SDKs installed:
+  10.0.113 [/usr/lib64/dotnet/sdk]
+  11.0.100-rc.3.26522.148 [/usr/lib64/dotnet/sdk]
+
+.NET runtimes installed:
+  Microsoft.AspNetCore.App 10.0.13 [/usr/lib64/dotnet/shared/Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 11.0.0-rc.3.26522.148 [/usr/lib64/dotnet/shared/Microsoft.AspNetCore.App]
+  Microsoft.NETCore.App 10.0.13 [/usr/lib64/dotnet/shared/Microsoft.NETCore.App]
+  Microsoft.NETCore.App 11.0.0-rc.3.26522.148 [/usr/lib64/dotnet/shared/Microsoft.NETCore.App]
+
+Other architectures found:
+  None
+
+Environment variables:
+  Not set
+
+global.json file:
+  /home/kushal/src/dotnet/MyWeatherStudio/global.json
+
+Learn more:
+  https://aka.ms/dotnet/info
+
+Download .NET:
+  https://aka.ms/dotnet/download
+
+real	0m0.047s
+user	0m0.007s
+sys	0m0.020s
+    info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
+
+Build succeeded in 0.9s
+
+real	0m1.111s
+user	0m0.140s
+sys	0m0.050s
+Restore complete (0.5s)
+
+Build succeeded in 0.5s
+
+real	0m0.674s
+user	0m0.111s
+sys	0m0.037s
+Restore complete (0.2s)
+    info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
+  Weather.Core net11.0 succeeded (2.1s) → src/Weather.Core/bin/Debug/net11.0/Weather.Core.dll
+  Weather.ServiceDefaults net11.0 succeeded (2.2s) → src/Weather.ServiceDefaults/bin/Debug/net11.0/Weather.ServiceDefaults.dll
+  Weather.AppHost net11.0 succeeded (2.2s) → src/Weather.AppHost/bin/Debug/net11.0/Weather.AppHost.dll
+  Weather.Core.Tests net11.0 succeeded (1.2s) → tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll
+  Weather.Infrastructure net11.0 succeeded (1.3s) → src/Weather.Infrastructure/bin/Debug/net11.0/Weather.Infrastructure.dll
+  Weather.Infrastructure.Tests net11.0 succeeded (0.8s) → tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll
+  Weather.Web net11.0 succeeded (2.4s) → src/Weather.Web/bin/Debug/net11.0/Weather.Web.dll
+  Weather.Api net11.0 succeeded (1.2s) → src/Weather.Api/bin/Debug/net11.0/Weather.Api.dll
+  Weather.Web.Tests net11.0 succeeded (0.6s) → tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll
+  Weather.Api.Tests net11.0 succeeded (0.7s) → tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll
+
+Build succeeded in 5.5s
+
+real	0m5.648s
+user	0m0.492s
+sys	0m0.061s
+Running tests from tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64)
+Running tests from tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64)
+Running tests from tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64)
+Running tests from tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64)
+tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) passed [✓41/x0/↓0] (640ms)
+tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (860ms)
+tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (1s 182ms)
+tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (1s 305ms)
+
+  In process file artifacts produced:
+    - TestResults/Weather.Core.Tests-linux-net11.0-report.html
+    - TestResults/Weather.Infrastructure.Tests-linux-net11.0-report.html
+    - TestResults/Weather.Web.Tests-linux-net11.0-report.html
+    - TestResults/Weather.Api.Tests-linux-net11.0-report.html
+
+Test run summary: Passed!
+  tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (1s 305ms)
+  tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (1s 182ms)
+  tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (860ms)
+  tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) passed [✓41/x0/↓0] (640ms)
+
+  total: 120
+  failed: 0
+  succeeded: 120
+  skipped: 0
+  duration: 1s 785ms
+
+real	0m3.385s
+user	0m8.150s
+sys	0m1.037s
+Restore complete (0.2s)
+
+Build succeeded in 0.2s
+Project 'Weather.Api' has the following package references
+   [net11.0]: 
+   Top-level Package                   Requested   Resolved
+   > Microsoft.AspNetCore.OpenApi      11.0.0      11.0.0  
+
+Project 'Weather.AppHost' has the following package references
+   [net11.0]: 
+   Top-level Package             Requested   Resolved
+   > Aspire.Hosting.AppHost      17.0.0      17.0.0  
+   > Aspire.Hosting.Dotnet       17.0.0      17.0.0  
+
+Project 'Weather.Core' has the following package references
+   [net11.0]: No packages were found for this framework.
+Project 'Weather.Infrastructure' has the following package references
+   [net11.0]: 
+   Top-level Package                           Requested   Resolved
+   > Dapper                                    2.1.100     2.1.100 
+   > Microsoft.Data.Sqlite                     11.0.0      11.0.0  
+   > Microsoft.Extensions.Http.Resilience      11.0.1      11.0.1  
+
+Project 'Weather.ServiceDefaults' has the following package references
+   [net11.0]: 
+   Top-level Package                                   Requested   Resolved
+   > Microsoft.Extensions.ServiceDiscovery             11.0.1      11.0.1  
+   > OpenTelemetry.Exporter.OpenTelemetryProtocol      1.21.0      1.21.0  
+   > OpenTelemetry.Extensions.Hosting                  1.21.0      1.21.0  
+   > OpenTelemetry.Instrumentation.AspNetCore          1.21.0      1.21.0  
+   > OpenTelemetry.Instrumentation.Http                1.21.0      1.21.0  
+
+Project 'Weather.Web' has the following package references
+   [net11.0]: 
+   Top-level Package                                  Requested                   Resolved             
+   > Microsoft.AspNetCore.App.Internal.Assets   (A)   [11.0.0-rc.3.26522.148, )   11.0.0-rc.3.26522.148
+   > Microsoft.Extensions.Http.Resilience             11.0.1                      11.0.1               
+
+Project 'Weather.Api.Tests' has the following package references
+   [net11.0]: 
+   Top-level Package                       Requested   Resolved
+   > Microsoft.AspNetCore.Mvc.Testing      11.0.0      11.0.0  
+   > Shouldly                              4.3.0       4.3.0   
+   > TUnit                                 1.87.12     1.87.12 
+
+Project 'Weather.Core.Tests' has the following package references
+   [net11.0]: 
+   Top-level Package      Requested   Resolved
+   > Shouldly             4.3.0       4.3.0   
+   > TUnit                1.87.12     1.87.12 
+
+Project 'Weather.Infrastructure.Tests' has the following package references
+   [net11.0]: 
+   Top-level Package      Requested   Resolved
+   > NSubstitute          6.2.0       6.2.0   
+   > Shouldly             4.3.0       4.3.0   
+   > TUnit                1.87.12     1.87.12 
+
+Project 'Weather.Web.Tests' has the following package references
+   [net11.0]: 
+   Top-level Package      Requested   Resolved
+   > bunit                2.15.2      2.15.2  
+   > Shouldly             4.3.0       4.3.0   
+   > TUnit                1.87.12     1.87.12 
+
+(A) : Auto-referenced package.
+
+real	0m1.748s
+user	0m1.283s
+sys	0m0.345s
+Restore complete (0.2s)
+
+Build succeeded in 0.2s
+
+The following sources were used:
+   https://api.nuget.org/v3/index.json
+
+The given project `Weather.Api` has no updates given the current sources.
+The given project `Weather.AppHost` has no updates given the current sources.
+The given project `Weather.Core` has no updates given the current sources.
+The given project `Weather.Infrastructure` has no updates given the current sources.
+The given project `Weather.ServiceDefaults` has no updates given the current sources.
+The given project `Weather.Web` has no updates given the current sources.
+The given project `Weather.Api.Tests` has no updates given the current sources.
+The given project `Weather.Core.Tests` has no updates given the current sources.
+The given project `Weather.Infrastructure.Tests` has no updates given the current sources.
+The given project `Weather.Web.Tests` has no updates given the current sources.
+
+real	0m4.806s
+user	0m2.943s
+sys	0m0.408s
+kushal@fedora:~/src/dotnet/MyWeatherStudio$ 
