@@ -210,4 +210,19 @@ The given project `Weather.Web.Tests` has no updates given the current sources.
 real	0m4.969s
 user	0m3.467s
 sys	0m0.390s
-kushal@fedora:~/src/dotnet/MyWeatherStudio$ 
+kushal@fedora:~/src/dotnet/MyWeatherStudio$ cd ~/src/dotnet/MyWeatherStudio/src/Weather.AppHost && aspire run
+bash: aspire: command not found...
+kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ export PATH="$PATH:/home/kushal/.dotnet/tools"
+kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ cd ~/src/dotnet/MyWeatherStudio/src/Weather.AppHost && aspire run
+🚨 Developer certificates may not be fully trusted (trust exit code was: PartiallyFailedToTrustTheCertificate).
+
+     AppHost:  Weather.AppHost.csproj                                            
+                                                                                 
+   Dashboard:  http://localhost:15080/login?t=6069be3e56f0926fcc1f052e858ec792   
+                                                                                 
+        Logs:  /home/kushal/.aspire/logs/cli_20261122T170552_cf91e5e6.log        
+                                                            
+               Press CTRL+C to stop the AppHost and exit.   
+^C
+🛑 Stopping Aspire.
+kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ 
