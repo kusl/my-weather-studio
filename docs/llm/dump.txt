@@ -7,19 +7,19 @@
 
 DUMP METADATA
 ═════════════════════════════════════════════════════════════════════════════════
-  Generated at   : 2026-11-22T10:42:47-05:00
+  Generated at   : 2026-11-22T11:03:23-05:00
   Generator      : export.sh
 
 REPOSITORY METADATA
 ═════════════════════════════════════════════════════════════════════════════════
   Repository root: /home/kushal/src/dotnet/MyWeatherStudio
   Branch         : main
-  Commit (full)  : 9c215ce2ace3790091c9f1e47a6d16e2ca9f3316
-  Commit (short) : 9c215ce
-  Commit date    : 2026-11-22 10:42:44 -0500
-  Commit message : run scripts
+  Commit (full)  : ede74c71c6d0454e0640e7714b1a3a8d98622fc7
+  Commit (short) : ede74c7
+  Commit date    : 2026-11-22 11:03:15 -0500
+  Commit message : use agpl v3
   Remote origin  : none
-  Files included : 119
+  Files included : 117
   Withheld paths : docs/llm/, docs/progress/
   Excluded files : export.sh
   Elided files   : LICENSE (metadata and SHA-256 only)
@@ -431,166 +431,616 @@ trap - EXIT
 cat "$OUTPUT_FILE"
 
 ################################################################################
-# FILE TREE  (119 included files)
+# FILE TREE  (117 included files)
 ################################################################################
 .
+├── .editorconfig
+├── .gitattributes
+├── .github
+│   ├── dependabot.yml
+│   └── workflows
+│       ├── build.yml
+│       ├── codeql.yml
+│       ├── dependency-review.yml
+│       ├── format.yml
+│       ├── markdown-lint.yml
+│       └── test.yml
+├── .gitignore
+├── .markdownlint.jsonc
 ├── ARCHITECTURE.md
+├── Directory.Build.props
+├── Directory.Packages.props
 ├── README.md
-└── weather
-    ├── .editorconfig
-    ├── .gitattributes
-    ├── .github
-    │   ├── dependabot.yml
-    │   └── workflows
-    │       ├── build.yml
-    │       ├── codeql.yml
-    │       ├── dependency-review.yml
-    │       ├── format.yml
-    │       ├── markdown-lint.yml
-    │       └── test.yml
-    ├── .gitignore
-    ├── .markdownlint.jsonc
-    ├── Directory.Build.props
-    ├── Directory.Packages.props
-    ├── LICENSE
-    ├── README.md
-    ├── docs
-    │   └── ARCHITECTURE.md
-    ├── global.json
-    ├── nuget.config
-    ├── src
-    │   ├── Weather.Api
-    │   │   ├── Contracts
-    │   │   │   ├── ForecastResponse.cs
-    │   │   │   └── NeighborhoodResponse.cs
-    │   │   ├── Endpoints
-    │   │   │   └── WeatherEndpoints.cs
-    │   │   ├── Program.cs
-    │   │   ├── README.md
-    │   │   ├── Weather.Api.csproj
-    │   │   ├── appsettings.Development.json
-    │   │   └── appsettings.json
-    │   ├── Weather.AppHost
-    │   │   ├── Program.cs
-    │   │   ├── README.md
-    │   │   ├── Weather.AppHost.csproj
-    │   │   └── appsettings.json
-    │   ├── Weather.Core
-    │   │   ├── Abstractions
-    │   │   │   ├── IForecastCache.cs
-    │   │   │   ├── INeighborhoodWarmer.cs
-    │   │   │   ├── INwsApiClient.cs
-    │   │   │   ├── IPointMetadataCache.cs
-    │   │   │   └── IWeatherService.cs
-    │   │   ├── Models
-    │   │   │   ├── CachedForecast.cs
-    │   │   │   ├── CachedPointMetadata.cs
-    │   │   │   ├── Forecast.cs
-    │   │   │   ├── ForecastFetchResult.cs
-    │   │   │   ├── ForecastPeriod.cs
-    │   │   │   ├── GeoCoordinate.cs
-    │   │   │   ├── GridNeighborhood.cs
-    │   │   │   ├── GridPoint.cs
-    │   │   │   ├── NeighborhoodForecast.cs
-    │   │   │   └── PointMetadata.cs
-    │   │   ├── README.md
-    │   │   ├── Telemetry
-    │   │   │   └── WeatherTelemetry.cs
-    │   │   └── Weather.Core.csproj
-    │   ├── Weather.Infrastructure
-    │   │   ├── Caching
-    │   │   │   ├── DatabaseInitializer.cs
-    │   │   │   ├── SqliteCacheOptions.cs
-    │   │   │   ├── SqliteConnectionFactory.cs
-    │   │   │   ├── SqliteForecastCache.cs
-    │   │   │   ├── SqlitePointMetadataCache.cs
-    │   │   │   └── TimestampText.cs
-    │   │   ├── DependencyInjection.cs
-    │   │   ├── Nws
-    │   │   │   ├── NwsApiClient.cs
-    │   │   │   ├── NwsClientOptions.cs
-    │   │   │   └── NwsJsonModels.cs
-    │   │   ├── README.md
-    │   │   ├── Serialization
-    │   │   │   └── WeatherJson.cs
-    │   │   ├── Services
-    │   │   │   ├── NeighborhoodWarmer.cs
-    │   │   │   ├── NeighborhoodWarmingBackgroundService.cs
-    │   │   │   └── WeatherService.cs
-    │   │   └── Weather.Infrastructure.csproj
-    │   ├── Weather.ServiceDefaults
-    │   │   ├── Extensions.cs
-    │   │   ├── README.md
-    │   │   └── Weather.ServiceDefaults.csproj
-    │   └── Weather.Web
-    │       ├── Components
-    │       │   ├── App.razor
-    │       │   ├── Layout
-    │       │   │   ├── MainLayout.razor
-    │       │   │   └── NavMenu.razor
-    │       │   ├── Pages
-    │       │   │   ├── About.razor
-    │       │   │   ├── Error.razor
-    │       │   │   └── Home.razor
-    │       │   ├── Routes.razor
-    │       │   └── _Imports.razor
-    │       ├── Program.cs
-    │       ├── README.md
-    │       ├── Services
-    │       │   ├── GeolocationService.cs
-    │       │   ├── IGeolocationService.cs
-    │       │   ├── IWeatherApiClient.cs
-    │       │   ├── SkyPalette.cs
-    │       │   ├── WeatherApiClient.cs
-    │       │   └── WeatherViewModels.cs
-    │       ├── Weather.Web.csproj
-    │       ├── appsettings.Development.json
-    │       ├── appsettings.json
-    │       └── wwwroot
-    │           ├── app.css
-    │           └── js
-    │               └── geolocation.js
-    ├── tests
-    │   ├── Weather.Api.Tests
-    │   │   ├── Fakes
-    │   │   │   └── FakeNwsApiClient.cs
-    │   │   ├── ForecastEndpointsTests.cs
-    │   │   ├── GlobalUsings.cs
-    │   │   ├── Weather.Api.Tests.csproj
-    │   │   └── WeatherApiFactory.cs
-    │   ├── Weather.Core.Tests
-    │   │   ├── ForecastFetchResultTests.cs
-    │   │   ├── GeoCoordinateTests.cs
-    │   │   ├── GlobalUsings.cs
-    │   │   ├── GridNeighborhoodTests.cs
-    │   │   ├── Weather.Core.Tests.csproj
-    │   │   └── WeatherTelemetryTests.cs
-    │   ├── Weather.Infrastructure.Tests
-    │   │   ├── Caching
-    │   │   │   ├── SqliteCacheHarness.cs
-    │   │   │   ├── SqliteForecastCacheTests.cs
-    │   │   │   └── SqlitePointMetadataCacheTests.cs
-    │   │   ├── Fakes
-    │   │   │   ├── MutableTimeProvider.cs
-    │   │   │   ├── NwsPayloads.cs
-    │   │   │   └── StubHttpMessageHandler.cs
-    │   │   ├── GlobalUsings.cs
-    │   │   ├── Nws
-    │   │   │   └── NwsApiClientTests.cs
-    │   │   ├── Services
-    │   │   │   ├── NeighborhoodWarmerTests.cs
-    │   │   │   └── WeatherServiceTests.cs
-    │   │   └── Weather.Infrastructure.Tests.csproj
-    │   └── Weather.Web.Tests
-    │       ├── Fakes
-    │       │   ├── FakeGeolocationService.cs
-    │       │   └── FakeWeatherApiClient.cs
-    │       ├── GlobalUsings.cs
-    │       ├── HomePageTests.cs
-    │       ├── SkyPaletteTests.cs
-    │       └── Weather.Web.Tests.csproj
-    └── weather.slnx
+├── docs
+│   └── ARCHITECTURE.md
+├── global.json
+├── nuget.config
+├── src
+│   ├── Weather.Api
+│   │   ├── Contracts
+│   │   │   ├── ForecastResponse.cs
+│   │   │   └── NeighborhoodResponse.cs
+│   │   ├── Endpoints
+│   │   │   └── WeatherEndpoints.cs
+│   │   ├── Program.cs
+│   │   ├── README.md
+│   │   ├── Weather.Api.csproj
+│   │   ├── appsettings.Development.json
+│   │   └── appsettings.json
+│   ├── Weather.AppHost
+│   │   ├── Program.cs
+│   │   ├── README.md
+│   │   ├── Weather.AppHost.csproj
+│   │   └── appsettings.json
+│   ├── Weather.Core
+│   │   ├── Abstractions
+│   │   │   ├── IForecastCache.cs
+│   │   │   ├── INeighborhoodWarmer.cs
+│   │   │   ├── INwsApiClient.cs
+│   │   │   ├── IPointMetadataCache.cs
+│   │   │   └── IWeatherService.cs
+│   │   ├── Models
+│   │   │   ├── CachedForecast.cs
+│   │   │   ├── CachedPointMetadata.cs
+│   │   │   ├── Forecast.cs
+│   │   │   ├── ForecastFetchResult.cs
+│   │   │   ├── ForecastPeriod.cs
+│   │   │   ├── GeoCoordinate.cs
+│   │   │   ├── GridNeighborhood.cs
+│   │   │   ├── GridPoint.cs
+│   │   │   ├── NeighborhoodForecast.cs
+│   │   │   └── PointMetadata.cs
+│   │   ├── README.md
+│   │   ├── Telemetry
+│   │   │   └── WeatherTelemetry.cs
+│   │   └── Weather.Core.csproj
+│   ├── Weather.Infrastructure
+│   │   ├── Caching
+│   │   │   ├── DatabaseInitializer.cs
+│   │   │   ├── SqliteCacheOptions.cs
+│   │   │   ├── SqliteConnectionFactory.cs
+│   │   │   ├── SqliteForecastCache.cs
+│   │   │   ├── SqlitePointMetadataCache.cs
+│   │   │   └── TimestampText.cs
+│   │   ├── DependencyInjection.cs
+│   │   ├── Nws
+│   │   │   ├── NwsApiClient.cs
+│   │   │   ├── NwsClientOptions.cs
+│   │   │   └── NwsJsonModels.cs
+│   │   ├── README.md
+│   │   ├── Serialization
+│   │   │   └── WeatherJson.cs
+│   │   ├── Services
+│   │   │   ├── NeighborhoodWarmer.cs
+│   │   │   ├── NeighborhoodWarmingBackgroundService.cs
+│   │   │   └── WeatherService.cs
+│   │   └── Weather.Infrastructure.csproj
+│   ├── Weather.ServiceDefaults
+│   │   ├── Extensions.cs
+│   │   ├── README.md
+│   │   └── Weather.ServiceDefaults.csproj
+│   └── Weather.Web
+│       ├── Components
+│       │   ├── App.razor
+│       │   ├── Layout
+│       │   │   ├── MainLayout.razor
+│       │   │   └── NavMenu.razor
+│       │   ├── Pages
+│       │   │   ├── About.razor
+│       │   │   ├── Error.razor
+│       │   │   └── Home.razor
+│       │   ├── Routes.razor
+│       │   └── _Imports.razor
+│       ├── Program.cs
+│       ├── README.md
+│       ├── Services
+│       │   ├── GeolocationService.cs
+│       │   ├── IGeolocationService.cs
+│       │   ├── IWeatherApiClient.cs
+│       │   ├── SkyPalette.cs
+│       │   ├── WeatherApiClient.cs
+│       │   └── WeatherViewModels.cs
+│       ├── Weather.Web.csproj
+│       ├── appsettings.Development.json
+│       ├── appsettings.json
+│       └── wwwroot
+│           ├── app.css
+│           └── js
+│               └── geolocation.js
+├── tests
+│   ├── Weather.Api.Tests
+│   │   ├── Fakes
+│   │   │   └── FakeNwsApiClient.cs
+│   │   ├── ForecastEndpointsTests.cs
+│   │   ├── GlobalUsings.cs
+│   │   ├── Weather.Api.Tests.csproj
+│   │   └── WeatherApiFactory.cs
+│   ├── Weather.Core.Tests
+│   │   ├── ForecastFetchResultTests.cs
+│   │   ├── GeoCoordinateTests.cs
+│   │   ├── GlobalUsings.cs
+│   │   ├── GridNeighborhoodTests.cs
+│   │   ├── Weather.Core.Tests.csproj
+│   │   └── WeatherTelemetryTests.cs
+│   ├── Weather.Infrastructure.Tests
+│   │   ├── Caching
+│   │   │   ├── SqliteCacheHarness.cs
+│   │   │   ├── SqliteForecastCacheTests.cs
+│   │   │   └── SqlitePointMetadataCacheTests.cs
+│   │   ├── Fakes
+│   │   │   ├── MutableTimeProvider.cs
+│   │   │   ├── NwsPayloads.cs
+│   │   │   └── StubHttpMessageHandler.cs
+│   │   ├── GlobalUsings.cs
+│   │   ├── Nws
+│   │   │   └── NwsApiClientTests.cs
+│   │   ├── Services
+│   │   │   ├── NeighborhoodWarmerTests.cs
+│   │   │   └── WeatherServiceTests.cs
+│   │   └── Weather.Infrastructure.Tests.csproj
+│   └── Weather.Web.Tests
+│       ├── Fakes
+│       │   ├── FakeGeolocationService.cs
+│       │   └── FakeWeatherApiClient.cs
+│       ├── GlobalUsings.cs
+│       ├── HomePageTests.cs
+│       ├── SkyPaletteTests.cs
+│       └── Weather.Web.Tests.csproj
+└── weather.slnx
 
+
+################################################################################
+# FILE: .editorconfig
+################################################################################
+
+--- METADATA ---
+  Relative path:         .editorconfig
+  Size:                  2.1 KiB (2141 bytes)
+  SHA-256:               eb6a7e115908c683655994ee88fcbaf19ab6ff6b5f733f4f6a9b0fcb9376ec06
+
+--- CONTENT ---
+# EditorConfig — https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{json,yml,yaml,csproj,props,targets,slnx,razor,html,css,js}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.cs]
+indent_size = 4
+# Prefer file-scoped namespaces (C# 10+)
+csharp_style_namespace_declarations = file_scoped:warning
+# 'var' usage
+csharp_style_var_for_built_in_types = true:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = true:silent
+# Expression-bodied members
+csharp_style_expression_bodied_methods = when_on_single_line:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+# Modern language features
+csharp_style_prefer_primary_constructors = true:suggestion
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_style_prefer_top_level_statements = true:suggestion
+csharp_style_prefer_pattern_matching = true:suggestion
+# this. preferences
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_property = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_event = false:warning
+# Namespace + using
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false
+# Naming: async methods end in Async
+dotnet_naming_rule.async_methods_end_in_async.severity = suggestion
+dotnet_naming_rule.async_methods_end_in_async.symbols = any_async_methods
+dotnet_naming_rule.async_methods_end_in_async.style = end_in_async
+dotnet_naming_symbols.any_async_methods.applicable_kinds = method
+dotnet_naming_symbols.any_async_methods.required_modifiers = async
+dotnet_naming_style.end_in_async.required_suffix = Async
+dotnet_naming_style.end_in_async.capitalization = pascal_case
+# Treat a couple of noisy analyzer rules as suggestions in a learning sandbox
+dotnet_diagnostic.CA1848.severity = none   # use LoggerMessage delegates (we use source-gen where it matters)
+dotnet_diagnostic.CA2007.severity = none   # ConfigureAwait — not needed in ASP.NET Core
+
+################################################################################
+# FILE: .gitattributes
+################################################################################
+
+--- METADATA ---
+  Relative path:         .gitattributes
+  Size:                  270 B (270 bytes)
+  SHA-256:               5a9ed64325b9724d68718eb93d8dbf34ffc1f95d57fe15bc9eec05c98f67956a
+
+--- CONTENT ---
+* text=auto eol=lf
+*.sln    text eol=crlf
+*.slnx   text eol=lf
+*.csproj text eol=lf
+*.cs     text eol=lf diff=csharp
+*.razor  text eol=lf
+*.props  text eol=lf
+*.targets text eol=lf
+*.json   text eol=lf
+*.yml    text eol=lf
+*.md     text eol=lf
+*.png binary
+*.db  binary
+
+################################################################################
+# FILE: .github/dependabot.yml
+################################################################################
+
+--- METADATA ---
+  Relative path:         .github/dependabot.yml
+  Size:                  757 B (757 bytes)
+  SHA-256:               9e3c7f118454b01438723f30399b6b9dce10ba55059ae854e9dfc78c448cec12
+
+--- CONTENT ---
+version: 2
+
+# Keeps the centrally-managed package versions (Directory.Packages.props) and
+# the GitHub Actions used in CI current. The version baseline in the repo is a
+# snapshot; these PRs are how it stays fresh.
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    groups:
+      # One PR per week for routine bumps keeps the noise down; majors still
+      # come through on their own so they get a proper look.
+      dotnet-dependencies:
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+
+################################################################################
+# FILE: .github/workflows/build.yml
+################################################################################
+
+--- METADATA ---
+  Relative path:         .github/workflows/build.yml
+  Size:                  770 B (770 bytes)
+  SHA-256:               73d7134e7d90358cea4808517af7674ea11d7570507dec0b122f4ca4ed88c331
+
+--- CONTENT ---
+name: build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Least privilege: this workflow only needs to read the repo.
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (Release)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out
+        uses: actions/checkout@v6
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          # Installs the SDK pinned in global.json (10.0.x feature band).
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore weather.slnx
+
+      - name: Build
+        run: dotnet build weather.slnx --configuration Release --no-restore
+
+################################################################################
+# FILE: .github/workflows/codeql.yml
+################################################################################
+
+--- METADATA ---
+  Relative path:         .github/workflows/codeql.yml
+  Size:                  985 B (985 bytes)
+  SHA-256:               834bc2df55027b276f096c1c0f3ae17b7c4182eb11361a89334cd6747301655e
+
+--- CONTENT ---
+name: codeql
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Weekly scan so newly-published advisories are caught even without a push.
+    - cron: '23 4 * * 1'
+
+permissions:
+  contents: read
+  security-events: write
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze (C#)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out
+        uses: actions/checkout@v6
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: csharp
+          build-mode: manual
+
+      - name: Build
+        run: dotnet build weather.slnx --configuration Release
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:csharp"
+
+################################################################################
+# FILE: .github/workflows/dependency-review.yml
+################################################################################
+
+--- METADATA ---
+  Relative path:         .github/workflows/dependency-review.yml
+  Size:                  525 B (525 bytes)
+  SHA-256:               8cc148ea0bbda4154ef4ba972ac69bf370de9cff8f8771ea7b99e9e94ed8015f
+
+--- CONTENT ---
+name: dependency-review
+
+on:
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    name: Dependency review
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out
+        uses: actions/checkout@v6
+
+      # Flags dependency changes in a PR that introduce known-vulnerable
+      # packages or disallowed licences before they land.
+      - name: Dependency review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+
+################################################################################
+# FILE: .github/workflows/format.yml
+################################################################################
+
+--- METADATA ---
+  Relative path:         .github/workflows/format.yml
+  Size:                  566 B (566 bytes)
+  SHA-256:               5b69a8e703e5b66a20833a108215fbf91aa3266297223e8ba7c96108a3bb2402
+
+--- CONTENT ---
+name: format
+
+on:
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  format:
+    name: dotnet format (verify)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out
+        uses: actions/checkout@v6
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+
+      # Fails the build if any file isn't formatted to the .editorconfig rules.
+      - name: Verify formatting
+        run: dotnet format weather.slnx --verify-no-changes --severity info
+
+################################################################################
+# FILE: .github/workflows/markdown-lint.yml
+################################################################################
+
+--- METADATA ---
+  Relative path:         .github/workflows/markdown-lint.yml
+  Size:                  646 B (646 bytes)
+  SHA-256:               1f7cffd27cd6ff2293efcd200ada473f4ba184e2131f65bc47baaa5b7f71df97
+
+--- CONTENT ---
+name: markdown-lint
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**/*.md'
+      - '.markdownlint.jsonc'
+      - '.github/workflows/markdown-lint.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  markdownlint:
+    name: Lint Markdown
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      # markdownlint-cli2 reads .markdownlint.jsonc at the repo root.
+      - name: Lint Markdown
+        run: npx --yes markdownlint-cli2 "**/*.md" "#**/bin" "#**/obj"
+
+################################################################################
+# FILE: .github/workflows/test.yml
+################################################################################
+
+--- METADATA ---
+  Relative path:         .github/workflows/test.yml
+  Size:                  799 B (799 bytes)
+  SHA-256:               2d498add13b7cae99ae1d9e8f73410461fdba7eee14fb9eae56e52b03806cd87
+
+--- CONTENT ---
+name: test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out
+        uses: actions/checkout@v6
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+
+      # TUnit runs on Microsoft.Testing.Platform; `dotnet test` drives it via
+      # the TestingPlatformDotnetTestSupport flag set in each test .csproj. We
+      # let `dotnet test` build the test projects so the runner and build stay
+      # in lock-step.
+      - name: Test
+        run: dotnet test weather.slnx --configuration Release
+
+################################################################################
+# FILE: .gitignore
+################################################################################
+
+--- METADATA ---
+  Relative path:         .gitignore
+  Size:                  317 B (317 bytes)
+  SHA-256:               4721c9ea2ab63c11b31fe895ef80341ace9951fa218742ee5ec8184341e819e0
+
+--- CONTENT ---
+## .NET
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+artifacts/
+*.user
+*.suo
+.vs/
+.vscode/
+*.userprefs
+
+## Test / coverage
+[Tt]est[Rr]esults/
+TestResults/
+coverage/
+*.coverage
+*.trx
+*.cobertura.xml
+
+## Rider
+.idea/
+
+## SQLite cache (generated at runtime)
+*.db
+*.db-shm
+*.db-wal
+weather-cache*.db*
+
+## OS noise
+.DS_Store
+Thumbs.db
+
+################################################################################
+# FILE: .markdownlint.jsonc
+################################################################################
+
+--- METADATA ---
+  Relative path:         .markdownlint.jsonc
+  Size:                  402 B (402 bytes)
+  SHA-256:               75d474773a6c8c17c3b3be96a1437bd19fc61b6a8ea1bb0f66df1a846dd81de7
+
+--- CONTENT ---
+{
+  // Sensible defaults, relaxed where they fight normal README prose.
+  "default": true,
+  // Long prose/URL lines are fine.
+  "MD013": false,
+  // Allow the occasional inline HTML element.
+  "MD033": false,
+  // Not every file must begin with a top-level heading.
+  "MD041": false,
+  // Allow duplicate sibling headings like repeated "Run it" across sections.
+  "MD024": { "siblings_only": true }
+}
 
 ################################################################################
 # FILE: ARCHITECTURE.md
@@ -767,13 +1217,130 @@ signals appear in the Aspire dashboard with no extra configuration.
   for every failure mode. See [Weather.Web](../src/Weather.Web/README.md).
 
 ################################################################################
+# FILE: Directory.Build.props
+################################################################################
+
+--- METADATA ---
+  Relative path:         Directory.Build.props
+  Size:                  1.9 KiB (1960 bytes)
+  SHA-256:               6862f3a53456609c4a1fc4ff5f3b150bba93f24312877f0726bf407c17ced079
+
+--- CONTENT ---
+<Project>
+
+  <!--
+    Solution-wide build settings.
+    Applied to every project automatically by MSBuild because it sits at the
+    repository root. Keep project .csproj files lean by putting shared,
+    opinionated defaults here.
+  -->
+  <PropertyGroup>
+    <!-- Target the latest LTS runtime and the matching language version. -->
+    <TargetFramework>net11.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Modern C# ergonomics. -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Deterministic, reproducible builds. -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <InvariantGlobalization>true</InvariantGlobalization>
+
+    <!-- Analyzers: opt in to the full, latest rule set. -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>Recommended</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    <!--
+      Warnings are NOT treated as errors by default so that a freshly cloned
+      repo always builds on the first try, even if a newer analyzer surfaces a
+      new suggestion. Flip this to 'true' (or build CI with '-warnaserror')
+      once the tree is green on your machine. See the root README.
+    -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <!-- Generate XML docs for libraries but do not fail on missing comments. -->
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- Source Link + symbols so stack traces map back to source on GitHub. -->
+  <PropertyGroup>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+</Project>
+
+################################################################################
+# FILE: Directory.Packages.props
+################################################################################
+
+--- METADATA ---
+  Relative path:         Directory.Packages.props
+  Size:                  2.2 KiB (2251 bytes)
+  SHA-256:               3280c09ef0e817f7b1c73453c116c431ba84039208d5fbd1e0a65a7c1d7d98b6
+
+--- CONTENT ---
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <AspireVersion>17.0.0</AspireVersion>
+    <OpenTelemetryVersion>1.21.0</OpenTelemetryVersion>
+  </PropertyGroup>
+
+  <ItemGroup Label="Data access (SQLite + Dapper)">
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="11.0.0" />
+    <PackageVersion Include="Dapper" Version="2.1.100" />
+  </ItemGroup>
+
+  <ItemGroup Label="Resilience, hosting, service discovery, rate limiting (first-party)">
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="11.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="11.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="11.0.1" />
+    <PackageVersion Include="System.Threading.RateLimiting" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="ASP.NET Core add-ons (first-party)">
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Label=".NET Aspire orchestration">
+    <PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Label="OpenTelemetry">
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="$(OpenTelemetryVersion)" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="$(OpenTelemetryVersion)" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="$(OpenTelemetryVersion)" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryVersion)" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="$(OpenTelemetryVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Label="Testing (TUnit runner + Shouldly + bUnit + NSubstitute)">
+    <PackageVersion Include="TUnit" Version="1.87.12" />
+    <PackageVersion Include="Shouldly" Version="4.3.0" />
+    <PackageVersion Include="NSubstitute" Version="6.2.0 " />
+    <PackageVersion Include="bunit.web" Version="1.40.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="11.0.0" />
+  </ItemGroup>
+
+</Project>
+
+################################################################################
 # FILE: README.md
 ################################################################################
 
 --- METADATA ---
   Relative path:         README.md
-  Size:                  8.1 KiB (8263 bytes)
-  SHA-256:               47453003cae2974c8d1d24c32098117e015397c551701b8d1a04b2ac99aed82e
+  Size:                  8.1 KiB (8254 bytes)
+  SHA-256:               86409caa738ee9a28f7028c66c4e227cc2f44194f8053bea77509e4faa5e7b82
 
 --- CONTENT ---
 # Weather
@@ -988,840 +1555,14 @@ Markdown linting. Action versions are kept current by Dependabot.
 
 ## Licence
 
-[MIT](LICENSE).
+AGPLv3
 
 ################################################################################
-# FILE: weather/.editorconfig
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/.editorconfig
-  Size:                  2.1 KiB (2141 bytes)
-  SHA-256:               eb6a7e115908c683655994ee88fcbaf19ab6ff6b5f733f4f6a9b0fcb9376ec06
-
---- CONTENT ---
-# EditorConfig — https://editorconfig.org
-root = true
-
-[*]
-charset = utf-8
-end_of_line = lf
-insert_final_newline = true
-trim_trailing_whitespace = true
-indent_style = space
-indent_size = 4
-
-[*.{json,yml,yaml,csproj,props,targets,slnx,razor,html,css,js}]
-indent_size = 2
-
-[*.md]
-trim_trailing_whitespace = false
-
-[*.cs]
-indent_size = 4
-# Prefer file-scoped namespaces (C# 10+)
-csharp_style_namespace_declarations = file_scoped:warning
-# 'var' usage
-csharp_style_var_for_built_in_types = true:suggestion
-csharp_style_var_when_type_is_apparent = true:suggestion
-csharp_style_var_elsewhere = true:silent
-# Expression-bodied members
-csharp_style_expression_bodied_methods = when_on_single_line:suggestion
-csharp_style_expression_bodied_properties = true:suggestion
-# Modern language features
-csharp_style_prefer_primary_constructors = true:suggestion
-csharp_prefer_simple_using_statement = true:suggestion
-csharp_style_prefer_top_level_statements = true:suggestion
-csharp_style_prefer_pattern_matching = true:suggestion
-# this. preferences
-dotnet_style_qualification_for_field = false:warning
-dotnet_style_qualification_for_property = false:warning
-dotnet_style_qualification_for_method = false:warning
-dotnet_style_qualification_for_event = false:warning
-# Namespace + using
-dotnet_sort_system_directives_first = true
-dotnet_separate_import_directive_groups = false
-# Naming: async methods end in Async
-dotnet_naming_rule.async_methods_end_in_async.severity = suggestion
-dotnet_naming_rule.async_methods_end_in_async.symbols = any_async_methods
-dotnet_naming_rule.async_methods_end_in_async.style = end_in_async
-dotnet_naming_symbols.any_async_methods.applicable_kinds = method
-dotnet_naming_symbols.any_async_methods.required_modifiers = async
-dotnet_naming_style.end_in_async.required_suffix = Async
-dotnet_naming_style.end_in_async.capitalization = pascal_case
-# Treat a couple of noisy analyzer rules as suggestions in a learning sandbox
-dotnet_diagnostic.CA1848.severity = none   # use LoggerMessage delegates (we use source-gen where it matters)
-dotnet_diagnostic.CA2007.severity = none   # ConfigureAwait — not needed in ASP.NET Core
-
-################################################################################
-# FILE: weather/.gitattributes
+# FILE: docs/ARCHITECTURE.md
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/.gitattributes
-  Size:                  270 B (270 bytes)
-  SHA-256:               5a9ed64325b9724d68718eb93d8dbf34ffc1f95d57fe15bc9eec05c98f67956a
-
---- CONTENT ---
-* text=auto eol=lf
-*.sln    text eol=crlf
-*.slnx   text eol=lf
-*.csproj text eol=lf
-*.cs     text eol=lf diff=csharp
-*.razor  text eol=lf
-*.props  text eol=lf
-*.targets text eol=lf
-*.json   text eol=lf
-*.yml    text eol=lf
-*.md     text eol=lf
-*.png binary
-*.db  binary
-
-################################################################################
-# FILE: weather/.github/dependabot.yml
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/.github/dependabot.yml
-  Size:                  757 B (757 bytes)
-  SHA-256:               9e3c7f118454b01438723f30399b6b9dce10ba55059ae854e9dfc78c448cec12
-
---- CONTENT ---
-version: 2
-
-# Keeps the centrally-managed package versions (Directory.Packages.props) and
-# the GitHub Actions used in CI current. The version baseline in the repo is a
-# snapshot; these PRs are how it stays fresh.
-updates:
-  - package-ecosystem: "nuget"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-    open-pull-requests-limit: 10
-    groups:
-      # One PR per week for routine bumps keeps the noise down; majors still
-      # come through on their own so they get a proper look.
-      dotnet-dependencies:
-        update-types:
-          - "minor"
-          - "patch"
-
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-    open-pull-requests-limit: 10
-
-################################################################################
-# FILE: weather/.github/workflows/build.yml
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/.github/workflows/build.yml
-  Size:                  770 B (770 bytes)
-  SHA-256:               73d7134e7d90358cea4808517af7674ea11d7570507dec0b122f4ca4ed88c331
-
---- CONTENT ---
-name: build
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-# Least privilege: this workflow only needs to read the repo.
-permissions:
-  contents: read
-
-concurrency:
-  group: build-${{ github.ref }}
-  cancel-in-progress: true
-
-jobs:
-  build:
-    name: Build (Release)
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - name: Check out
-        uses: actions/checkout@v6
-
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          # Installs the SDK pinned in global.json (10.0.x feature band).
-          global-json-file: global.json
-
-      - name: Restore
-        run: dotnet restore weather.slnx
-
-      - name: Build
-        run: dotnet build weather.slnx --configuration Release --no-restore
-
-################################################################################
-# FILE: weather/.github/workflows/codeql.yml
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/.github/workflows/codeql.yml
-  Size:                  985 B (985 bytes)
-  SHA-256:               834bc2df55027b276f096c1c0f3ae17b7c4182eb11361a89334cd6747301655e
-
---- CONTENT ---
-name: codeql
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  schedule:
-    # Weekly scan so newly-published advisories are caught even without a push.
-    - cron: '23 4 * * 1'
-
-permissions:
-  contents: read
-  security-events: write
-
-concurrency:
-  group: codeql-${{ github.ref }}
-  cancel-in-progress: true
-
-jobs:
-  analyze:
-    name: Analyze (C#)
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Check out
-        uses: actions/checkout@v6
-
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          global-json-file: global.json
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
-        with:
-          languages: csharp
-          build-mode: manual
-
-      - name: Build
-        run: dotnet build weather.slnx --configuration Release
-
-      - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@v4
-        with:
-          category: "/language:csharp"
-
-################################################################################
-# FILE: weather/.github/workflows/dependency-review.yml
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/.github/workflows/dependency-review.yml
-  Size:                  525 B (525 bytes)
-  SHA-256:               8cc148ea0bbda4154ef4ba972ac69bf370de9cff8f8771ea7b99e9e94ed8015f
-
---- CONTENT ---
-name: dependency-review
-
-on:
-  pull_request:
-    branches: [ main ]
-
-permissions:
-  contents: read
-
-jobs:
-  review:
-    name: Dependency review
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Check out
-        uses: actions/checkout@v6
-
-      # Flags dependency changes in a PR that introduce known-vulnerable
-      # packages or disallowed licences before they land.
-      - name: Dependency review
-        uses: actions/dependency-review-action@v4
-        with:
-          fail-on-severity: high
-
-################################################################################
-# FILE: weather/.github/workflows/format.yml
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/.github/workflows/format.yml
-  Size:                  566 B (566 bytes)
-  SHA-256:               5b69a8e703e5b66a20833a108215fbf91aa3266297223e8ba7c96108a3bb2402
-
---- CONTENT ---
-name: format
-
-on:
-  pull_request:
-    branches: [ main ]
-
-permissions:
-  contents: read
-
-jobs:
-  format:
-    name: dotnet format (verify)
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Check out
-        uses: actions/checkout@v6
-
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          global-json-file: global.json
-
-      # Fails the build if any file isn't formatted to the .editorconfig rules.
-      - name: Verify formatting
-        run: dotnet format weather.slnx --verify-no-changes --severity info
-
-################################################################################
-# FILE: weather/.github/workflows/markdown-lint.yml
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/.github/workflows/markdown-lint.yml
-  Size:                  646 B (646 bytes)
-  SHA-256:               1f7cffd27cd6ff2293efcd200ada473f4ba184e2131f65bc47baaa5b7f71df97
-
---- CONTENT ---
-name: markdown-lint
-
-on:
-  pull_request:
-    branches: [ main ]
-    paths:
-      - '**/*.md'
-      - '.markdownlint.jsonc'
-      - '.github/workflows/markdown-lint.yml'
-
-permissions:
-  contents: read
-
-jobs:
-  markdownlint:
-    name: Lint Markdown
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Check out
-        uses: actions/checkout@v6
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: '24'
-
-      # markdownlint-cli2 reads .markdownlint.jsonc at the repo root.
-      - name: Lint Markdown
-        run: npx --yes markdownlint-cli2 "**/*.md" "#**/bin" "#**/obj"
-
-################################################################################
-# FILE: weather/.github/workflows/test.yml
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/.github/workflows/test.yml
-  Size:                  799 B (799 bytes)
-  SHA-256:               2d498add13b7cae99ae1d9e8f73410461fdba7eee14fb9eae56e52b03806cd87
-
---- CONTENT ---
-name: test
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-permissions:
-  contents: read
-
-concurrency:
-  group: test-${{ github.ref }}
-  cancel-in-progress: true
-
-jobs:
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    steps:
-      - name: Check out
-        uses: actions/checkout@v6
-
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          global-json-file: global.json
-
-      # TUnit runs on Microsoft.Testing.Platform; `dotnet test` drives it via
-      # the TestingPlatformDotnetTestSupport flag set in each test .csproj. We
-      # let `dotnet test` build the test projects so the runner and build stay
-      # in lock-step.
-      - name: Test
-        run: dotnet test weather.slnx --configuration Release
-
-################################################################################
-# FILE: weather/.gitignore
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/.gitignore
-  Size:                  317 B (317 bytes)
-  SHA-256:               4721c9ea2ab63c11b31fe895ef80341ace9951fa218742ee5ec8184341e819e0
-
---- CONTENT ---
-## .NET
-bin/
-obj/
-[Dd]ebug/
-[Rr]elease/
-artifacts/
-*.user
-*.suo
-.vs/
-.vscode/
-*.userprefs
-
-## Test / coverage
-[Tt]est[Rr]esults/
-TestResults/
-coverage/
-*.coverage
-*.trx
-*.cobertura.xml
-
-## Rider
-.idea/
-
-## SQLite cache (generated at runtime)
-*.db
-*.db-shm
-*.db-wal
-weather-cache*.db*
-
-## OS noise
-.DS_Store
-Thumbs.db
-
-################################################################################
-# FILE: weather/.markdownlint.jsonc
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/.markdownlint.jsonc
-  Size:                  402 B (402 bytes)
-  SHA-256:               75d474773a6c8c17c3b3be96a1437bd19fc61b6a8ea1bb0f66df1a846dd81de7
-
---- CONTENT ---
-{
-  // Sensible defaults, relaxed where they fight normal README prose.
-  "default": true,
-  // Long prose/URL lines are fine.
-  "MD013": false,
-  // Allow the occasional inline HTML element.
-  "MD033": false,
-  // Not every file must begin with a top-level heading.
-  "MD041": false,
-  // Allow duplicate sibling headings like repeated "Run it" across sections.
-  "MD024": { "siblings_only": true }
-}
-
-################################################################################
-# FILE: weather/Directory.Build.props
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/Directory.Build.props
-  Size:                  1.9 KiB (1960 bytes)
-  SHA-256:               6862f3a53456609c4a1fc4ff5f3b150bba93f24312877f0726bf407c17ced079
-
---- CONTENT ---
-<Project>
-
-  <!--
-    Solution-wide build settings.
-    Applied to every project automatically by MSBuild because it sits at the
-    repository root. Keep project .csproj files lean by putting shared,
-    opinionated defaults here.
-  -->
-  <PropertyGroup>
-    <!-- Target the latest LTS runtime and the matching language version. -->
-    <TargetFramework>net11.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-
-    <!-- Modern C# ergonomics. -->
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-
-    <!-- Deterministic, reproducible builds. -->
-    <Deterministic>true</Deterministic>
-    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
-    <InvariantGlobalization>true</InvariantGlobalization>
-
-    <!-- Analyzers: opt in to the full, latest rule set. -->
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <AnalysisMode>Recommended</AnalysisMode>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-
-    <!--
-      Warnings are NOT treated as errors by default so that a freshly cloned
-      repo always builds on the first try, even if a newer analyzer surfaces a
-      new suggestion. Flip this to 'true' (or build CI with '-warnaserror')
-      once the tree is green on your machine. See the root README.
-    -->
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-
-    <!-- Generate XML docs for libraries but do not fail on missing comments. -->
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
-  </PropertyGroup>
-
-  <!-- Source Link + symbols so stack traces map back to source on GitHub. -->
-  <PropertyGroup>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
-
-</Project>
-
-################################################################################
-# FILE: weather/Directory.Packages.props
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/Directory.Packages.props
-  Size:                  2.2 KiB (2251 bytes)
-  SHA-256:               3280c09ef0e817f7b1c73453c116c431ba84039208d5fbd1e0a65a7c1d7d98b6
-
---- CONTENT ---
-<Project>
-  <PropertyGroup>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
-    <AspireVersion>17.0.0</AspireVersion>
-    <OpenTelemetryVersion>1.21.0</OpenTelemetryVersion>
-  </PropertyGroup>
-
-  <ItemGroup Label="Data access (SQLite + Dapper)">
-    <PackageVersion Include="Microsoft.Data.Sqlite" Version="11.0.0" />
-    <PackageVersion Include="Dapper" Version="2.1.100" />
-  </ItemGroup>
-
-  <ItemGroup Label="Resilience, hosting, service discovery, rate limiting (first-party)">
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="11.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="11.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="11.0.1" />
-    <PackageVersion Include="System.Threading.RateLimiting" Version="11.0.0" />
-  </ItemGroup>
-
-  <ItemGroup Label="ASP.NET Core add-ons (first-party)">
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="11.0.0" />
-  </ItemGroup>
-
-  <ItemGroup Label=".NET Aspire orchestration">
-    <PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
-  </ItemGroup>
-
-  <ItemGroup Label="OpenTelemetry">
-    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="$(OpenTelemetryVersion)" />
-    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="$(OpenTelemetryVersion)" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="$(OpenTelemetryVersion)" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryVersion)" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="$(OpenTelemetryVersion)" />
-  </ItemGroup>
-
-  <ItemGroup Label="Testing (TUnit runner + Shouldly + bUnit + NSubstitute)">
-    <PackageVersion Include="TUnit" Version="1.87.12" />
-    <PackageVersion Include="Shouldly" Version="4.3.0" />
-    <PackageVersion Include="NSubstitute" Version="6.2.0 " />
-    <PackageVersion Include="bunit.web" Version="1.40.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="11.0.0" />
-  </ItemGroup>
-
-</Project>
-
-################################################################################
-# FILE: weather/LICENSE
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/LICENSE
-  Size:                  1.0 KiB (1067 bytes)
-  SHA-256:               5eabf0a6f3f072996079d7ab9cf098cc4dbdf8331886f1178f7d32349bf9b04a
-
---- CONTENT ---
-MIT License
-
-Copyright (c) 2026 collabskus
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-################################################################################
-# FILE: weather/README.md
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/README.md
-  Size:                  8.1 KiB (8263 bytes)
-  SHA-256:               c9492f5d6121c63f1045225acf851177c3380e713cd0c2cc33fd0a54207adf55
-
---- CONTENT ---
-# Weather
-
-A weather dashboard built on the U.S. National Weather Service (NWS) API,
-written in **.NET 10 / C# 14**. It pairs a **Blazor Server** front end with an
-**ASP.NET Core Minimal API** backend, caches forecasts in **SQLite** (via
-**Dapper**), is wired for observability with **OpenTelemetry**, and is
-orchestrated with **.NET Aspire**.
-
-Repository: <https://github.com/collabskus/weather.git>
-
-> [!IMPORTANT]
-> The package and GitHub Action versions committed here are a **baseline
-> snapshot**, centralised so they can be updated in one place. The bundled
-> [Dependabot config](.github/dependabot.yml) opens weekly PRs to keep them
-> current, and the [CI workflows](.github/workflows) are the source of truth for
-> whether the solution builds and the tests pass.
-
-## What it does
-
-1. The browser is asked for the user's location.
-2. That coordinate is resolved to an NWS **forecast grid cell** and the forecast
-   for that cell is shown — a "sky-state" hero that paints the sky implied by the
-   current conditions, plus cards for the upcoming periods.
-3. If the user declines to share their location, or the browser can't provide it,
-   the dashboard falls back to manual latitude/longitude entry (with a one-click
-   sample location). It works the same either way.
-
-Forecasts are cached for a short window and reused, so the dashboard stays quick
-and the weather service isn't polled more than necessary — all invisible to the
-user, who always sees current data.
-
-## Design at a glance
-
-Three decisions shape the system; the full reasoning is in
-[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
-
-- **Caching** — two SQLite tiers: long-lived coordinate→grid metadata (30 days,
-  keyed by a 4-dp coordinate so nearby users share a row) and short-lived grid
-  forecasts (honouring NWS `Cache-Control`, clamped to 6 h). Conditional GETs
-  (`If-None-Match` → `304`) refresh expiry cheaply; if NWS is unreachable, the
-  last good forecast is served rather than an error.
-- **Neighbourhood warming** — the user's own cell is fetched synchronously; the
-  surrounding 3×3 ring is warmed in the background via a bounded channel and a
-  rate-limited `BackgroundService`, so panning feels instant without ever
-  slowing the user's request.
-- **Observability** — Aspire `ServiceDefaults` set up OpenTelemetry, health
-  checks, and service discovery; a custom meter/trace source records cache
-  hit-rate and NWS latency/throttling. It all flows into the Aspire dashboard.
-
-## Geolocation fallback behaviour
-
-Browser geolocation can fail in several ways, and the app treats every one as a
-normal path rather than an error:
-
-| Situation | What the user sees |
-| --- | --- |
-| Location shared | The forecast for their cell |
-| Permission denied | "Location is off" + manual entry + sample location |
-| Position unavailable / timeout / unsupported | "Couldn't pin down where you are" + manual entry + sample |
-| Coordinate outside NWS coverage | "No coverage for that spot" + manual entry + sample |
-| API/network error | "The forecast didn't load" + retry + sample |
-
-The browser bridge (`wwwroot/js/geolocation.js`) **never rejects** — it always
-resolves a result object — so "the user said no" never lands on an exception
-path. Details in [`src/Weather.Web/README.md`](src/Weather.Web/README.md).
-
-## Prerequisites
-
-- **.NET 11 SDK** (the repo pins the `11.0.x` feature band in
-  [`global.json`](global.json)).
-- For the Aspire run experience, the **.NET Aspire** tooling/workload as
-  described in the [Aspire docs](https://learn.microsoft.com/dotnet/aspire/).
-- No database to install — SQLite is file-based and created on first run.
-
-## Run it
-
-### With .NET Aspire (recommended)
-
-One command starts the API and the dashboard together and opens the Aspire
-dashboard for logs, traces, and metrics:
-
-```bash
-dotnet run --project src/Weather.AppHost
-```
-
-### Standalone (without Aspire)
-
-Run the two services in separate terminals:
-
-```bash
-# Terminal 1 — the API
-dotnet run --project src/Weather.Api
-
-# Terminal 2 — the dashboard, pointed at the API
-dotnet run --project src/Weather.Web
-```
-
-When not running under Aspire, tell the web app where the API is. Either set it
-in configuration:
-
-```jsonc
-// src/Weather.Web/appsettings.Development.json
-{
-  "WeatherApi": { "BaseUrl": "https://localhost:7001" }
-}
-```
-
-or via the service-discovery environment variable:
-
-```bash
-services__api__https__0=https://localhost:7001 dotnet run --project src/Weather.Web
-```
-
-## Build and test
-
-```bash
-# Restore + build the whole solution
-dotnet restore weather.slnx
-dotnet build weather.slnx --configuration Release
-
-# Run all tests (TUnit + bUnit + Shouldly)
-dotnet test weather.slnx --configuration Release
-
-# Verify formatting (as CI does)
-dotnet format weather.slnx --verify-no-changes
-```
-
-The solution uses **`weather.slnx`** (the XML solution format), **Central
-Package Management** ([`Directory.Packages.props`](Directory.Packages.props)),
-and shared build settings ([`Directory.Build.props`](Directory.Build.props)).
-
-> [!NOTE]
-> Warnings are **not** treated as errors by default, so a fresh clone builds on
-> the first try even if a newer analyzer surfaces a new suggestion. To tighten
-> this up once your tree is green, set `TreatWarningsAsErrors` to `true` in
-> `Directory.Build.props` or build with `-warnaserror`.
-
-## Tests
-
-Extensive coverage across four projects, using **TUnit** (runner), **bUnit**
-(Blazor component tests), **Shouldly** (assertions), and **NSubstitute** (fakes):
-
-- **Weather.Core.Tests** — coordinate validation/rounding, grid-neighbourhood
-  geometry, fetch-result factories, telemetry instruments.
-- **Weather.Infrastructure.Tests** — the NWS client (parsing, conditional GET,
-  failure mapping) against a stub handler; the SQLite caches against a real
-  temp database; the full `WeatherService` cache-aside policy; the background
-  warmer.
-- **Weather.Api.Tests** — the endpoints end-to-end via `WebApplicationFactory`,
-  with a fake NWS source and a real SQLite cache (200 / 400 / 404).
-- **Weather.Web.Tests** — the dashboard's state machine and every geolocation
-  fallback rendered with bUnit, plus the sky-state palette logic.
-
-## Project layout
-
-```
-weather/
-├─ src/
-│  ├─ Weather.Core/             # domain models, abstractions, telemetry
-│  ├─ Weather.Infrastructure/   # NWS client, SQLite caches, services, warmer
-│  ├─ Weather.ServiceDefaults/  # Aspire: OTel, health, discovery, resilience
-│  ├─ Weather.Api/              # ASP.NET Core Minimal API
-│  ├─ Weather.Web/              # Blazor Server dashboard
-│  └─ Weather.AppHost/          # .NET Aspire orchestrator
-├─ tests/
-│  ├─ Weather.Core.Tests/
-│  ├─ Weather.Infrastructure.Tests/
-│  ├─ Weather.Api.Tests/
-│  └─ Weather.Web.Tests/
-├─ docs/ARCHITECTURE.md
-├─ .github/                     # CI workflows + Dependabot
-├─ Directory.Build.props
-├─ Directory.Packages.props
-├─ global.json
-└─ weather.slnx
-```
-
-Each project has its own README with the detail for that layer.
-
-## Observability
-
-Both services emit OpenTelemetry over OTLP. Under the AppHost, signals appear in
-the Aspire dashboard automatically. Beyond the standard ASP.NET Core / HttpClient
-/ runtime instrumentation, the app records cache hit/miss ratios and the latency,
-throttling, and errors of every NWS call. See
-[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#decision-3--observability) and
-[`src/Weather.ServiceDefaults/README.md`](src/Weather.ServiceDefaults/README.md).
-
-## A note on the NWS API
-
-The NWS API **requires a descriptive `User-Agent`** that identifies your app and
-a contact; requests without one are rejected. The default is set in
-`NwsClientOptions` and should be overridden with your own details in
-configuration:
-
-```jsonc
-// appsettings.json
-{
-  "Nws": { "UserAgent": "your-app/1.0 (you@example.com)" }
-}
-```
-
-See the [NWS API documentation](https://www.weather.gov/documentation/services-web-api).
-
-## CI
-
-The workflows under [`.github/workflows`](.github/workflows) cover build, test,
-`dotnet format` verification, CodeQL security analysis, dependency review, and
-Markdown linting. Action versions are kept current by Dependabot.
-
-## Licence
-
-[MIT](LICENSE).
-
-################################################################################
-# FILE: weather/docs/ARCHITECTURE.md
-################################################################################
-
---- METADATA ---
-  Relative path:         weather/docs/ARCHITECTURE.md
+  Relative path:         docs/ARCHITECTURE.md
   Size:                  8.5 KiB (8750 bytes)
   SHA-256:               8b5ee609352c899e01cd4390c971ed384d69fe4be0a1a41060dcb25b16bd8c7d
 
@@ -1991,11 +1732,11 @@ signals appear in the Aspire dashboard with no extra configuration.
   for every failure mode. See [Weather.Web](../src/Weather.Web/README.md).
 
 ################################################################################
-# FILE: weather/global.json
+# FILE: global.json
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/global.json
+  Relative path:         global.json
   Size:                  183 B (183 bytes)
   SHA-256:               3cd5badb72536107f35912d868d7064df170e823194f3e50b52cd487e2b1ca29
 
@@ -2012,11 +1753,11 @@ signals appear in the Aspire dashboard with no extra configuration.
 }
 
 ################################################################################
-# FILE: weather/nuget.config
+# FILE: nuget.config
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/nuget.config
+  Relative path:         nuget.config
   Size:                  355 B (355 bytes)
   SHA-256:               cb93c65e28718aa9075fce221e9f9cea9e72d3fe1b30462383448a591f5b3aa1
 
@@ -2035,11 +1776,11 @@ signals appear in the Aspire dashboard with no extra configuration.
 </configuration>
 
 ################################################################################
-# FILE: weather/src/Weather.Api/Contracts/ForecastResponse.cs
+# FILE: src/Weather.Api/Contracts/ForecastResponse.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Api/Contracts/ForecastResponse.cs
+  Relative path:         src/Weather.Api/Contracts/ForecastResponse.cs
   Size:                  1.8 KiB (1841 bytes)
   SHA-256:               6f473abbe00a91324ef82f881d43fc1ec297588046f69e6ed34104f940d73e2a
 
@@ -2109,11 +1850,11 @@ public sealed record ForecastPeriodResponse(
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Api/Contracts/NeighborhoodResponse.cs
+# FILE: src/Weather.Api/Contracts/NeighborhoodResponse.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Api/Contracts/NeighborhoodResponse.cs
+  Relative path:         src/Weather.Api/Contracts/NeighborhoodResponse.cs
   Size:                  918 B (918 bytes)
   SHA-256:               97182702cd7d9196a781852f0d31031bc49fd02ec7b00d1f721a17ab2267f5a4
 
@@ -2149,11 +1890,11 @@ public sealed record NeighborhoodResponse(
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Api/Endpoints/WeatherEndpoints.cs
+# FILE: src/Weather.Api/Endpoints/WeatherEndpoints.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Api/Endpoints/WeatherEndpoints.cs
+  Relative path:         src/Weather.Api/Endpoints/WeatherEndpoints.cs
   Size:                  2.9 KiB (3019 bytes)
   SHA-256:               97ea51db976178671339c31c2dd64b42ce96a42e96679d9f8e7d293085af9f22
 
@@ -2236,11 +1977,11 @@ public static class WeatherEndpoints
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Api/Program.cs
+# FILE: src/Weather.Api/Program.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Api/Program.cs
+  Relative path:         src/Weather.Api/Program.cs
   Size:                  1.3 KiB (1368 bytes)
   SHA-256:               e71f8147041ddb5a01e85f14db256d1cf70ae3f18d8e123671886de31d358364
 
@@ -2291,11 +2032,11 @@ app.Run();
 public partial class Program;
 
 ################################################################################
-# FILE: weather/src/Weather.Api/README.md
+# FILE: src/Weather.Api/README.md
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Api/README.md
+  Relative path:         src/Weather.Api/README.md
   Size:                  3.2 KiB (3296 bytes)
   SHA-256:               b88bb1d6eed1bec30c08fc92027473795fa76095cf300f1b0045e7d2c57724bd
 
@@ -2377,11 +2118,11 @@ the cache pointed at a throwaway temp database, asserting the `200` / `400` /
 `404` behaviours and the response shape.
 
 ################################################################################
-# FILE: weather/src/Weather.Api/Weather.Api.csproj
+# FILE: src/Weather.Api/Weather.Api.csproj
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Api/Weather.Api.csproj
+  Relative path:         src/Weather.Api/Weather.Api.csproj
   Size:                  737 B (737 bytes)
   SHA-256:               a03927b52af50dc984e11bcf3cd9adaf2eba8500629c4cc2f272b9af7dc3e964
 
@@ -2408,11 +2149,11 @@ the cache pointed at a throwaway temp database, asserting the `200` / `400` /
 </Project>
 
 ################################################################################
-# FILE: weather/src/Weather.Api/appsettings.Development.json
+# FILE: src/Weather.Api/appsettings.Development.json
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Api/appsettings.Development.json
+  Relative path:         src/Weather.Api/appsettings.Development.json
   Size:                  165 B (165 bytes)
   SHA-256:               c5926bf20909f92585bb5009a48e52d728f90b2ec5b35ae249aef136f1ff469b
 
@@ -2428,11 +2169,11 @@ the cache pointed at a throwaway temp database, asserting the `200` / `400` /
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Api/appsettings.json
+# FILE: src/Weather.Api/appsettings.json
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Api/appsettings.json
+  Relative path:         src/Weather.Api/appsettings.json
   Size:                  500 B (500 bytes)
   SHA-256:               50172bad023d9adce43edf96a453c74195de0a3dfb4cd5e1fccdb1561122c659
 
@@ -2459,11 +2200,11 @@ the cache pointed at a throwaway temp database, asserting the `200` / `400` /
 }
 
 ################################################################################
-# FILE: weather/src/Weather.AppHost/Program.cs
+# FILE: src/Weather.AppHost/Program.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.AppHost/Program.cs
+  Relative path:         src/Weather.AppHost/Program.cs
   Size:                  552 B (552 bytes)
   SHA-256:               1c4149c466e940909e98eedd66d66a1156820dd32bb08f9528c7d0c334611b5a
 
@@ -2483,11 +2224,11 @@ builder.AddProject<Projects.Weather_Web>("web")
 builder.Build().Run();
 
 ################################################################################
-# FILE: weather/src/Weather.AppHost/README.md
+# FILE: src/Weather.AppHost/README.md
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.AppHost/README.md
+  Relative path:         src/Weather.AppHost/README.md
   Size:                  2.1 KiB (2169 bytes)
   SHA-256:               3a17e57c4f335bd1b020ccf720b0266100f8829b8bb03840477fc3efa4c3cfea
 
@@ -2550,11 +2291,11 @@ telemetry flows straight into the Aspire dashboard — no extra configuration.
   [root README](../../README.md).
 
 ################################################################################
-# FILE: weather/src/Weather.AppHost/Weather.AppHost.csproj
+# FILE: src/Weather.AppHost/Weather.AppHost.csproj
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.AppHost/Weather.AppHost.csproj
+  Relative path:         src/Weather.AppHost/Weather.AppHost.csproj
   Size:                  1.1 KiB (1136 bytes)
   SHA-256:               38031babd4a9586df091c95513f8d355f968da5241eb4d54e7102d0d63df4201
 
@@ -2589,11 +2330,11 @@ telemetry flows straight into the Aspire dashboard — no extra configuration.
 </Project>
 
 ################################################################################
-# FILE: weather/src/Weather.AppHost/appsettings.json
+# FILE: src/Weather.AppHost/appsettings.json
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.AppHost/appsettings.json
+  Relative path:         src/Weather.AppHost/appsettings.json
   Size:                  158 B (158 bytes)
   SHA-256:               42f506bc3a9d676eecf304ff7482b89cd46f448d4964ee87d55d116b5dae3954
 
@@ -2609,11 +2350,11 @@ telemetry flows straight into the Aspire dashboard — no extra configuration.
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Abstractions/IForecastCache.cs
+# FILE: src/Weather.Core/Abstractions/IForecastCache.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Abstractions/IForecastCache.cs
+  Relative path:         src/Weather.Core/Abstractions/IForecastCache.cs
   Size:                  376 B (376 bytes)
   SHA-256:               b38d5b884aaa1d053ab49b6759e2756659ed6897790aeefb3672d704c614ef23
 
@@ -2631,11 +2372,11 @@ public interface IForecastCache
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Abstractions/INeighborhoodWarmer.cs
+# FILE: src/Weather.Core/Abstractions/INeighborhoodWarmer.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Abstractions/INeighborhoodWarmer.cs
+  Relative path:         src/Weather.Core/Abstractions/INeighborhoodWarmer.cs
   Size:                  655 B (655 bytes)
   SHA-256:               e5a3416f1abd4cdab170be092963ae7baba861cb9481ac89090efdb51868925c
 
@@ -2660,11 +2401,11 @@ public interface INeighborhoodWarmer
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Abstractions/INwsApiClient.cs
+# FILE: src/Weather.Core/Abstractions/INwsApiClient.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Abstractions/INwsApiClient.cs
+  Relative path:         src/Weather.Core/Abstractions/INwsApiClient.cs
   Size:                  982 B (982 bytes)
   SHA-256:               1c2c43a46449a88605b5fca82c91f9d9f00cf979fd97e15f9f0894f3a42370c2
 
@@ -2696,11 +2437,11 @@ public interface INwsApiClient
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Abstractions/IPointMetadataCache.cs
+# FILE: src/Weather.Core/Abstractions/IPointMetadataCache.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Abstractions/IPointMetadataCache.cs
+  Relative path:         src/Weather.Core/Abstractions/IPointMetadataCache.cs
   Size:                  391 B (391 bytes)
   SHA-256:               a1705ebc1da86e3b91c1892af5ba2811d68588108f9500cd62931c3c12adc726
 
@@ -2718,11 +2459,11 @@ public interface IPointMetadataCache
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Abstractions/IWeatherService.cs
+# FILE: src/Weather.Core/Abstractions/IWeatherService.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Abstractions/IWeatherService.cs
+  Relative path:         src/Weather.Core/Abstractions/IWeatherService.cs
   Size:                  1.3 KiB (1340 bytes)
   SHA-256:               2b6c93e5976d900c47b53f0ccdb2a1df76bea707c6aeacdab162149ae7bb4082
 
@@ -2760,11 +2501,11 @@ public interface IWeatherService
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Models/CachedForecast.cs
+# FILE: src/Weather.Core/Models/CachedForecast.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Models/CachedForecast.cs
+  Relative path:         src/Weather.Core/Models/CachedForecast.cs
   Size:                  343 B (343 bytes)
   SHA-256:               5f0c9aac06c47eca76b158c9223f0cbc2b41b307cb7593de280d983dd416db5c
 
@@ -2782,11 +2523,11 @@ public sealed record CachedForecast(
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Models/CachedPointMetadata.cs
+# FILE: src/Weather.Core/Models/CachedPointMetadata.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Models/CachedPointMetadata.cs
+  Relative path:         src/Weather.Core/Models/CachedPointMetadata.cs
   Size:                  325 B (325 bytes)
   SHA-256:               cab572bb111f950fa4183767a7e95f702f766f68bd73e9c5d4e167b98d94ce5c
 
@@ -2803,11 +2544,11 @@ public sealed record CachedPointMetadata(
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Models/Forecast.cs
+# FILE: src/Weather.Core/Models/Forecast.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Models/Forecast.cs
+  Relative path:         src/Weather.Core/Models/Forecast.cs
   Size:                  363 B (363 bytes)
   SHA-256:               d571761e381ca7e72ee33e64da851e57ef6a6a46c6bc3e8e1a3e919337c5d1ec
 
@@ -2825,11 +2566,11 @@ public sealed record Forecast(
     IReadOnlyList<ForecastPeriod> Periods);
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Models/ForecastFetchResult.cs
+# FILE: src/Weather.Core/Models/ForecastFetchResult.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Models/ForecastFetchResult.cs
+  Relative path:         src/Weather.Core/Models/ForecastFetchResult.cs
   Size:                  1.6 KiB (1618 bytes)
   SHA-256:               199457e9a37240f1690d3ac0b0584a08d441c3e7b6416a6b130270ca84665fd4
 
@@ -2875,11 +2616,11 @@ public sealed record ForecastFetchResult
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Models/ForecastPeriod.cs
+# FILE: src/Weather.Core/Models/ForecastPeriod.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Models/ForecastPeriod.cs
+  Relative path:         src/Weather.Core/Models/ForecastPeriod.cs
   Size:                  472 B (472 bytes)
   SHA-256:               73c0b93a45dba75932923657c45d0a56af1cf5563c2f78c0bb748559b54afec1
 
@@ -2903,11 +2644,11 @@ public sealed record ForecastPeriod(
     string Icon);
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Models/GeoCoordinate.cs
+# FILE: src/Weather.Core/Models/GeoCoordinate.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Models/GeoCoordinate.cs
+  Relative path:         src/Weather.Core/Models/GeoCoordinate.cs
   Size:                  2.0 KiB (2030 bytes)
   SHA-256:               ce4e8db6b60d692e7aebe2b8160226cf165ca0b450c7b1bafce644cc00e00834
 
@@ -2967,11 +2708,11 @@ public readonly record struct GeoCoordinate
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Models/GridNeighborhood.cs
+# FILE: src/Weather.Core/Models/GridNeighborhood.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Models/GridNeighborhood.cs
+  Relative path:         src/Weather.Core/Models/GridNeighborhood.cs
   Size:                  1.4 KiB (1428 bytes)
   SHA-256:               db8e80e3be90f5261ca8fc1522f9f051f573da53eb3fe7279050b5c2857a99e7
 
@@ -3021,11 +2762,11 @@ public static class GridNeighborhood
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Models/GridPoint.cs
+# FILE: src/Weather.Core/Models/GridPoint.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Models/GridPoint.cs
+  Relative path:         src/Weather.Core/Models/GridPoint.cs
   Size:                  366 B (366 bytes)
   SHA-256:               e9254025f975d2411844672d1308c81564ab4680fd35ee92deff218864a21d40
 
@@ -3042,11 +2783,11 @@ public readonly record struct GridPoint(string GridId, int GridX, int GridY)
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Models/NeighborhoodForecast.cs
+# FILE: src/Weather.Core/Models/NeighborhoodForecast.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Models/NeighborhoodForecast.cs
+  Relative path:         src/Weather.Core/Models/NeighborhoodForecast.cs
   Size:                  422 B (422 bytes)
   SHA-256:               037b9767361b6b398ce3af6c613165f9c4f0b60daf470f84c9f82fc6161b0816
 
@@ -3064,11 +2805,11 @@ public sealed record NeighborhoodForecast(
     IReadOnlyList<Forecast> Neighbors);
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Models/PointMetadata.cs
+# FILE: src/Weather.Core/Models/PointMetadata.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Models/PointMetadata.cs
+  Relative path:         src/Weather.Core/Models/PointMetadata.cs
   Size:                  515 B (515 bytes)
   SHA-256:               128e344af350444ced461ce9a1dfd061b5e72955fa7c5f7ee8d69db8634db9c0
 
@@ -3091,11 +2832,11 @@ public sealed record PointMetadata(
     string? RadarStation);
 
 ################################################################################
-# FILE: weather/src/Weather.Core/README.md
+# FILE: src/Weather.Core/README.md
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/README.md
+  Relative path:         src/Weather.Core/README.md
   Size:                  2.9 KiB (2939 bytes)
   SHA-256:               1df7a396f846fd36098552cb0707fba7d94cfa6ebf3f66c2b85b6b6da119484f
 
@@ -3162,11 +2903,11 @@ boundary behaviour, neighbourhood geometry, fetch-result factories, and the
 telemetry instruments (verified with a `MeterListener`).
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Telemetry/WeatherTelemetry.cs
+# FILE: src/Weather.Core/Telemetry/WeatherTelemetry.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Telemetry/WeatherTelemetry.cs
+  Relative path:         src/Weather.Core/Telemetry/WeatherTelemetry.cs
   Size:                  3.7 KiB (3775 bytes)
   SHA-256:               db509db4156e1ba14413d6fcdcf36df012b9eadf63823831fa894c24f04f54fe
 
@@ -3266,11 +3007,11 @@ public sealed class WeatherTelemetry : IDisposable
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Core/Weather.Core.csproj
+# FILE: src/Weather.Core/Weather.Core.csproj
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Core/Weather.Core.csproj
+  Relative path:         src/Weather.Core/Weather.Core.csproj
   Size:                  605 B (605 bytes)
   SHA-256:               d4de02bea10482fda8dbe49e9baa93f18fe93e60c6c903cf110566c0bb917408
 
@@ -3293,11 +3034,11 @@ public sealed class WeatherTelemetry : IDisposable
 </Project>
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Caching/DatabaseInitializer.cs
+# FILE: src/Weather.Infrastructure/Caching/DatabaseInitializer.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Caching/DatabaseInitializer.cs
+  Relative path:         src/Weather.Infrastructure/Caching/DatabaseInitializer.cs
   Size:                  2.5 KiB (2595 bytes)
   SHA-256:               4ce89d5c7d4bf73f83663685dfee69ddefbc7851f75e83b29279c53308a6c5c8
 
@@ -3373,11 +3114,11 @@ public sealed class DatabaseInitializer(
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Caching/SqliteCacheOptions.cs
+# FILE: src/Weather.Infrastructure/Caching/SqliteCacheOptions.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Caching/SqliteCacheOptions.cs
+  Relative path:         src/Weather.Infrastructure/Caching/SqliteCacheOptions.cs
   Size:                  548 B (548 bytes)
   SHA-256:               f008e36ad7cde5e4728f702943f8fbca6cdbeed44c6aaf39bbd03e7de2006572
 
@@ -3398,11 +3139,11 @@ public sealed class SqliteCacheOptions
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Caching/SqliteConnectionFactory.cs
+# FILE: src/Weather.Infrastructure/Caching/SqliteConnectionFactory.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Caching/SqliteConnectionFactory.cs
+  Relative path:         src/Weather.Infrastructure/Caching/SqliteConnectionFactory.cs
   Size:                  1.1 KiB (1109 bytes)
   SHA-256:               2c95a15720681d2f15ffdd47deacc967d2bc55f477eaa206c626bbf445646b1d
 
@@ -3441,11 +3182,11 @@ public sealed class SqliteConnectionFactory(IOptions<SqliteCacheOptions> options
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Caching/SqliteForecastCache.cs
+# FILE: src/Weather.Infrastructure/Caching/SqliteForecastCache.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Caching/SqliteForecastCache.cs
+  Relative path:         src/Weather.Infrastructure/Caching/SqliteForecastCache.cs
   Size:                  3.4 KiB (3467 bytes)
   SHA-256:               00abcf8a252ca9a52e925d058b82dd1e91891c4574a1e5aa1202c7d543a09bc0
 
@@ -3540,11 +3281,11 @@ internal sealed class SqliteForecastCache(ISqliteConnectionFactory connectionFac
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Caching/SqlitePointMetadataCache.cs
+# FILE: src/Weather.Infrastructure/Caching/SqlitePointMetadataCache.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Caching/SqlitePointMetadataCache.cs
+  Relative path:         src/Weather.Infrastructure/Caching/SqlitePointMetadataCache.cs
   Size:                  4.6 KiB (4701 bytes)
   SHA-256:               37ec0a1ed417daeba90cb143a60ea3986d058de0f96741bf50451d4beb748699
 
@@ -3670,11 +3411,11 @@ internal sealed class SqlitePointMetadataCache(ISqliteConnectionFactory connecti
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Caching/TimestampText.cs
+# FILE: src/Weather.Infrastructure/Caching/TimestampText.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Caching/TimestampText.cs
+  Relative path:         src/Weather.Infrastructure/Caching/TimestampText.cs
   Size:                  638 B (638 bytes)
   SHA-256:               4378aee4117fc7e2d2eca7f4654db580d3a5d299a4f0ad7da8bf132eb979ea6f
 
@@ -3698,11 +3439,11 @@ internal static class TimestampText
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/DependencyInjection.cs
+# FILE: src/Weather.Infrastructure/DependencyInjection.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/DependencyInjection.cs
+  Relative path:         src/Weather.Infrastructure/DependencyInjection.cs
   Size:                  3.6 KiB (3726 bytes)
   SHA-256:               0c173c21fc11c74493c2aa44ed4ac6089dbbecf6a5a0a4346afba20f122a7099
 
@@ -3791,11 +3532,11 @@ public static class DependencyInjection
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Nws/NwsApiClient.cs
+# FILE: src/Weather.Infrastructure/Nws/NwsApiClient.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Nws/NwsApiClient.cs
+  Relative path:         src/Weather.Infrastructure/Nws/NwsApiClient.cs
   Size:                  8.0 KiB (8191 bytes)
   SHA-256:               e3af48ac8207a4ec826b733e6008569e69de2b6180e02b589d675e8e1db972d8
 
@@ -3993,11 +3734,11 @@ internal sealed class NwsApiClient(
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Nws/NwsClientOptions.cs
+# FILE: src/Weather.Infrastructure/Nws/NwsClientOptions.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Nws/NwsClientOptions.cs
+  Relative path:         src/Weather.Infrastructure/Nws/NwsClientOptions.cs
   Size:                  1.5 KiB (1531 bytes)
   SHA-256:               d0bddb043502ac7d9eefdc67ce53612154846cdc811d186ea6877f308cbe0ddf
 
@@ -4037,11 +3778,11 @@ public sealed class NwsClientOptions
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Nws/NwsJsonModels.cs
+# FILE: src/Weather.Infrastructure/Nws/NwsJsonModels.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Nws/NwsJsonModels.cs
+  Relative path:         src/Weather.Infrastructure/Nws/NwsJsonModels.cs
   Size:                  2.6 KiB (2674 bytes)
   SHA-256:               c4c16f41af2a4c5adadbffb73950473e19fe6e119384a8004b0cad6c0c75c514
 
@@ -4124,11 +3865,11 @@ internal sealed record NwsQuantitativeValue
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/README.md
+# FILE: src/Weather.Infrastructure/README.md
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/README.md
+  Relative path:         src/Weather.Infrastructure/README.md
   Size:                  5.4 KiB (5527 bytes)
   SHA-256:               bbeef331d9f89fa99e7af24e57b9e5e3c4c2e8b625b9a44e9befd1385b4ac3e8
 
@@ -4248,11 +3989,11 @@ mapping), the caches against a **real temp SQLite database**, the full
 warmer's fan-out and skip-fresh behaviour.
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Serialization/WeatherJson.cs
+# FILE: src/Weather.Infrastructure/Serialization/WeatherJson.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Serialization/WeatherJson.cs
+  Relative path:         src/Weather.Infrastructure/Serialization/WeatherJson.cs
   Size:                  1.3 KiB (1354 bytes)
   SHA-256:               9ab742b473082b0981aad3ec98ede2d641b0b0dec47c400edfc173212b4e073c
 
@@ -4292,11 +4033,11 @@ public static class WeatherJson
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Services/NeighborhoodWarmer.cs
+# FILE: src/Weather.Infrastructure/Services/NeighborhoodWarmer.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Services/NeighborhoodWarmer.cs
+  Relative path:         src/Weather.Infrastructure/Services/NeighborhoodWarmer.cs
   Size:                  1.3 KiB (1380 bytes)
   SHA-256:               0354a36b5c0e89e2a602ca372996280ada55ac68a0a7d53bafd0c1c43541bdfa
 
@@ -4343,11 +4084,11 @@ internal sealed class NeighborhoodWarmer : INeighborhoodWarmer
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Services/NeighborhoodWarmingBackgroundService.cs
+# FILE: src/Weather.Infrastructure/Services/NeighborhoodWarmingBackgroundService.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Services/NeighborhoodWarmingBackgroundService.cs
+  Relative path:         src/Weather.Infrastructure/Services/NeighborhoodWarmingBackgroundService.cs
   Size:                  4.0 KiB (4138 bytes)
   SHA-256:               d0bfa4d5439a4444e483c3d36c08e825109213c81425586a3f01b487f950749d
 
@@ -4466,11 +4207,11 @@ internal sealed class NeighborhoodWarmingBackgroundService(
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Services/WeatherService.cs
+# FILE: src/Weather.Infrastructure/Services/WeatherService.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Services/WeatherService.cs
+  Relative path:         src/Weather.Infrastructure/Services/WeatherService.cs
   Size:                  6.9 KiB (7080 bytes)
   SHA-256:               29aaaf363ecce402917794e7393e5148c559465721d3822e304d051daf08341d
 
@@ -4663,11 +4404,11 @@ internal sealed class WeatherService(
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Infrastructure/Weather.Infrastructure.csproj
+# FILE: src/Weather.Infrastructure/Weather.Infrastructure.csproj
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Infrastructure/Weather.Infrastructure.csproj
+  Relative path:         src/Weather.Infrastructure/Weather.Infrastructure.csproj
   Size:                  1.2 KiB (1265 bytes)
   SHA-256:               d44c1d954b6d38b7a0a4f35424f6fc8d6fad2d2ce4a9aa5aeee291cfa901d163
 
@@ -4706,11 +4447,11 @@ internal sealed class WeatherService(
 </Project>
 
 ################################################################################
-# FILE: weather/src/Weather.ServiceDefaults/Extensions.cs
+# FILE: src/Weather.ServiceDefaults/Extensions.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.ServiceDefaults/Extensions.cs
+  Relative path:         src/Weather.ServiceDefaults/Extensions.cs
   Size:                  4.0 KiB (4088 bytes)
   SHA-256:               25ebc4338bc368383966811c8ede59aa2e723b5dfc828002b46a1658c42ed4a9
 
@@ -4836,11 +4577,11 @@ public static class Extensions
 }
 
 ################################################################################
-# FILE: weather/src/Weather.ServiceDefaults/README.md
+# FILE: src/Weather.ServiceDefaults/README.md
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.ServiceDefaults/README.md
+  Relative path:         src/Weather.ServiceDefaults/README.md
   Size:                  2.4 KiB (2429 bytes)
   SHA-256:               5131930cc2c7b5dc30b7a39604dfe718a4235032d8b123d5bf2b6b6548b200de
 
@@ -4900,11 +4641,11 @@ Both [`Weather.Api`](../Weather.Api/README.md) and
 the Aspire dashboard.
 
 ################################################################################
-# FILE: weather/src/Weather.ServiceDefaults/Weather.ServiceDefaults.csproj
+# FILE: src/Weather.ServiceDefaults/Weather.ServiceDefaults.csproj
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.ServiceDefaults/Weather.ServiceDefaults.csproj
+  Relative path:         src/Weather.ServiceDefaults/Weather.ServiceDefaults.csproj
   Size:                  1.3 KiB (1315 bytes)
   SHA-256:               85ed7e88d154f7c269e0d2808eba42ae055b38390007e5f181714bfaccc7500c
 
@@ -4941,11 +4682,11 @@ the Aspire dashboard.
 </Project>
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Components/App.razor
+# FILE: src/Weather.Web/Components/App.razor
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Components/App.razor
+  Relative path:         src/Weather.Web/Components/App.razor
   Size:                  746 B (746 bytes)
   SHA-256:               d01306694701c6f17e0743d87ec472bbe41f797d0aafd3a0e939b4e448a62504
 
@@ -4975,11 +4716,11 @@ the Aspire dashboard.
 </html>
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Components/Layout/MainLayout.razor
+# FILE: src/Weather.Web/Components/Layout/MainLayout.razor
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Components/Layout/MainLayout.razor
+  Relative path:         src/Weather.Web/Components/Layout/MainLayout.razor
   Size:                  807 B (807 bytes)
   SHA-256:               1f45b03a50354ce60ff1b2cc3e822bdf788064228195d8d7e0ac7d441053a49c
 
@@ -5015,11 +4756,11 @@ the Aspire dashboard.
 </div>
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Components/Layout/NavMenu.razor
+# FILE: src/Weather.Web/Components/Layout/NavMenu.razor
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Components/Layout/NavMenu.razor
+  Relative path:         src/Weather.Web/Components/Layout/NavMenu.razor
   Size:                  217 B (217 bytes)
   SHA-256:               518966c4b46475842302398947fe8b5c60e876b48475619b14364bfb76f50151
 
@@ -5031,11 +4772,11 @@ the Aspire dashboard.
 </nav>
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Components/Pages/About.razor
+# FILE: src/Weather.Web/Components/Pages/About.razor
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Components/Pages/About.razor
+  Relative path:         src/Weather.Web/Components/Pages/About.razor
   Size:                  1.3 KiB (1335 bytes)
   SHA-256:               812f802bf17dcbddee23409594ff8c85dfe8746d5e19d358d345d350d022fd89
 
@@ -5067,11 +4808,11 @@ the Aspire dashboard.
 </section>
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Components/Pages/Error.razor
+# FILE: src/Weather.Web/Components/Pages/Error.razor
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Components/Pages/Error.razor
+  Relative path:         src/Weather.Web/Components/Pages/Error.razor
   Size:                  1.0 KiB (1053 bytes)
   SHA-256:               01b55d81a22a748d5dcdd8414e6f192a007cdbf094485bca27b3f069034f9205
 
@@ -5114,11 +4855,11 @@ the Aspire dashboard.
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Components/Pages/Home.razor
+# FILE: src/Weather.Web/Components/Pages/Home.razor
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Components/Pages/Home.razor
+  Relative path:         src/Weather.Web/Components/Pages/Home.razor
   Size:                  17.2 KiB (17614 bytes)
   SHA-256:               fcf955ba38adebd392430a586f69ab7f7ed31e9eaa4fa43e8e626a4c8f6a0864
 
@@ -5600,11 +5341,11 @@ the Aspire dashboard.
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Components/Routes.razor
+# FILE: src/Weather.Web/Components/Routes.razor
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Components/Routes.razor
+  Relative path:         src/Weather.Web/Components/Routes.razor
   Size:                  610 B (610 bytes)
   SHA-256:               18fc57642356ff1b000dbc0de9bc6afb760c0e4ab5efc553310c74b9491df05f
 
@@ -5626,11 +5367,11 @@ the Aspire dashboard.
 </Router>
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Components/_Imports.razor
+# FILE: src/Weather.Web/Components/_Imports.razor
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Components/_Imports.razor
+  Relative path:         src/Weather.Web/Components/_Imports.razor
   Size:                  416 B (416 bytes)
   SHA-256:               e343d9c6133f79673bffdba747989f2fcac869fdc5defaa2ec7c230dc163dba1
 
@@ -5649,11 +5390,11 @@ the Aspire dashboard.
 @using Weather.Web.Services
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Program.cs
+# FILE: src/Weather.Web/Program.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Program.cs
+  Relative path:         src/Weather.Web/Program.cs
   Size:                  1.2 KiB (1250 bytes)
   SHA-256:               34288f316d70924db97c449c735935000d502520c8414a3c76effb134507de1a
 
@@ -5699,11 +5440,11 @@ app.MapRazorComponents<App>()
 app.Run();
 
 ################################################################################
-# FILE: weather/src/Weather.Web/README.md
+# FILE: src/Weather.Web/README.md
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/README.md
+  Relative path:         src/Weather.Web/README.md
   Size:                  4.2 KiB (4338 bytes)
   SHA-256:               4775c854a6b5fde22edca41143574a2f39d8843492cd784dce0f12d7f21a6ac0
 
@@ -5811,11 +5552,11 @@ Weather.Web/
 ```
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Services/GeolocationService.cs
+# FILE: src/Weather.Web/Services/GeolocationService.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Services/GeolocationService.cs
+  Relative path:         src/Weather.Web/Services/GeolocationService.cs
   Size:                  2.1 KiB (2198 bytes)
   SHA-256:               cba8d02764a815bfdb43b17c2ddb0ac1c9cf0b750a501ac2d31c1913effa4e7b
 
@@ -5883,11 +5624,11 @@ internal sealed class GeolocationService(IJSRuntime jsRuntime) : IGeolocationSer
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Services/IGeolocationService.cs
+# FILE: src/Weather.Web/Services/IGeolocationService.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Services/IGeolocationService.cs
+  Relative path:         src/Weather.Web/Services/IGeolocationService.cs
   Size:                  1.8 KiB (1840 bytes)
   SHA-256:               a2d826a6ab9ac75e360a75623314192c448fae179f6ba0e68210df2e26419425
 
@@ -5948,11 +5689,11 @@ public interface IGeolocationService
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Services/IWeatherApiClient.cs
+# FILE: src/Weather.Web/Services/IWeatherApiClient.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Services/IWeatherApiClient.cs
+  Relative path:         src/Weather.Web/Services/IWeatherApiClient.cs
   Size:                  941 B (941 bytes)
   SHA-256:               78b09068d3ec605da97a0fc5c38c48091bc3b4827374faf9c2ab8e4b982cf05c
 
@@ -5983,11 +5724,11 @@ public interface IWeatherApiClient
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Services/SkyPalette.cs
+# FILE: src/Weather.Web/Services/SkyPalette.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Services/SkyPalette.cs
+  Relative path:         src/Weather.Web/Services/SkyPalette.cs
   Size:                  3.3 KiB (3369 bytes)
   SHA-256:               fc0f6f48d21a620c4770e5ae8585585b0cf1712afe9f8202d8a5c5c174c1ba50
 
@@ -6073,11 +5814,11 @@ public static class SkyPalette
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Services/WeatherApiClient.cs
+# FILE: src/Weather.Web/Services/WeatherApiClient.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Services/WeatherApiClient.cs
+  Relative path:         src/Weather.Web/Services/WeatherApiClient.cs
   Size:                  2.4 KiB (2446 bytes)
   SHA-256:               3ca22664efa5ff763c22e90ac523936bb68477df7bc0f455358bfd3f15ccb150
 
@@ -6151,11 +5892,11 @@ public sealed class WeatherApiClient(HttpClient httpClient) : IWeatherApiClient
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Services/WeatherViewModels.cs
+# FILE: src/Weather.Web/Services/WeatherViewModels.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Services/WeatherViewModels.cs
+  Relative path:         src/Weather.Web/Services/WeatherViewModels.cs
   Size:                  1.2 KiB (1270 bytes)
   SHA-256:               049e36722cc484bc9d1159c41e2cc2a6ad1d24ec80067dbb8efadc5e7c34cdae
 
@@ -6203,11 +5944,11 @@ public sealed record NeighborhoodDto(
     IReadOnlyList<ForecastDto> Neighbors);
 
 ################################################################################
-# FILE: weather/src/Weather.Web/Weather.Web.csproj
+# FILE: src/Weather.Web/Weather.Web.csproj
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/Weather.Web.csproj
+  Relative path:         src/Weather.Web/Weather.Web.csproj
   Size:                  487 B (487 bytes)
   SHA-256:               21ea220e308aa545f972f80937ba19bee81f8899781a032dc0e3513be2f904a4
 
@@ -6228,11 +5969,11 @@ public sealed record NeighborhoodDto(
 </Project>
 
 ################################################################################
-# FILE: weather/src/Weather.Web/appsettings.Development.json
+# FILE: src/Weather.Web/appsettings.Development.json
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/appsettings.Development.json
+  Relative path:         src/Weather.Web/appsettings.Development.json
   Size:                  130 B (130 bytes)
   SHA-256:               43dc67e35fc8a37e82448c8f7e4d672551ca3acd4ba3fe06ba142c2e2f08e3f8
 
@@ -6248,11 +5989,11 @@ public sealed record NeighborhoodDto(
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Web/appsettings.json
+# FILE: src/Weather.Web/appsettings.json
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/appsettings.json
+  Relative path:         src/Weather.Web/appsettings.json
   Size:                  199 B (199 bytes)
   SHA-256:               2d0e4e668ea153e06ca772f3ff02b443d3f1651f0bad36fe8afb6c24057f3008
 
@@ -6271,11 +6012,11 @@ public sealed record NeighborhoodDto(
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Web/wwwroot/app.css
+# FILE: src/Weather.Web/wwwroot/app.css
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/wwwroot/app.css
+  Relative path:         src/Weather.Web/wwwroot/app.css
   Size:                  13.5 KiB (13774 bytes)
   SHA-256:               9139cf36e5421dbc7810dc7699269fc34183578504f2d4ac8673a51d9e1e88d9
 
@@ -6958,11 +6699,11 @@ a {
 }
 
 ################################################################################
-# FILE: weather/src/Weather.Web/wwwroot/js/geolocation.js
+# FILE: src/Weather.Web/wwwroot/js/geolocation.js
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/src/Weather.Web/wwwroot/js/geolocation.js
+  Relative path:         src/Weather.Web/wwwroot/js/geolocation.js
   Size:                  2.4 KiB (2459 bytes)
   SHA-256:               5ba55f246a87cb156e9b3b6924e986ca94f798fdd46d4a5817cafe02649cc2d0
 
@@ -7033,11 +6774,11 @@ window.weatherGeo = {
 };
 
 ################################################################################
-# FILE: weather/tests/Weather.Api.Tests/Fakes/FakeNwsApiClient.cs
+# FILE: tests/Weather.Api.Tests/Fakes/FakeNwsApiClient.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Api.Tests/Fakes/FakeNwsApiClient.cs
+  Relative path:         tests/Weather.Api.Tests/Fakes/FakeNwsApiClient.cs
   Size:                  2.1 KiB (2157 bytes)
   SHA-256:               253051c682a5431300315b9405e479d5116ab2d161c2d37cead10d5c9edb5630
 
@@ -7094,11 +6835,11 @@ internal sealed class FakeNwsApiClient : INwsApiClient
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs
+# FILE: tests/Weather.Api.Tests/ForecastEndpointsTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Api.Tests/ForecastEndpointsTests.cs
+  Relative path:         tests/Weather.Api.Tests/ForecastEndpointsTests.cs
   Size:                  2.4 KiB (2423 bytes)
   SHA-256:               12f3e8fc65564861845af6f73752515b349fcc6edb3cb0b7950ccbad59606384
 
@@ -7175,11 +6916,11 @@ public sealed class ForecastEndpointsTests : IDisposable
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Api.Tests/GlobalUsings.cs
+# FILE: tests/Weather.Api.Tests/GlobalUsings.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Api.Tests/GlobalUsings.cs
+  Relative path:         tests/Weather.Api.Tests/GlobalUsings.cs
   Size:                  48 B (48 bytes)
   SHA-256:               1532004021727066270ee5f31aa3f62feafeaa252c4126bf0ff17769f1f327e5
 
@@ -7188,11 +6929,11 @@ global using Shouldly;
 global using TUnit.Core;
 
 ################################################################################
-# FILE: weather/tests/Weather.Api.Tests/Weather.Api.Tests.csproj
+# FILE: tests/Weather.Api.Tests/Weather.Api.Tests.csproj
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Api.Tests/Weather.Api.Tests.csproj
+  Relative path:         tests/Weather.Api.Tests/Weather.Api.Tests.csproj
   Size:                  559 B (559 bytes)
   SHA-256:               c38a5535273fafe78cdcaa38eab89614e6c842d5e9f67b1e02aa083fdd498cb8
 
@@ -7219,11 +6960,11 @@ global using TUnit.Core;
 </Project>
 
 ################################################################################
-# FILE: weather/tests/Weather.Api.Tests/WeatherApiFactory.cs
+# FILE: tests/Weather.Api.Tests/WeatherApiFactory.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Api.Tests/WeatherApiFactory.cs
+  Relative path:         tests/Weather.Api.Tests/WeatherApiFactory.cs
   Size:                  2.0 KiB (2055 bytes)
   SHA-256:               e4960152c2e2887c91f75e45c91e4e003f52e0cc99fe1f4a02673d3690b30226
 
@@ -7297,11 +7038,11 @@ internal sealed class WeatherApiFactory : WebApplicationFactory<Program>
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs
+# FILE: tests/Weather.Core.Tests/ForecastFetchResultTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Core.Tests/ForecastFetchResultTests.cs
+  Relative path:         tests/Weather.Core.Tests/ForecastFetchResultTests.cs
   Size:                  2.3 KiB (2354 bytes)
   SHA-256:               0baebe13f2c8b295531d611e86a206339be487ee1285ef5d5d24ac6cb6677208
 
@@ -7381,11 +7122,11 @@ public sealed class GridPointTests
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs
+# FILE: tests/Weather.Core.Tests/GeoCoordinateTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Core.Tests/GeoCoordinateTests.cs
+  Relative path:         tests/Weather.Core.Tests/GeoCoordinateTests.cs
   Size:                  3.7 KiB (3822 bytes)
   SHA-256:               d171a8b9212a34a8acccab8ada9681e4a3f1619d59b76313054468e1d3ecb235
 
@@ -7513,11 +7254,11 @@ public sealed class GeoCoordinateTests
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Core.Tests/GlobalUsings.cs
+# FILE: tests/Weather.Core.Tests/GlobalUsings.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Core.Tests/GlobalUsings.cs
+  Relative path:         tests/Weather.Core.Tests/GlobalUsings.cs
   Size:                  82 B (82 bytes)
   SHA-256:               ae172c2ec5791665aed392a7a651fa476ffb7a326fec4e854fe3e5ee5de4c661
 
@@ -7527,11 +7268,11 @@ global using TUnit.Core;
 global using Weather.Core.Models;
 
 ################################################################################
-# FILE: weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs
+# FILE: tests/Weather.Core.Tests/GridNeighborhoodTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Core.Tests/GridNeighborhoodTests.cs
+  Relative path:         tests/Weather.Core.Tests/GridNeighborhoodTests.cs
   Size:                  2.1 KiB (2167 bytes)
   SHA-256:               7f1aa3ed8cfd19c0c02cac1170642f653b6091340645658ec136072e4970300f
 
@@ -7614,11 +7355,11 @@ public sealed class GridNeighborhoodTests
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Core.Tests/Weather.Core.Tests.csproj
+# FILE: tests/Weather.Core.Tests/Weather.Core.Tests.csproj
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Core.Tests/Weather.Core.Tests.csproj
+  Relative path:         tests/Weather.Core.Tests/Weather.Core.Tests.csproj
   Size:                  727 B (727 bytes)
   SHA-256:               a09b0ff0f6f8ba8891b8571ea62bd1f8546520f09e3f8348d5f39db73d884bd2
 
@@ -7647,11 +7388,11 @@ public sealed class GridNeighborhoodTests
 </Project>
 
 ################################################################################
-# FILE: weather/tests/Weather.Core.Tests/WeatherTelemetryTests.cs
+# FILE: tests/Weather.Core.Tests/WeatherTelemetryTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Core.Tests/WeatherTelemetryTests.cs
+  Relative path:         tests/Weather.Core.Tests/WeatherTelemetryTests.cs
   Size:                  2.9 KiB (2932 bytes)
   SHA-256:               2f1ab34a330a2c433411ecd0beef9f5c5d7257cf3ea45a8cd21e0e0a5e078ee1
 
@@ -7746,11 +7487,11 @@ public sealed class WeatherTelemetryTests
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Infrastructure.Tests/Caching/SqliteCacheHarness.cs
+# FILE: tests/Weather.Infrastructure.Tests/Caching/SqliteCacheHarness.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Infrastructure.Tests/Caching/SqliteCacheHarness.cs
+  Relative path:         tests/Weather.Infrastructure.Tests/Caching/SqliteCacheHarness.cs
   Size:                  2.0 KiB (2035 bytes)
   SHA-256:               29702cf761e4e55d559e5c2da4ac7aea9a728121efdc51a301aff928dbd9ab3a
 
@@ -7816,11 +7557,11 @@ internal sealed class SqliteCacheHarness : IAsyncDisposable
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Infrastructure.Tests/Caching/SqliteForecastCacheTests.cs
+# FILE: tests/Weather.Infrastructure.Tests/Caching/SqliteForecastCacheTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Infrastructure.Tests/Caching/SqliteForecastCacheTests.cs
+  Relative path:         tests/Weather.Infrastructure.Tests/Caching/SqliteForecastCacheTests.cs
   Size:                  3.5 KiB (3635 bytes)
   SHA-256:               ad26728a522b016108e6fb25159e34307bb93e6dacc15b556c02e60a3adbe6e2
 
@@ -7918,11 +7659,11 @@ public sealed class SqliteForecastCacheTests
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Infrastructure.Tests/Caching/SqlitePointMetadataCacheTests.cs
+# FILE: tests/Weather.Infrastructure.Tests/Caching/SqlitePointMetadataCacheTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Infrastructure.Tests/Caching/SqlitePointMetadataCacheTests.cs
+  Relative path:         tests/Weather.Infrastructure.Tests/Caching/SqlitePointMetadataCacheTests.cs
   Size:                  3.5 KiB (3568 bytes)
   SHA-256:               91fbcc1306ac5c69ffbcc6c1f5e757a84d3a0529dcb8a01bd497f84fd055fbdf
 
@@ -8016,11 +7757,11 @@ public sealed class SqlitePointMetadataCacheTests
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Infrastructure.Tests/Fakes/MutableTimeProvider.cs
+# FILE: tests/Weather.Infrastructure.Tests/Fakes/MutableTimeProvider.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Infrastructure.Tests/Fakes/MutableTimeProvider.cs
+  Relative path:         tests/Weather.Infrastructure.Tests/Fakes/MutableTimeProvider.cs
   Size:                  517 B (517 bytes)
   SHA-256:               e0ca3a1fa68df8179cb91268e1a2216a4d7ace2b33c4896bef72bbd9f82ae4aa
 
@@ -8043,11 +7784,11 @@ internal sealed class MutableTimeProvider(DateTimeOffset now) : TimeProvider
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Infrastructure.Tests/Fakes/NwsPayloads.cs
+# FILE: tests/Weather.Infrastructure.Tests/Fakes/NwsPayloads.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Infrastructure.Tests/Fakes/NwsPayloads.cs
+  Relative path:         tests/Weather.Infrastructure.Tests/Fakes/NwsPayloads.cs
   Size:                  2.9 KiB (2946 bytes)
   SHA-256:               f00f304c98b5bb0db9489c18a1f627a606596efae6ada9f8f17b4aeb9a89a615
 
@@ -8130,11 +7871,11 @@ internal static class NwsPayloads
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Infrastructure.Tests/Fakes/StubHttpMessageHandler.cs
+# FILE: tests/Weather.Infrastructure.Tests/Fakes/StubHttpMessageHandler.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Infrastructure.Tests/Fakes/StubHttpMessageHandler.cs
+  Relative path:         tests/Weather.Infrastructure.Tests/Fakes/StubHttpMessageHandler.cs
   Size:                  1.6 KiB (1668 bytes)
   SHA-256:               d15ee8a3c615fd8adda1350a8e7ac679a44c96efb1c536187eae3812a3e70400
 
@@ -8188,11 +7929,11 @@ internal sealed class StubHttpMessageHandler(Func<HttpRequestMessage, HttpRespon
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Infrastructure.Tests/GlobalUsings.cs
+# FILE: tests/Weather.Infrastructure.Tests/GlobalUsings.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Infrastructure.Tests/GlobalUsings.cs
+  Relative path:         tests/Weather.Infrastructure.Tests/GlobalUsings.cs
   Size:                  108 B (108 bytes)
   SHA-256:               752f93715f143adb18c512f2373be5423522c35b4f64ef8ce44b8fbc6c37fbcd
 
@@ -8203,11 +7944,11 @@ global using TUnit.Core;
 global using Weather.Core.Models;
 
 ################################################################################
-# FILE: weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs
+# FILE: tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs
+  Relative path:         tests/Weather.Infrastructure.Tests/Nws/NwsApiClientTests.cs
   Size:                  7.9 KiB (8065 bytes)
   SHA-256:               4ece42c409c88a51ec3c3517cea0c03614672da693a758c39ef7469364e07696
 
@@ -8423,11 +8164,11 @@ public sealed class NwsApiClientTests
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Infrastructure.Tests/Services/NeighborhoodWarmerTests.cs
+# FILE: tests/Weather.Infrastructure.Tests/Services/NeighborhoodWarmerTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Infrastructure.Tests/Services/NeighborhoodWarmerTests.cs
+  Relative path:         tests/Weather.Infrastructure.Tests/Services/NeighborhoodWarmerTests.cs
   Size:                  4.3 KiB (4357 bytes)
   SHA-256:               8a8dc1dec985fcaa04cadd6f8bcf7a012c4fc2942abd3176076ab4881b482ce4
 
@@ -8550,11 +8291,11 @@ public sealed class NeighborhoodWarmerTests
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs
+# FILE: tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs
+  Relative path:         tests/Weather.Infrastructure.Tests/Services/WeatherServiceTests.cs
   Size:                  9.5 KiB (9720 bytes)
   SHA-256:               d48431097c18f7f23458b175db9594a1439127b6552a00bd56d057578f25ab5f
 
@@ -8779,11 +8520,11 @@ public sealed class WeatherServiceTests
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Infrastructure.Tests/Weather.Infrastructure.Tests.csproj
+# FILE: tests/Weather.Infrastructure.Tests/Weather.Infrastructure.Tests.csproj
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Infrastructure.Tests/Weather.Infrastructure.Tests.csproj
+  Relative path:         tests/Weather.Infrastructure.Tests/Weather.Infrastructure.Tests.csproj
   Size:                  560 B (560 bytes)
   SHA-256:               9b602f723dee449baffa880c25c02bfb2a2d12bf601ab9487cb01903d63d5f77
 
@@ -8810,11 +8551,11 @@ public sealed class WeatherServiceTests
 </Project>
 
 ################################################################################
-# FILE: weather/tests/Weather.Web.Tests/Fakes/FakeGeolocationService.cs
+# FILE: tests/Weather.Web.Tests/Fakes/FakeGeolocationService.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Web.Tests/Fakes/FakeGeolocationService.cs
+  Relative path:         tests/Weather.Web.Tests/Fakes/FakeGeolocationService.cs
   Size:                  1.4 KiB (1397 bytes)
   SHA-256:               be33774209ec21d804b23fdaf14af46d8149ab5a637a088a00951f974d471ece
 
@@ -8858,11 +8599,11 @@ internal sealed class FakeGeolocationService : IGeolocationService
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Web.Tests/Fakes/FakeWeatherApiClient.cs
+# FILE: tests/Weather.Web.Tests/Fakes/FakeWeatherApiClient.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Web.Tests/Fakes/FakeWeatherApiClient.cs
+  Relative path:         tests/Weather.Web.Tests/Fakes/FakeWeatherApiClient.cs
   Size:                  1.4 KiB (1434 bytes)
   SHA-256:               83d4951f2f097f0be1e0700985d0a0f27e77914b57ca6d5215399761a7765d57
 
@@ -8910,11 +8651,11 @@ internal sealed class FakeWeatherApiClient : IWeatherApiClient
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Web.Tests/GlobalUsings.cs
+# FILE: tests/Weather.Web.Tests/GlobalUsings.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Web.Tests/GlobalUsings.cs
+  Relative path:         tests/Weather.Web.Tests/GlobalUsings.cs
   Size:                  83 B (83 bytes)
   SHA-256:               70bd3aba674654aa8ae5fb80a199dec41bb67b7a653b436457c9ced97b039cab
 
@@ -8924,11 +8665,11 @@ global using TUnit.Core;
 global using Weather.Web.Services;
 
 ################################################################################
-# FILE: weather/tests/Weather.Web.Tests/HomePageTests.cs
+# FILE: tests/Weather.Web.Tests/HomePageTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Web.Tests/HomePageTests.cs
+  Relative path:         tests/Weather.Web.Tests/HomePageTests.cs
   Size:                  5.4 KiB (5499 bytes)
   SHA-256:               2a57327e0d74ce057f7d932b6756f403c833af73c6cadb96975b08ccb7ff15a1
 
@@ -9081,11 +8822,11 @@ public sealed class HomePageTests
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Web.Tests/SkyPaletteTests.cs
+# FILE: tests/Weather.Web.Tests/SkyPaletteTests.cs
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Web.Tests/SkyPaletteTests.cs
+  Relative path:         tests/Weather.Web.Tests/SkyPaletteTests.cs
   Size:                  2.7 KiB (2775 bytes)
   SHA-256:               1781e3c9b7d878e8af36d625d12343e75b56491af76d68140607fd26503b7f5f
 
@@ -9172,11 +8913,11 @@ public sealed class SkyPaletteTests
 }
 
 ################################################################################
-# FILE: weather/tests/Weather.Web.Tests/Weather.Web.Tests.csproj
+# FILE: tests/Weather.Web.Tests/Weather.Web.Tests.csproj
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/tests/Weather.Web.Tests/Weather.Web.Tests.csproj
+  Relative path:         tests/Weather.Web.Tests/Weather.Web.Tests.csproj
   Size:                  536 B (536 bytes)
   SHA-256:               47a69663f529ac1f9b1e9b91279cad4e1f411e2dded51109467128abf94c5d21
 
@@ -9203,11 +8944,11 @@ public sealed class SkyPaletteTests
 </Project>
 
 ################################################################################
-# FILE: weather/weather.slnx
+# FILE: weather.slnx
 ################################################################################
 
 --- METADATA ---
-  Relative path:         weather/weather.slnx
+  Relative path:         weather.slnx
   Size:                  1.1 KiB (1142 bytes)
   SHA-256:               dfb9fcaefbf0fb4c8a6d2ddc05efe6fa31e88c1e1443212ad6077af3de4bc341
 
@@ -9242,10 +8983,10 @@ public sealed class SkyPaletteTests
 ################################################################################
 # DUMP SUMMARY
 ################################################################################
-  Files dumped   : 119
-  Total size     : 261.2 KiB (267450 bytes)
+  Files dumped   : 117
+  Total size     : 252.1 KiB (258111 bytes)
   Output file    : /home/kushal/src/dotnet/MyWeatherStudio/docs/llm/dump.txt
-  Completed at   : 2026-11-22T10:42:49-05:00
+  Completed at   : 2026-11-22T11:03:24-05:00
 ################################################################################
 # END OF DUMP
 ################################################################################
