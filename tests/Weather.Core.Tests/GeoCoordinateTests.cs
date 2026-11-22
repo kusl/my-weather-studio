@@ -102,11 +102,14 @@ public sealed class GeoCoordinateTests
     [Test]
     public void ToApiString_is_culture_independent()
     {
-        // Guard against a comma decimal separator leaking in under a non-US culture.
+        var commaDecimalCulture = (CultureInfo)CultureInfo.InvariantCulture.Clone();
+        commaDecimalCulture.NumberFormat.NumberDecimalSeparator = ",";
+        commaDecimalCulture.NumberFormat.NumberGroupSeparator = ".";
+
         var original = CultureInfo.CurrentCulture;
         try
         {
-            CultureInfo.CurrentCulture = new CultureInfo("de-DE");
+            CultureInfo.CurrentCulture = commaDecimalCulture;
             new GeoCoordinate(37.0879, -76.4505).ToApiString().ShouldBe("37.0879,-76.4505");
         }
         finally
