@@ -210,4 +210,4 @@ Markdown linting. Action versions are kept current by Dependabot.
 
 ## Licence
 
-[MIT](LICENSE).
+AGPLv3
