@@ -7,19 +7,19 @@
 
 DUMP METADATA
 ═════════════════════════════════════════════════════════════════════════════════
-  Generated at   : 2026-11-22T10:28:59-05:00
+  Generated at   : 2026-11-22T10:39:16-05:00
   Generator      : export.sh
 
 REPOSITORY METADATA
 ═════════════════════════════════════════════════════════════════════════════════
   Repository root: /home/kushal/src/dotnet/MyWeatherStudio
   Branch         : main
-  Commit (full)  : 676e27af938d0b5f714c8f81e78bc871d3f06474
-  Commit (short) : 676e27a
-  Commit date    : 2026-06-18 07:54:07 -0400
-  Commit message : add claude response
+  Commit (full)  : f5c18feda9d9f8d5f169132f03b3b513cfb17c2f
+  Commit (short) : f5c18fe
+  Commit date    : 2026-11-22 10:39:12 -0500
+  Commit message : update to use dotnet 11
   Remote origin  : none
-  Files included : 120
+  Files included : 119
   Withheld paths : docs/llm/, docs/progress/
   Excluded files : export.sh
   Elided files   : LICENSE (metadata and SHA-256 only)
@@ -34,10 +34,7 @@ NOT EVERYTHING TRACKED IS BELOW
 
 GIT WORKING TREE STATUS (first 20 lines)
 ═════════════════════════════════════════════════════════════════════════════════
- D weather.zip
- M weather/Directory.Packages.props
-?? docs/
-?? export.sh
+  (clean — no uncommitted changes)
 
 ################################################################################
 # FILE: export.sh  [THIS SCRIPT — included for full context]
@@ -434,166 +431,165 @@ trap - EXIT
 cat "$OUTPUT_FILE"
 
 ################################################################################
-# FILE TREE  (120 included files)
+# FILE TREE  (119 included files)
 ################################################################################
 .
 ├── ARCHITECTURE.md
 ├── README.md
-├── weather
-│   ├── .editorconfig
-│   ├── .gitattributes
-│   ├── .github
-│   │   ├── dependabot.yml
-│   │   └── workflows
-│   │       ├── build.yml
-│   │       ├── codeql.yml
-│   │       ├── dependency-review.yml
-│   │       ├── format.yml
-│   │       ├── markdown-lint.yml
-│   │       └── test.yml
-│   ├── .gitignore
-│   ├── .markdownlint.jsonc
-│   ├── Directory.Build.props
-│   ├── Directory.Packages.props
-│   ├── LICENSE
-│   ├── README.md
-│   ├── docs
-│   │   └── ARCHITECTURE.md
-│   ├── global.json
-│   ├── nuget.config
-│   ├── src
-│   │   ├── Weather.Api
-│   │   │   ├── Contracts
-│   │   │   │   ├── ForecastResponse.cs
-│   │   │   │   └── NeighborhoodResponse.cs
-│   │   │   ├── Endpoints
-│   │   │   │   └── WeatherEndpoints.cs
-│   │   │   ├── Program.cs
-│   │   │   ├── README.md
-│   │   │   ├── Weather.Api.csproj
-│   │   │   ├── appsettings.Development.json
-│   │   │   └── appsettings.json
-│   │   ├── Weather.AppHost
-│   │   │   ├── Program.cs
-│   │   │   ├── README.md
-│   │   │   ├── Weather.AppHost.csproj
-│   │   │   └── appsettings.json
-│   │   ├── Weather.Core
-│   │   │   ├── Abstractions
-│   │   │   │   ├── IForecastCache.cs
-│   │   │   │   ├── INeighborhoodWarmer.cs
-│   │   │   │   ├── INwsApiClient.cs
-│   │   │   │   ├── IPointMetadataCache.cs
-│   │   │   │   └── IWeatherService.cs
-│   │   │   ├── Models
-│   │   │   │   ├── CachedForecast.cs
-│   │   │   │   ├── CachedPointMetadata.cs
-│   │   │   │   ├── Forecast.cs
-│   │   │   │   ├── ForecastFetchResult.cs
-│   │   │   │   ├── ForecastPeriod.cs
-│   │   │   │   ├── GeoCoordinate.cs
-│   │   │   │   ├── GridNeighborhood.cs
-│   │   │   │   ├── GridPoint.cs
-│   │   │   │   ├── NeighborhoodForecast.cs
-│   │   │   │   └── PointMetadata.cs
-│   │   │   ├── README.md
-│   │   │   ├── Telemetry
-│   │   │   │   └── WeatherTelemetry.cs
-│   │   │   └── Weather.Core.csproj
-│   │   ├── Weather.Infrastructure
-│   │   │   ├── Caching
-│   │   │   │   ├── DatabaseInitializer.cs
-│   │   │   │   ├── SqliteCacheOptions.cs
-│   │   │   │   ├── SqliteConnectionFactory.cs
-│   │   │   │   ├── SqliteForecastCache.cs
-│   │   │   │   ├── SqlitePointMetadataCache.cs
-│   │   │   │   └── TimestampText.cs
-│   │   │   ├── DependencyInjection.cs
-│   │   │   ├── Nws
-│   │   │   │   ├── NwsApiClient.cs
-│   │   │   │   ├── NwsClientOptions.cs
-│   │   │   │   └── NwsJsonModels.cs
-│   │   │   ├── README.md
-│   │   │   ├── Serialization
-│   │   │   │   └── WeatherJson.cs
-│   │   │   ├── Services
-│   │   │   │   ├── NeighborhoodWarmer.cs
-│   │   │   │   ├── NeighborhoodWarmingBackgroundService.cs
-│   │   │   │   └── WeatherService.cs
-│   │   │   └── Weather.Infrastructure.csproj
-│   │   ├── Weather.ServiceDefaults
-│   │   │   ├── Extensions.cs
-│   │   │   ├── README.md
-│   │   │   └── Weather.ServiceDefaults.csproj
-│   │   └── Weather.Web
-│   │       ├── Components
-│   │       │   ├── App.razor
-│   │       │   ├── Layout
-│   │       │   │   ├── MainLayout.razor
-│   │       │   │   └── NavMenu.razor
-│   │       │   ├── Pages
-│   │       │   │   ├── About.razor
-│   │       │   │   ├── Error.razor
-│   │       │   │   └── Home.razor
-│   │       │   ├── Routes.razor
-│   │       │   └── _Imports.razor
-│   │       ├── Program.cs
-│   │       ├── README.md
-│   │       ├── Services
-│   │       │   ├── GeolocationService.cs
-│   │       │   ├── IGeolocationService.cs
-│   │       │   ├── IWeatherApiClient.cs
-│   │       │   ├── SkyPalette.cs
-│   │       │   ├── WeatherApiClient.cs
-│   │       │   └── WeatherViewModels.cs
-│   │       ├── Weather.Web.csproj
-│   │       ├── appsettings.Development.json
-│   │       ├── appsettings.json
-│   │       └── wwwroot
-│   │           ├── app.css
-│   │           └── js
-│   │               └── geolocation.js
-│   ├── tests
-│   │   ├── Weather.Api.Tests
-│   │   │   ├── Fakes
-│   │   │   │   └── FakeNwsApiClient.cs
-│   │   │   ├── ForecastEndpointsTests.cs
-│   │   │   ├── GlobalUsings.cs
-│   │   │   ├── Weather.Api.Tests.csproj
-│   │   │   └── WeatherApiFactory.cs
-│   │   ├── Weather.Core.Tests
-│   │   │   ├── ForecastFetchResultTests.cs
-│   │   │   ├── GeoCoordinateTests.cs
-│   │   │   ├── GlobalUsings.cs
-│   │   │   ├── GridNeighborhoodTests.cs
-│   │   │   ├── Weather.Core.Tests.csproj
-│   │   │   └── WeatherTelemetryTests.cs
-│   │   ├── Weather.Infrastructure.Tests
-│   │   │   ├── Caching
-│   │   │   │   ├── SqliteCacheHarness.cs
-│   │   │   │   ├── SqliteForecastCacheTests.cs
-│   │   │   │   └── SqlitePointMetadataCacheTests.cs
-│   │   │   ├── Fakes
-│   │   │   │   ├── MutableTimeProvider.cs
-│   │   │   │   ├── NwsPayloads.cs
-│   │   │   │   └── StubHttpMessageHandler.cs
-│   │   │   ├── GlobalUsings.cs
-│   │   │   ├── Nws
-│   │   │   │   └── NwsApiClientTests.cs
-│   │   │   ├── Services
-│   │   │   │   ├── NeighborhoodWarmerTests.cs
-│   │   │   │   └── WeatherServiceTests.cs
-│   │   │   └── Weather.Infrastructure.Tests.csproj
-│   │   └── Weather.Web.Tests
-│   │       ├── Fakes
-│   │       │   ├── FakeGeolocationService.cs
-│   │       │   └── FakeWeatherApiClient.cs
-│   │       ├── GlobalUsings.cs
-│   │       ├── HomePageTests.cs
-│   │       ├── SkyPaletteTests.cs
-│   │       └── Weather.Web.Tests.csproj
-│   └── weather.slnx
-└── weather.zip
+└── weather
+    ├── .editorconfig
+    ├── .gitattributes
+    ├── .github
+    │   ├── dependabot.yml
+    │   └── workflows
+    │       ├── build.yml
+    │       ├── codeql.yml
+    │       ├── dependency-review.yml
+    │       ├── format.yml
+    │       ├── markdown-lint.yml
+    │       └── test.yml
+    ├── .gitignore
+    ├── .markdownlint.jsonc
+    ├── Directory.Build.props
+    ├── Directory.Packages.props
+    ├── LICENSE
+    ├── README.md
+    ├── docs
+    │   └── ARCHITECTURE.md
+    ├── global.json
+    ├── nuget.config
+    ├── src
+    │   ├── Weather.Api
+    │   │   ├── Contracts
+    │   │   │   ├── ForecastResponse.cs
+    │   │   │   └── NeighborhoodResponse.cs
+    │   │   ├── Endpoints
+    │   │   │   └── WeatherEndpoints.cs
+    │   │   ├── Program.cs
+    │   │   ├── README.md
+    │   │   ├── Weather.Api.csproj
+    │   │   ├── appsettings.Development.json
+    │   │   └── appsettings.json
+    │   ├── Weather.AppHost
+    │   │   ├── Program.cs
+    │   │   ├── README.md
+    │   │   ├── Weather.AppHost.csproj
+    │   │   └── appsettings.json
+    │   ├── Weather.Core
+    │   │   ├── Abstractions
+    │   │   │   ├── IForecastCache.cs
+    │   │   │   ├── INeighborhoodWarmer.cs
+    │   │   │   ├── INwsApiClient.cs
+    │   │   │   ├── IPointMetadataCache.cs
+    │   │   │   └── IWeatherService.cs
+    │   │   ├── Models
+    │   │   │   ├── CachedForecast.cs
+    │   │   │   ├── CachedPointMetadata.cs
+    │   │   │   ├── Forecast.cs
+    │   │   │   ├── ForecastFetchResult.cs
+    │   │   │   ├── ForecastPeriod.cs
+    │   │   │   ├── GeoCoordinate.cs
+    │   │   │   ├── GridNeighborhood.cs
+    │   │   │   ├── GridPoint.cs
+    │   │   │   ├── NeighborhoodForecast.cs
+    │   │   │   └── PointMetadata.cs
+    │   │   ├── README.md
+    │   │   ├── Telemetry
+    │   │   │   └── WeatherTelemetry.cs
+    │   │   └── Weather.Core.csproj
+    │   ├── Weather.Infrastructure
+    │   │   ├── Caching
+    │   │   │   ├── DatabaseInitializer.cs
+    │   │   │   ├── SqliteCacheOptions.cs
+    │   │   │   ├── SqliteConnectionFactory.cs
+    │   │   │   ├── SqliteForecastCache.cs
+    │   │   │   ├── SqlitePointMetadataCache.cs
+    │   │   │   └── TimestampText.cs
+    │   │   ├── DependencyInjection.cs
+    │   │   ├── Nws
+    │   │   │   ├── NwsApiClient.cs
+    │   │   │   ├── NwsClientOptions.cs
+    │   │   │   └── NwsJsonModels.cs
+    │   │   ├── README.md
+    │   │   ├── Serialization
+    │   │   │   └── WeatherJson.cs
+    │   │   ├── Services
+    │   │   │   ├── NeighborhoodWarmer.cs
+    │   │   │   ├── NeighborhoodWarmingBackgroundService.cs
+    │   │   │   └── WeatherService.cs
+    │   │   └── Weather.Infrastructure.csproj
+    │   ├── Weather.ServiceDefaults
+    │   │   ├── Extensions.cs
+    │   │   ├── README.md
+    │   │   └── Weather.ServiceDefaults.csproj
+    │   └── Weather.Web
+    │       ├── Components
+    │       │   ├── App.razor
+    │       │   ├── Layout
+    │       │   │   ├── MainLayout.razor
+    │       │   │   └── NavMenu.razor
+    │       │   ├── Pages
+    │       │   │   ├── About.razor
+    │       │   │   ├── Error.razor
+    │       │   │   └── Home.razor
+    │       │   ├── Routes.razor
+    │       │   └── _Imports.razor
+    │       ├── Program.cs
+    │       ├── README.md
+    │       ├── Services
+    │       │   ├── GeolocationService.cs
+    │       │   ├── IGeolocationService.cs
+    │       │   ├── IWeatherApiClient.cs
+    │       │   ├── SkyPalette.cs
+    │       │   ├── WeatherApiClient.cs
+    │       │   └── WeatherViewModels.cs
+    │       ├── Weather.Web.csproj
+    │       ├── appsettings.Development.json
+    │       ├── appsettings.json
+    │       └── wwwroot
+    │           ├── app.css
+    │           └── js
+    │               └── geolocation.js
+    ├── tests
+    │   ├── Weather.Api.Tests
+    │   │   ├── Fakes
+    │   │   │   └── FakeNwsApiClient.cs
+    │   │   ├── ForecastEndpointsTests.cs
+    │   │   ├── GlobalUsings.cs
+    │   │   ├── Weather.Api.Tests.csproj
+    │   │   └── WeatherApiFactory.cs
+    │   ├── Weather.Core.Tests
+    │   │   ├── ForecastFetchResultTests.cs
+    │   │   ├── GeoCoordinateTests.cs
+    │   │   ├── GlobalUsings.cs
+    │   │   ├── GridNeighborhoodTests.cs
+    │   │   ├── Weather.Core.Tests.csproj
+    │   │   └── WeatherTelemetryTests.cs
+    │   ├── Weather.Infrastructure.Tests
+    │   │   ├── Caching
+    │   │   │   ├── SqliteCacheHarness.cs
+    │   │   │   ├── SqliteForecastCacheTests.cs
+    │   │   │   └── SqlitePointMetadataCacheTests.cs
+    │   │   ├── Fakes
+    │   │   │   ├── MutableTimeProvider.cs
+    │   │   │   ├── NwsPayloads.cs
+    │   │   │   └── StubHttpMessageHandler.cs
+    │   │   ├── GlobalUsings.cs
+    │   │   ├── Nws
+    │   │   │   └── NwsApiClientTests.cs
+    │   │   ├── Services
+    │   │   │   ├── NeighborhoodWarmerTests.cs
+    │   │   │   └── WeatherServiceTests.cs
+    │   │   └── Weather.Infrastructure.Tests.csproj
+    │   └── Weather.Web.Tests
+    │       ├── Fakes
+    │       │   ├── FakeGeolocationService.cs
+    │       │   └── FakeWeatherApiClient.cs
+    │       ├── GlobalUsings.cs
+    │       ├── HomePageTests.cs
+    │       ├── SkyPaletteTests.cs
+    │       └── Weather.Web.Tests.csproj
+    └── weather.slnx
 
 
 ################################################################################
@@ -1454,7 +1450,7 @@ Thumbs.db
 --- METADATA ---
   Relative path:         weather/Directory.Build.props
   Size:                  1.9 KiB (1960 bytes)
-  SHA-256:               ddc59eed7ccc614c11e4b55cc0eefa61a1fb57d1e38098491da66f858599843a
+  SHA-256:               6862f3a53456609c4a1fc4ff5f3b150bba93f24312877f0726bf407c17ced079
 
 --- CONTENT ---
 <Project>
@@ -1467,7 +1463,7 @@ Thumbs.db
   -->
   <PropertyGroup>
     <!-- Target the latest LTS runtime and the matching language version. -->
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <LangVersion>latest</LangVersion>
 
     <!-- Modern C# ergonomics. -->
@@ -1514,8 +1510,8 @@ Thumbs.db
 
 --- METADATA ---
   Relative path:         weather/Directory.Packages.props
-  Size:                  2.3 KiB (2305 bytes)
-  SHA-256:               7093f72684c3d40006739b0a13b113feb37befaf2737352125c9b314e88844aa
+  Size:                  5.1 KiB (5210 bytes)
+  SHA-256:               d39f318dbcc2a2f1d970a3be9bd29cbcb7a684c5eae46958845fe01a985d5851
 
 --- CONTENT ---
 <Project>
@@ -1524,24 +1520,24 @@ Thumbs.db
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
 
     <!-- Shared version variables to keep families aligned. -->
-    <AspireVersion>9.5.1</AspireVersion>
-    <OpenTelemetryVersion>1.10.0</OpenTelemetryVersion>
+    <AspireVersion>17.0.0</AspireVersion>
+    <OpenTelemetryVersion>1.21.0</OpenTelemetryVersion>
   </PropertyGroup>
 
   <ItemGroup Label="Data access (SQLite + Dapper)">
-    <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.0" />
-    <PackageVersion Include="Dapper" Version="2.1.66" />
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="11.0.0" />
+    <PackageVersion Include="Dapper" Version="2.1.100" />
   </ItemGroup>
 
   <ItemGroup Label="Resilience, hosting, service discovery, rate limiting (first-party)">
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.10.0" />
-    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="$(AspireVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="11.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="11.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="11.0.1" />
     <PackageVersion Include="System.Threading.RateLimiting" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup Label="ASP.NET Core add-ons (first-party)">
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup Label=".NET Aspire orchestration">
@@ -1551,20 +1547,78 @@ Thumbs.db
   <ItemGroup Label="OpenTelemetry">
     <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="$(OpenTelemetryVersion)" />
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="$(OpenTelemetryVersion)" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.10.1" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="$(OpenTelemetryVersion)" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryVersion)" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="$(OpenTelemetryVersion)" />
   </ItemGroup>
 
   <ItemGroup Label="Testing (TUnit runner + Shouldly + bUnit + NSubstitute)">
-    <PackageVersion Include="TUnit" Version="0.25.0" />
+    <PackageVersion Include="TUnit" Version="1.87.12" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
-    <PackageVersion Include="NSubstitute" Version="5.3.0" />
+    <PackageVersion Include="NSubstitute" Version="6.2.0 " />
     <PackageVersion Include="bunit.web" Version="1.40.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.0" />
   </ItemGroup>
 
 </Project>
+
+
+<!-- 
+
+Project `Weather.Api` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package                   Requested   Resolved   Latest
+   > Microsoft.AspNetCore.OpenApi      10.0.0      10.0.0     11.0.0
+
+Project `Weather.AppHost` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package             Requested   Resolved   Latest
+   > Aspire.Hosting.AppHost      9.5.1       9.5.1      17.0.0
+
+The given project `Weather.Core` has no updates given the current sources.
+Project `Weather.Infrastructure` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package                           Requested   Resolved   Latest 
+   > Dapper                                    2.1.66      2.1.66     2.1.100
+   > Microsoft.Data.Sqlite                     10.0.0      10.0.0     11.0.0 
+   > Microsoft.Extensions.Hosting              10.0.0      10.0.0     11.0.0 
+   > Microsoft.Extensions.Http.Resilience      9.10.0      9.10.0     11.0.1 
+   > System.Threading.RateLimiting             10.0.0      10.0.0     11.0.0 
+
+Project `Weather.ServiceDefaults` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package                                   Requested   Resolved   Latest
+   > Microsoft.Extensions.Http.Resilience              9.10.0      9.10.0     11.0.1
+   > Microsoft.Extensions.ServiceDiscovery             9.5.1       9.5.1      11.0.1
+   > OpenTelemetry.Exporter.OpenTelemetryProtocol      1.10.0      1.10.0     1.21.0
+   > OpenTelemetry.Extensions.Hosting                  1.10.0      1.10.0     1.21.0
+   > OpenTelemetry.Instrumentation.AspNetCore          1.10.1      1.10.1     1.21.0
+   > OpenTelemetry.Instrumentation.Http                1.10.0      1.10.0     1.21.0
+   > OpenTelemetry.Instrumentation.Runtime             1.10.0      1.10.0     1.21.0
+
+The given project `Weather.Web` has no updates given the current sources.
+Project `Weather.Api.Tests` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package                       Requested   Resolved   Latest 
+   > Microsoft.AspNetCore.Mvc.Testing      10.0.0      10.0.0     11.0.0 
+   > TUnit                                 0.25.0      0.25.0     1.87.12
+
+Project `Weather.Core.Tests` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package      Requested   Resolved   Latest 
+   > TUnit                0.25.0      0.25.0     1.87.12
+
+Project `Weather.Infrastructure.Tests` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package      Requested   Resolved   Latest 
+   > NSubstitute          5.3.0       5.3.0      6.2.0  
+   > TUnit                0.25.0      0.25.0     1.87.12
+
+Project `Weather.Web.Tests` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package      Requested   Resolved   Latest 
+   > TUnit                0.25.0      0.25.0     1.87.12
+
 
 ################################################################################
 # FILE: weather/LICENSE
@@ -1605,7 +1659,7 @@ SOFTWARE.
 --- METADATA ---
   Relative path:         weather/README.md
   Size:                  8.1 KiB (8263 bytes)
-  SHA-256:               47453003cae2974c8d1d24c32098117e015397c551701b8d1a04b2ac99aed82e
+  SHA-256:               c9492f5d6121c63f1045225acf851177c3380e713cd0c2cc33fd0a54207adf55
 
 --- CONTENT ---
 # Weather
@@ -1676,7 +1730,7 @@ path. Details in [`src/Weather.Web/README.md`](src/Weather.Web/README.md).
 
 ## Prerequisites
 
-- **.NET 10 SDK** (the repo pins the `10.0.x` feature band in
+- **.NET 11 SDK** (the repo pins the `11.0.x` feature band in
   [`global.json`](global.json)).
 - For the Aspire run experience, the **.NET Aspire** tooling/workload as
   described in the [Aspire docs](https://learn.microsoft.com/dotnet/aspire/).
@@ -2002,15 +2056,18 @@ signals appear in the Aspire dashboard with no extra configuration.
 
 --- METADATA ---
   Relative path:         weather/global.json
-  Size:                  111 B (111 bytes)
-  SHA-256:               20c93ca7812d0a9825eef71217156f95ab2f4fe5aadfeb22ebc1c24b630018d3
+  Size:                  183 B (183 bytes)
+  SHA-256:               3cd5badb72536107f35912d868d7064df170e823194f3e50b52cd487e2b1ca29
 
 --- CONTENT ---
 {
   "sdk": {
-    "version": "10.0.100",
-    "rollForward": "latestFeature",
-    "allowPrerelease": false
+    "version": "11.0.100-rc.3.26522.148",
+    "rollForward": "latestMinor",
+    "allowPrerelease": true
+  },
+  "test": {
+    "runner": "Microsoft.Testing.Platform"
   }
 }
 
@@ -2558,8 +2615,8 @@ telemetry flows straight into the Aspire dashboard — no extra configuration.
 
 --- METADATA ---
   Relative path:         weather/src/Weather.AppHost/Weather.AppHost.csproj
-  Size:                  1.1 KiB (1135 bytes)
-  SHA-256:               905379ab919e913f049e7d9e20c4f9d36c889392b7ba8af214e142d041d085c5
+  Size:                  1.1 KiB (1136 bytes)
+  SHA-256:               38031babd4a9586df091c95513f8d355f968da5241eb4d54e7102d0d63df4201
 
 --- CONTENT ---
 <Project Sdk="Microsoft.NET.Sdk">
@@ -2569,7 +2626,7 @@ telemetry flows straight into the Aspire dashboard — no extra configuration.
        Program.cs. Its version must match the Aspire.Hosting.AppHost package
        (managed centrally in Directory.Packages.props); an SDK reference can't
        be version-managed by Central Package Management, so it's pinned here. -->
-  <Sdk Name="Aspire.AppHost.Sdk" Version="9.5.1" />
+  <Sdk Name="Aspire.AppHost.Sdk" Version="17.0.0" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9245,10 +9302,10 @@ public sealed class SkyPaletteTests
 ################################################################################
 # DUMP SUMMARY
 ################################################################################
-  Files dumped   : 120
-  Total size     : 261.2 KiB (267431 bytes)
+  Files dumped   : 119
+  Total size     : 264.1 KiB (270409 bytes)
   Output file    : /home/kushal/src/dotnet/MyWeatherStudio/docs/llm/dump.txt
-  Completed at   : 2026-11-22T10:29:01-05:00
+  Completed at   : 2026-11-22T10:39:17-05:00
 ################################################################################
 # END OF DUMP
 ################################################################################

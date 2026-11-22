@@ -2,8 +2,6 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
-
-    <!-- Shared version variables to keep families aligned. -->
     <AspireVersion>17.0.0</AspireVersion>
     <OpenTelemetryVersion>1.21.0</OpenTelemetryVersion>
   </PropertyGroup>
@@ -103,3 +101,27 @@ Project `Weather.Web.Tests` has the following updates to its packages
    Top-level Package      Requested   Resolved   Latest 
    > TUnit                0.25.0      0.25.0     1.87.12
 
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.AppHost/Weather.AppHost.csproj : error NU1015: The following PackageReference item(s) do not have a version specified: Aspire.Hosting.AppHost
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.ServiceDefaults/Weather.ServiceDefaults.csproj : error NU1015: The following PackageReference item(s) do not have a version specified: Microsoft.Extensions.Http.Resilience, Microsoft.Extensions.ServiceDiscovery, OpenTelemetry.Exporter.OpenTelemetryProtocol, OpenTelemetry.Extensions.Hosting, OpenTelemetry.Instrumentation.AspNetCore, OpenTelemetry.Instrumentation.Http, OpenTelemetry.Instrumentation.Runtime
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Core.Tests/Weather.Core.Tests.csproj : error NU1015: The following PackageReference item(s) do not have a version specified: Shouldly, TUnit
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Infrastructure/Weather.Infrastructure.csproj : error NU1015: The following PackageReference item(s) do not have a version specified: Dapper, Microsoft.Data.Sqlite, Microsoft.Extensions.Hosting, Microsoft.Extensions.Http.Resilience, System.Threading.RateLimiting
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Web.Tests/Weather.Web.Tests.csproj : error NU1015: The following PackageReference item(s) do not have a version specified: bunit.web, Shouldly, TUnit
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Api.Tests/Weather.Api.Tests.csproj : error NU1015: The following PackageReference item(s) do not have a version specified: Microsoft.AspNetCore.Mvc.Testing, Shouldly, TUnit
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Web/Weather.Web.csproj : warning NU1602: Weather.ServiceDefaults does not provide an inclusive lower bound for dependency Microsoft.Extensions.Http.Resilience. Microsoft.Extensions.Http.Resilience 8.0.0 was resolved instead.
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Web/Weather.Web.csproj : warning NU1602: Weather.ServiceDefaults does not provide an inclusive lower bound for dependency Microsoft.Extensions.ServiceDiscovery. Microsoft.Extensions.ServiceDiscovery 8.0.0 was resolved instead.
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Web/Weather.Web.csproj : warning NU1602: Weather.ServiceDefaults does not provide an inclusive lower bound for dependency OpenTelemetry.Exporter.OpenTelemetryProtocol. OpenTelemetry.Exporter.OpenTelemetryProtocol 1.0.1 was resolved instead.
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Web/Weather.Web.csproj : warning NU1602: Weather.ServiceDefaults does not provide an inclusive lower bound for dependency OpenTelemetry.Extensions.Hosting. OpenTelemetry.Extensions.Hosting 1.4.0 was resolved instead.
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Web/Weather.Web.csproj : warning NU1602: Weather.ServiceDefaults does not provide an inclusive lower bound for dependency OpenTelemetry.Instrumentation.AspNetCore. OpenTelemetry.Instrumentation.AspNetCore 1.6.0 was resolved instead.
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Web/Weather.Web.csproj : warning NU1602: Weather.ServiceDefaults does not provide an inclusive lower bound for dependency OpenTelemetry.Instrumentation.Http. OpenTelemetry.Instrumentation.Http 1.6.0 was resolved instead.
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Web/Weather.Web.csproj : warning NU1602: Weather.ServiceDefaults does not provide an inclusive lower bound for dependency OpenTelemetry.Instrumentation.Runtime. OpenTelemetry.Instrumentation.Runtime 1.0.0 was resolved instead.
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Web/Weather.Web.csproj : warning NU1902: Package 'OpenTelemetry.Api' 1.6.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g94r-2vxg-569j
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Web/Weather.Web.csproj : warning NU1902: Package 'OpenTelemetry.Instrumentation.AspNetCore' 1.6.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-vh2m-22xx-q94f
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Web/Weather.Web.csproj : warning NU1902: Package 'OpenTelemetry.Instrumentation.Http' 1.6.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-vh2m-22xx-q94f
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/tests/Weather.Infrastructure.Tests/Weather.Infrastructure.Tests.csproj : error NU1015: The following PackageReference item(s) do not have a version specified: NSubstitute, Shouldly, TUnit
+    /home/kushal/src/dotnet/MyWeatherStudio/weather/src/Weather.Api/Weather.Api.csproj : error NU1015: The following PackageReference item(s) do not have a version specified: Microsoft.AspNetCore.OpenApi
+
+Restore failed with 8 error(s) and 10 warning(s) in 0.3s
+
+real	0m0.472s
+user	0m0.128s
+sys	0m0.037s
