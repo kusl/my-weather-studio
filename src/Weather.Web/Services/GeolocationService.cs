@@ -2,60 +2,56 @@ using Microsoft.JSInterop;
 
 namespace Weather.Web.Services;
 
-/// <summary>
-/// Bridges to <c>wwwroot/js/geolocation.js</c>, whose <c>getCurrentPosition</c>
-/// resolves a plain object in every case (success or failure) and never
-/// rejects. This keeps the C# side branch-only: no exception handling for the
-/// ordinary "user said no" path. JS-bridge faults (circuit disconnected, script
-/// missing) are still caught and surfaced as <see cref="GeolocationError.Unknown"/>.
-/// </summary>
-internal sealed class GeolocationService(IJSRuntime jsRuntime) : IGeolocationService
+internal sealed class GeolocationService(IJSRuntime jsRuntime) : IGeolocationService, IAsyncDisposable
 {
-    public async ValueTask<GeolocationResult> GetCurrentPositionAsync(
-        CancellationToken cancellationToken = default)
+    private const string ModulePath = "./js/geolocation.js";
+
+    private IJSObjectReference? _module;
+
+    public async ValueTask<GeolocationResult> GetCurrentPositionAsync(CancellationToken cancellationToken = default)
     {
-        GeoJsResult raw;
+        GeoJsResult? raw;
         try
         {
-            raw = await jsRuntime
-                .InvokeAsync<GeoJsResult>("weatherGeo.getCurrentPosition", cancellationToken)
-                .ConfigureAwait(false);
+            _module ??= await jsRuntime.InvokeAsync<IJSObjectReference>("import", cancellationToken, ModulePath);
+            raw = await _module.InvokeAsync<GeoJsResult?>("getCurrentPosition", cancellationToken);
         }
-        catch (JSException)
-        {
-            return GeolocationResult.Failed(GeolocationError.Unknown);
-        }
-        catch (JSDisconnectedException)
-        {
-            return GeolocationResult.Failed(GeolocationError.Unknown);
-        }
-        catch (OperationCanceledException)
+        catch (Exception ex) when (ex is JSException or JSDisconnectedException or OperationCanceledException)
         {
             return GeolocationResult.Failed(GeolocationError.Unknown);
         }
 
-        if (raw.Success && raw.Latitude is { } latitude && raw.Longitude is { } longitude)
+        if (raw is { Success: true, Latitude: { } latitude, Longitude: { } longitude })
         {
             return new GeolocationResult(true, latitude, longitude, raw.Accuracy, GeolocationError.None);
         }
 
-        var error = raw.ErrorCode switch
+        return GeolocationResult.Failed(raw?.ErrorCode switch
         {
             "PermissionDenied" => GeolocationError.PermissionDenied,
             "PositionUnavailable" => GeolocationError.PositionUnavailable,
             "Timeout" => GeolocationError.Timeout,
             "NotSupported" => GeolocationError.NotSupported,
+            "InsecureContext" => GeolocationError.InsecureContext,
             _ => GeolocationError.Unknown,
-        };
-
-        return GeolocationResult.Failed(error);
+        });
     }
 
-    /// <summary>Shape of the object resolved by the JS helper.</summary>
-    private sealed record GeoJsResult(
-        bool Success,
-        double? Latitude,
-        double? Longitude,
-        double? Accuracy,
-        string? ErrorCode);
+    public async ValueTask DisposeAsync()
+    {
+        if (_module is null)
+        {
+            return;
+        }
+
+        try
+        {
+            await _module.DisposeAsync();
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+    }
+
+    private sealed record GeoJsResult(bool Success, double? Latitude, double? Longitude, double? Accuracy, string? ErrorCode);
 }

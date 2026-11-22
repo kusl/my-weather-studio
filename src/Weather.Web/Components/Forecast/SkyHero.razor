@@ -1,0 +1,48 @@
+<section class="sky" style="@Style" data-testid="hero">
+    <div class="sky__inner">
+        <div class="sky__eyebrow">
+            <span>@Location</span>
+            <span class="sky__state">@Theme.Label</span>
+        </div>
+
+        <div class="sky__headline">
+            <h1 class="sky__name">@Period.Name</h1>
+            <p class="sky__short">@Period.ShortForecast</p>
+        </div>
+
+        <div class="sky__readout">
+            <div class="sky__temp" data-testid="hero-temp">
+                @Period.Temperature.ToString(CultureInfo.InvariantCulture)<span class="sky__unit">@($"°{Period.TemperatureUnit}")</span>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Period.DetailedForecast))
+        {
+            <p class="sky__detail">@Period.DetailedForecast</p>
+        }
+
+        <dl class="sky__meta">
+            <div class="sky__meta-item">
+                <dt class="sky__meta-label">Precip</dt>
+                <dd class="sky__meta-value">@PeriodFormat.Precipitation(Period)</dd>
+            </div>
+            <div class="sky__meta-item">
+                <dt class="sky__meta-label">Wind</dt>
+                <dd class="sky__meta-value">@PeriodFormat.Wind(Period)</dd>
+            </div>
+        </dl>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public ForecastPeriodDto Period { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public string Location { get; set; } = string.Empty;
+
+    private SkyTheme Theme => SkyPalette.ForPeriod(Period.IsDaytime, Period.ShortForecast);
+
+    private string Style =>
+        $"--sky-from:{Theme.From};--sky-to:{Theme.To};--sky-fg:{Theme.Foreground};--sky-accent:{Theme.Accent};";
+}

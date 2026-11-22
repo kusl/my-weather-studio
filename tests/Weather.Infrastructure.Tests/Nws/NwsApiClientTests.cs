@@ -93,12 +93,11 @@ public sealed class NwsApiClientTests
 
         var result = await client.GetForecastAsync(SampleGrid);
 
-        result.Outcome.ShouldBe(NwsFetchOutcome.Success);
-        result.ETag.ShouldBe("\"abc123\"");
-        result.MaxAge.ShouldBe(TimeSpan.FromMinutes(45));
+        var fetched = result.ShouldBeOfType<ForecastFetchResult.Fetched>();
+        fetched.ETag.ShouldBe("\"abc123\"");
+        fetched.MaxAge.ShouldBe(TimeSpan.FromMinutes(45));
 
-        result.Forecast.ShouldNotBeNull();
-        var forecast = result.Forecast!;
+        var forecast = fetched.Forecast;
         forecast.Grid.ShouldBe(SampleGrid);
         forecast.Periods.Count.ShouldBe(2);
 
@@ -143,9 +142,9 @@ public sealed class NwsApiClientTests
 
         var result = await client.GetForecastAsync(SampleGrid, etag);
 
-        result.Outcome.ShouldBe(NwsFetchOutcome.NotModified);
-        result.ETag.ShouldBe(etag);
-        result.MaxAge.ShouldBe(TimeSpan.FromMinutes(20));
+        var notModified = result.ShouldBeOfType<ForecastFetchResult.NotModified>();
+        notModified.ETag.ShouldBe(etag);
+        notModified.MaxAge.ShouldBe(TimeSpan.FromMinutes(20));
 
         handler.LastRequest!.Headers.TryGetValues("If-None-Match", out var values).ShouldBeTrue();
         values!.ShouldContain(etag);
@@ -171,7 +170,7 @@ public sealed class NwsApiClientTests
         using var telemetry = new WeatherTelemetry();
         var client = CreateClient(handler, telemetry);
 
-        (await client.GetForecastAsync(SampleGrid)).Outcome.ShouldBe(NwsFetchOutcome.NotFound);
+        (await client.GetForecastAsync(SampleGrid)).ShouldBeOfType<ForecastFetchResult.NotFound>();
     }
 
     [Test]
@@ -181,7 +180,7 @@ public sealed class NwsApiClientTests
         using var telemetry = new WeatherTelemetry();
         var client = CreateClient(handler, telemetry);
 
-        (await client.GetForecastAsync(SampleGrid)).Outcome.ShouldBe(NwsFetchOutcome.Unavailable);
+        (await client.GetForecastAsync(SampleGrid)).ShouldBeOfType<ForecastFetchResult.Unavailable>();
     }
 
     [Test]
@@ -191,7 +190,7 @@ public sealed class NwsApiClientTests
         using var telemetry = new WeatherTelemetry();
         var client = CreateClient(handler, telemetry);
 
-        (await client.GetForecastAsync(SampleGrid)).Outcome.ShouldBe(NwsFetchOutcome.Unavailable);
+        (await client.GetForecastAsync(SampleGrid)).ShouldBeOfType<ForecastFetchResult.Unavailable>();
     }
 
     [Test]
@@ -204,6 +203,6 @@ public sealed class NwsApiClientTests
         using var telemetry = new WeatherTelemetry();
         var client = CreateClient(handler, telemetry);
 
-        (await client.GetForecastAsync(SampleGrid)).Outcome.ShouldBe(NwsFetchOutcome.Unavailable);
+        (await client.GetForecastAsync(SampleGrid)).ShouldBeOfType<ForecastFetchResult.Unavailable>();
     }
 }

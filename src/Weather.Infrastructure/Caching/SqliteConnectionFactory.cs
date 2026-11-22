@@ -3,14 +3,11 @@ using Microsoft.Extensions.Options;
 
 namespace Weather.Infrastructure.Caching;
 
-/// <summary>Creates open <see cref="SqliteConnection"/> instances from configuration.</summary>
 public interface ISqliteConnectionFactory
 {
-    /// <summary>Create and open a new connection. The caller owns disposal.</summary>
     Task<SqliteConnection> CreateOpenConnectionAsync(CancellationToken cancellationToken = default);
 }
 
-/// <inheritdoc />
 public sealed class SqliteConnectionFactory(IOptions<SqliteCacheOptions> options) : ISqliteConnectionFactory
 {
     private readonly string _connectionString = options.Value.ConnectionString;
@@ -20,12 +17,12 @@ public sealed class SqliteConnectionFactory(IOptions<SqliteCacheOptions> options
         var connection = new SqliteConnection(_connectionString);
         try
         {
-            await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+            await connection.OpenAsync(cancellationToken);
             return connection;
         }
         catch
         {
-            await connection.DisposeAsync().ConfigureAwait(false);
+            await connection.DisposeAsync();
             throw;
         }
     }

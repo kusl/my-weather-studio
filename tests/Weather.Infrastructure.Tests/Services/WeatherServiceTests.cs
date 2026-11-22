@@ -18,11 +18,11 @@ public sealed class WeatherServiceTests
         new(Coord, Grid, "forecast-url", "hourly-url", "Bethel Manor", "VA", "America/New_York", "KAKQ");
 
     private static Forecast ForecastFor(GridPoint grid) =>
-        new(grid, Now, Now, new[]
-        {
+        new(grid, Now, Now,
+        [
             new ForecastPeriod(1, "This Afternoon", Now, Now.AddHours(4), true, 90, "F", 3,
                 "5 mph", "S", "Sunny", "Detailed.", "icon"),
-        });
+        ]);
 
     private static CachedForecast FreshForecast(GridPoint grid) =>
         new(ForecastFor(grid), "\"e\"", Now, Now.AddHours(1));
@@ -57,7 +57,7 @@ public sealed class WeatherServiceTests
         var h = new Harness();
         h.Nws.GetPointMetadataAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>()).Returns(Meta());
         h.Nws.GetForecastAsync(Arg.Any<GridPoint>(), Arg.Any<string?>(), Arg.Any<CancellationToken>())
-            .Returns(ForecastFetchResult.Success(ForecastFor(Grid), "\"e\"", TimeSpan.FromMinutes(30)));
+            .Returns(new ForecastFetchResult.Fetched(ForecastFor(Grid), "\"e\"", TimeSpan.FromMinutes(30)));
 
         var result = await h.Service.GetForecastAsync(Coord);
 
@@ -100,7 +100,7 @@ public sealed class WeatherServiceTests
         h.MetadataCache.GetAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>()).Returns(FreshMeta());
         h.ForecastCache.GetAsync(Grid, Arg.Any<CancellationToken>()).Returns(StaleForecast(Grid));
         h.Nws.GetForecastAsync(Arg.Any<GridPoint>(), Arg.Any<string?>(), Arg.Any<CancellationToken>())
-            .Returns(ForecastFetchResult.NotModified("\"e2\"", TimeSpan.FromMinutes(20)));
+            .Returns(new ForecastFetchResult.NotModified("\"e2\"", TimeSpan.FromMinutes(20)));
 
         var result = await h.Service.GetForecastAsync(Coord);
 
@@ -121,7 +121,7 @@ public sealed class WeatherServiceTests
         h.MetadataCache.GetAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>()).Returns(FreshMeta());
         h.ForecastCache.GetAsync(Grid, Arg.Any<CancellationToken>()).Returns(StaleForecast(Grid));
         h.Nws.GetForecastAsync(Arg.Any<GridPoint>(), Arg.Any<string?>(), Arg.Any<CancellationToken>())
-            .Returns(ForecastFetchResult.Unavailable);
+            .Returns(new ForecastFetchResult.Unavailable());
 
         var result = await h.Service.GetForecastAsync(Coord);
 
@@ -136,7 +136,7 @@ public sealed class WeatherServiceTests
         var h = new Harness();
         h.MetadataCache.GetAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>()).Returns(FreshMeta());
         h.Nws.GetForecastAsync(Arg.Any<GridPoint>(), Arg.Any<string?>(), Arg.Any<CancellationToken>())
-            .Returns(ForecastFetchResult.NotFound);
+            .Returns(new ForecastFetchResult.NotFound());
 
         (await h.Service.GetForecastAsync(Coord)).ShouldBeNull();
     }
@@ -163,7 +163,7 @@ public sealed class WeatherServiceTests
         h.Nws.GetPointMetadataAsync(Arg.Any<GeoCoordinate>(), Arg.Any<CancellationToken>())
             .Returns((PointMetadata?)null);
         h.Nws.GetForecastAsync(Arg.Any<GridPoint>(), Arg.Any<string?>(), Arg.Any<CancellationToken>())
-            .Returns(ForecastFetchResult.Success(ForecastFor(Grid), "\"e\"", TimeSpan.FromMinutes(30)));
+            .Returns(new ForecastFetchResult.Fetched(ForecastFor(Grid), "\"e\"", TimeSpan.FromMinutes(30)));
 
         var result = await h.Service.GetForecastAsync(Coord);
 
@@ -208,7 +208,7 @@ public sealed class WeatherServiceTests
     {
         var h = new Harness();
         h.Nws.GetForecastAsync(Arg.Any<GridPoint>(), Arg.Any<string?>(), Arg.Any<CancellationToken>())
-            .Returns(ForecastFetchResult.Success(ForecastFor(Grid), "\"e\"", TimeSpan.FromMinutes(30)));
+            .Returns(new ForecastFetchResult.Fetched(ForecastFor(Grid), "\"e\"", TimeSpan.FromMinutes(30)));
 
         var result = await h.Service.GetForecastByGridAsync(Grid);
 

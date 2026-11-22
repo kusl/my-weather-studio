@@ -4,11 +4,6 @@ using Weather.Core.Models;
 
 namespace Weather.Infrastructure.Caching;
 
-/// <summary>
-/// SQLite-backed store of long-lived coordinate-&gt;grid metadata. The lookup
-/// key is the coordinate rounded to four decimals, so physically-close users
-/// collapse onto a single row and a single upstream <c>/points</c> call.
-/// </summary>
 internal sealed class SqlitePointMetadataCache(ISqliteConnectionFactory connectionFactory) : IPointMetadataCache
 {
     private const string SelectSql =
@@ -43,16 +38,13 @@ internal sealed class SqlitePointMetadataCache(ISqliteConnectionFactory connecti
             ExpiresAtUtc      = excluded.ExpiresAtUtc;
         """;
 
-    public async Task<CachedPointMetadata?> GetAsync(
-        GeoCoordinate coordinate, CancellationToken cancellationToken = default)
+    public async Task<CachedPointMetadata?> GetAsync(GeoCoordinate coordinate, CancellationToken cancellationToken = default)
     {
-        await using var connection = await connectionFactory
-            .CreateOpenConnectionAsync(cancellationToken).ConfigureAwait(false);
+        await using var connection = await connectionFactory.CreateOpenConnectionAsync(cancellationToken);
 
         var key = coordinate.Rounded().ToCacheKey();
         var row = await connection.QuerySingleOrDefaultAsync<MetadataRow>(
-            new CommandDefinition(SelectSql, new { CoordinateKey = key },
-                cancellationToken: cancellationToken)).ConfigureAwait(false);
+            new CommandDefinition(SelectSql, new { CoordinateKey = key }, cancellationToken: cancellationToken));
 
         if (row is null)
         {
@@ -77,8 +69,7 @@ internal sealed class SqlitePointMetadataCache(ISqliteConnectionFactory connecti
 
     public async Task UpsertAsync(CachedPointMetadata entry, CancellationToken cancellationToken = default)
     {
-        await using var connection = await connectionFactory
-            .CreateOpenConnectionAsync(cancellationToken).ConfigureAwait(false);
+        await using var connection = await connectionFactory.CreateOpenConnectionAsync(cancellationToken);
 
         var coordinate = entry.Metadata.Query.Rounded();
         var grid = entry.Metadata.Grid;
@@ -99,21 +90,35 @@ internal sealed class SqlitePointMetadataCache(ISqliteConnectionFactory connecti
             entry.Metadata.RadarStation,
             RetrievedAtUtc = TimestampText.ToText(entry.RetrievedAtUtc),
             ExpiresAtUtc = TimestampText.ToText(entry.ExpiresAtUtc),
-        }, cancellationToken: cancellationToken)).ConfigureAwait(false);
+        }, cancellationToken: cancellationToken));
     }
 
-    private sealed record MetadataRow(
-        double Latitude,
-        double Longitude,
-        string GridId,
-        int GridX,
-        int GridY,
-        string ForecastUrl,
-        string ForecastHourlyUrl,
-        string? City,
-        string? State,
-        string? TimeZone,
-        string? RadarStation,
-        string RetrievedAtUtc,
-        string ExpiresAtUtc);
+    private sealed class MetadataRow
+    {
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
+
+        public string GridId { get; set; } = string.Empty;
+
+        public int GridX { get; set; }
+
+        public int GridY { get; set; }
+
+        public string ForecastUrl { get; set; } = string.Empty;
+
+        public string ForecastHourlyUrl { get; set; } = string.Empty;
+
+        public string? City { get; set; }
+
+        public string? State { get; set; }
+
+        public string? TimeZone { get; set; }
+
+        public string? RadarStation { get; set; }
+
+        public string RetrievedAtUtc { get; set; } = string.Empty;
+
+        public string ExpiresAtUtc { get; set; } = string.Empty;
+    }
 }

@@ -1,16 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Weather.Core</RootNamespace>
-    <AssemblyName>Weather.Core</AssemblyName>
-    <Description>Dependency-free domain models, abstractions and telemetry primitives for the Weather dashboard.</Description>
+    <Description>Dependency-free domain models, abstractions and telemetry primitives.</Description>
   </PropertyGroup>
-
-  <!--
-    Weather.Core deliberately references NO NuGet packages.
-    It uses only the in-box BCL (records, System.Diagnostics.Metrics,
-    System.Threading.Channels). Everything else depends on Core, never the
-    other way around — this is the Dependency Inversion Principle in practice.
-  -->
 
 </Project>

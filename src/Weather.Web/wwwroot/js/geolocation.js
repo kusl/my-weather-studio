@@ -1,64 +1,32 @@
-// Browser geolocation bridge for the Blazor dashboard.
-//
-// Design rule: this promise ALWAYS resolves — it never rejects. Every outcome
-// (granted, denied, unavailable, timed out, unsupported) comes back as a plain
-// object the C# side can branch on. That keeps "the user said no" on the normal
-// path instead of the exception path.
-//
-// Resolved shape:
-//   { success, latitude, longitude, accuracy, errorCode }
-// where errorCode is one of:
-//   "PermissionDenied" | "PositionUnavailable" | "Timeout" | "NotSupported" | null
-window.weatherGeo = {
-    getCurrentPosition: function () {
-        return new Promise(function (resolve) {
-            if (!navigator || !("geolocation" in navigator)) {
-                resolve({
-                    success: false,
-                    latitude: null,
-                    longitude: null,
-                    accuracy: null,
-                    errorCode: "NotSupported"
-                });
-                return;
-            }
+const errorCodes = new Map([
+  [1, "PermissionDenied"],
+  [2, "PositionUnavailable"],
+  [3, "Timeout"],
+]);
 
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    resolve({
-                        success: true,
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude,
-                        accuracy: position.coords.accuracy,
-                        errorCode: null
-                    });
-                },
-                function (error) {
-                    // 1 = PERMISSION_DENIED, 2 = POSITION_UNAVAILABLE, 3 = TIMEOUT
-                    var code = "PositionUnavailable";
-                    if (error && typeof error.code === "number") {
-                        if (error.code === 1) {
-                            code = "PermissionDenied";
-                        } else if (error.code === 3) {
-                            code = "Timeout";
-                        } else {
-                            code = "PositionUnavailable";
-                        }
-                    }
-                    resolve({
-                        success: false,
-                        latitude: null,
-                        longitude: null,
-                        accuracy: null,
-                        errorCode: code
-                    });
-                },
-                {
-                    enableHighAccuracy: false,
-                    timeout: 10000,
-                    maximumAge: 300000
-                }
-            );
-        });
-    }
-};
+const failure = (errorCode) => ({ success: false, latitude: null, longitude: null, accuracy: null, errorCode });
+
+export function getCurrentPosition() {
+  if (!window.isSecureContext) {
+    return Promise.resolve(failure("InsecureContext"));
+  }
+
+  if (!("geolocation" in navigator)) {
+    return Promise.resolve(failure("NotSupported"));
+  }
+
+  const { promise, resolve } = Promise.withResolvers();
+  navigator.geolocation.getCurrentPosition(
+    ({ coords }) => resolve({
+      success: true,
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      accuracy: coords.accuracy,
+      errorCode: null,
+    }),
+    (error) => resolve(failure(errorCodes.get(error?.code) ?? "PositionUnavailable")),
+    { enableHighAccuracy: false, timeout: 10_000, maximumAge: 300_000 },
+  );
+
+  return promise;
+}

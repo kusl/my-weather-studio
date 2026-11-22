@@ -1,0 +1,27 @@
+<article class="card">
+    <div class="card__name">
+        <span class="card__chip" style="--chip:@Theme.From" title="@Theme.Label"></span>
+        @Period.Name
+    </div>
+    <div class="card__temp">
+        @Period.Temperature.ToString(CultureInfo.InvariantCulture)<span class="card__temp-unit">@($"°{Period.TemperatureUnit}")</span>
+    </div>
+    <p class="card__short">@Period.ShortForecast</p>
+    <dl class="card__rows">
+        <div class="card__row">
+            <dt class="card__row-label">Precip</dt>
+            <dd class="card__row-value">@PeriodFormat.Precipitation(Period)</dd>
+        </div>
+        <div class="card__row">
+            <dt class="card__row-label">Wind</dt>
+            <dd class="card__row-value">@PeriodFormat.Wind(Period)</dd>
+        </div>
+    </dl>
+</article>
+
+@code {
+    [Parameter, EditorRequired]
+    public ForecastPeriodDto Period { get; set; } = default!;
+
+    private SkyTheme Theme => SkyPalette.ForPeriod(Period.IsDaytime, Period.ShortForecast);
+}

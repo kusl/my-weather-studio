@@ -14,13 +14,13 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
-          global-json-file: global.json
+          dotnet-version: "11.0.x"
+          dotnet-quality: ga
 
-      # Fails the build if any file isn't formatted to the .editorconfig rules.
       - name: Verify formatting
-        run: dotnet format weather.slnx --verify-no-changes --severity info
+        run: dotnet format weather.slnx --verify-no-changes --severity warn

@@ -1,8 +1,8 @@
 # Weather.ServiceDefaults
 
-The shared **.NET Aspire service defaults**. Every executable service in the
+The shared **Aspire service defaults**. Every executable service in the
 solution (the API and the Blazor app) calls `AddServiceDefaults()` to get
-consistent observability, health, service discovery, and resilient HTTP without
+consistent observability, health and service discovery without
 repeating the wiring. This project is deliberately **app-agnostic** — it knows
 nothing about forecasts or caches.
 
@@ -10,7 +10,9 @@ nothing about forecasts or caches.
 
 - **OpenTelemetry** (`ConfigureOpenTelemetry`):
   - **Logging** with formatted messages and scopes included.
-  - **Metrics**: ASP.NET Core, `HttpClient`, and .NET runtime instrumentation.
+  - **Metrics**: ASP.NET Core and `HttpClient` instrumentation, plus the
+    built-in `System.Runtime` meter (no separate runtime instrumentation package
+    is needed on .NET 9 and later).
   - **Tracing**: the application's own activity source plus ASP.NET Core and
     `HttpClient` instrumentation.
   - **OTLP export**: enabled automatically when `OTEL_EXPORTER_OTLP_ENDPOINT` is
@@ -18,9 +20,14 @@ nothing about forecasts or caches.
 - **Health checks** (`AddDefaultHealthChecks`): a default "self" liveness check.
 - **Service discovery**: logical service names (e.g. `https+http://api`) resolve
   to real addresses.
-- **Resilient HttpClient defaults** (`ConfigureHttpClientDefaults`): every
-  outbound `HttpClient` gets the standard resilience handler (retry with jitter,
-  circuit breaker, timeout) and service-discovery resolution by default.
+- **HttpClient defaults** (`ConfigureHttpClientDefaults`): every outbound
+  `HttpClient` gets service-discovery resolution.
+
+Resilience is **not** added globally. A global standard resilience handler plus
+a per-client one (which the NWS client needs for its own timeouts) stacks two
+pipelines on the same client, multiplying retries and timeouts. Instead each
+typed client adds exactly one `AddStandardResilienceHandler()`: the NWS client in
+`Weather.Infrastructure`, the API client in `Weather.Web`.
 
 ## What `MapDefaultEndpoints()` adds
 
@@ -41,10 +48,10 @@ unchanged — which is the whole point of the Aspire "service defaults" pattern.
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
-builder.AddServiceDefaults();          // OTel, health, discovery, resilient HTTP
+builder.AddServiceDefaults();
 // ... app-specific registrations ...
 var app = builder.Build();
-app.MapDefaultEndpoints();             // /health and /alive
+app.MapDefaultEndpoints();
 ```
 
 Both [`Weather.Api`](../Weather.Api/README.md) and

@@ -13,13 +13,16 @@
     <p class="panel__body">
         Forecasts don't change second to second, so responses are cached locally for a short
         window and reused. That keeps the dashboard quick and keeps the weather service from
-        being polled more than it needs to be. The caching is invisible in normal use: you always
-        see current data, just faster on repeat views. When the service is briefly unreachable,
-        the last good forecast is shown rather than an error.
+        being polled more than it needs to be. When the service is briefly unreachable, the last
+        good forecast is shown rather than an error.
     </p>
     <p class="panel__body">
         Behind the scenes the app records cache hit/miss ratios and the latency of every call to
-        the weather service, so slow responses or rate-limiting show up on a dashboard rather than
-        as a mystery. Coordinates are sent only to fetch a forecast and aren't stored.
+        the weather service. Coordinates are sent only to fetch a forecast and aren't stored with
+        anything that identifies you.
+    </p>
+    <p class="panel__body">
+        Weather supports the latest versions of evergreen browsers: Chrome, Edge, Firefox, Safari
+        and Samsung Internet.
     </p>
 </section>

@@ -3,18 +3,10 @@ using System.Diagnostics.Metrics;
 
 namespace Weather.Core.Telemetry;
 
-/// <summary>
-/// Single source of truth for the application's custom metrics and traces.
-/// Registered as a singleton; the <see cref="Meter"/> and
-/// <see cref="ActivitySource"/> names are wired into OpenTelemetry in
-/// <c>Weather.Api/Program.cs</c> via <c>AddMeter</c>/<c>AddSource</c>.
-/// </summary>
 public sealed class WeatherTelemetry : IDisposable
 {
-    /// <summary>Meter name — register with <c>AddMeter(WeatherTelemetry.MeterName)</c>.</summary>
     public const string MeterName = "Weather.Cache";
 
-    /// <summary>Activity source name — register with <c>AddSource(WeatherTelemetry.ActivitySourceName)</c>.</summary>
     public const string ActivitySourceName = "Weather.Nws";
 
     private readonly Meter _meter;

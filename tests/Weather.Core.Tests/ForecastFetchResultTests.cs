@@ -2,51 +2,47 @@ namespace Weather.Core.Tests;
 
 public sealed class ForecastFetchResultTests
 {
-    private static Forecast SampleForecast() => new(
-        new GridPoint("AKQ", 83, 61),
-        DateTimeOffset.UtcNow,
-        DateTimeOffset.UtcNow,
-        Array.Empty<ForecastPeriod>());
+    private static readonly Forecast Sample = new(new GridPoint("AKQ", 83, 61), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, []);
+
+    private static string Describe(ForecastFetchResult result) => result switch
+    {
+        ForecastFetchResult.Fetched => "fetched",
+        ForecastFetchResult.NotModified => "not-modified",
+        ForecastFetchResult.NotFound => "not-found",
+        ForecastFetchResult.Unavailable => "unavailable",
+    };
 
     [Test]
-    public void Success_carries_forecast_etag_and_maxage()
+    public void Fetched_carries_forecast_etag_and_max_age()
     {
-        var forecast = SampleForecast();
+        var result = new ForecastFetchResult.Fetched(Sample, "\"abc\"", TimeSpan.FromMinutes(30));
 
-        var result = ForecastFetchResult.Success(forecast, "\"abc\"", TimeSpan.FromMinutes(30));
-
-        result.Outcome.ShouldBe(NwsFetchOutcome.Success);
-        result.Forecast.ShouldBe(forecast);
+        result.Forecast.ShouldBe(Sample);
         result.ETag.ShouldBe("\"abc\"");
         result.MaxAge.ShouldBe(TimeSpan.FromMinutes(30));
     }
 
     [Test]
-    public void NotModified_carries_no_forecast()
+    public void NotModified_carries_etag_and_max_age()
     {
-        var result = ForecastFetchResult.NotModified("\"abc\"", TimeSpan.FromMinutes(10));
+        var result = new ForecastFetchResult.NotModified("\"abc\"", TimeSpan.FromMinutes(10));
 
-        result.Outcome.ShouldBe(NwsFetchOutcome.NotModified);
-        result.Forecast.ShouldBeNull();
         result.ETag.ShouldBe("\"abc\"");
         result.MaxAge.ShouldBe(TimeSpan.FromMinutes(10));
     }
 
     [Test]
-    public void NotFound_is_a_terminal_outcome_with_no_payload()
+    public void Every_outcome_is_matched_exhaustively()
     {
-        ForecastFetchResult.NotFound.Outcome.ShouldBe(NwsFetchOutcome.NotFound);
-        ForecastFetchResult.NotFound.Forecast.ShouldBeNull();
-        ForecastFetchResult.NotFound.ETag.ShouldBeNull();
+        Describe(new ForecastFetchResult.Fetched(Sample, null, null)).ShouldBe("fetched");
+        Describe(new ForecastFetchResult.NotModified(null, null)).ShouldBe("not-modified");
+        Describe(new ForecastFetchResult.NotFound()).ShouldBe("not-found");
+        Describe(new ForecastFetchResult.Unavailable()).ShouldBe("unavailable");
     }
 
     [Test]
-    public void Unavailable_is_a_terminal_outcome_with_no_payload()
-    {
-        ForecastFetchResult.Unavailable.Outcome.ShouldBe(NwsFetchOutcome.Unavailable);
-        ForecastFetchResult.Unavailable.Forecast.ShouldBeNull();
-        ForecastFetchResult.Unavailable.ETag.ShouldBeNull();
-    }
+    public void Terminal_outcomes_have_value_equality() =>
+        new ForecastFetchResult.NotFound().ShouldBe(new ForecastFetchResult.NotFound());
 }
 
 public sealed class GridPointTests
@@ -64,10 +60,6 @@ public sealed class GridPointTests
         new GridPoint("AKQ", 83, 61).ShouldNotBe(new GridPoint("AKQ", 83, 62));
 
     [Test]
-    public void With_expression_replaces_a_single_index()
-    {
-        var origin = new GridPoint("AKQ", 83, 61);
-
-        (origin with { GridX = 84 }).ShouldBe(new GridPoint("AKQ", 84, 61));
-    }
+    public void With_expression_replaces_a_single_index() =>
+        (new GridPoint("AKQ", 83, 61) with { GridX = 84 }).ShouldBe(new GridPoint("AKQ", 84, 61));
 }

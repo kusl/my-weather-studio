@@ -1,101 +1,144 @@
 # Weather.Web
 
-The Blazor Server front end: a single-page **sky-state dashboard** that reads the
-user's location from the browser, asks the [Weather API](../Weather.Api/README.md)
-for a forecast, and renders it. Its defining job is to handle the *unhappy* paths
-of browser geolocation as gracefully as the happy one.
+The Blazor front end (interactive server rendering): a single-page **sky-state
+dashboard** that reads the user's location from the browser, asks the
+[Weather API](../Weather.Api/README.md) for a forecast, and renders it. Its
+defining job is to handle the *unhappy* paths as gracefully as the happy one —
+including browsers that are too old to run it at all.
 
 ## What it does
 
-1. On first interactive render it asks the browser for the current position
-   (`navigator.geolocation`).
-2. On success it calls `GET /api/forecast?latitude={lat}&longitude={lon}` and
+1. The first HTML response runs the **browser gate** (below). On a current
+   browser it starts Blazor.
+2. On first interactive render the dashboard asks the browser for the current
+   position (`navigator.geolocation`).
+3. On success it calls `GET /api/forecast?latitude={lat}&longitude={lon}` and
    renders the result.
-3. On **any** failure — permission denied, position unavailable, timeout, or no
-   Geolocation API at all — it falls back to a manual latitude/longitude form
-   plus a one-click sample location (Newport News, VA).
+4. On **any** failure it falls back to a manual latitude/longitude form plus a
+   one-click sample location (Newport News, VA).
+
+## Browser support and the gate
+
+Only the latest evergreen browsers are supported. `wwwroot/js/gate.js` is the
+one piece of code written for old browsers: ES3 syntax, no dependencies, styled
+by the equally conservative `wwwroot/css/gate.css`. `App.razor` loads it instead
+of `blazor.web.js`; it carries the fingerprinted Blazor URL in a `data-` attribute.
+
+The gate checks exactly what the app relies on — modern JavaScript syntax
+(optional chaining, class private fields, async iteration), modules,
+`Promise.withResolvers`, `Object.groupBy`, `structuredClone`, `fetch`,
+`WebSocket`, `<dialog>`, and the CSS features `app.css` uses (nesting, cascade
+layers, `:has()`, container queries, `color-mix()`, `dvh` units). Then:
+
+- **All present** — it injects `blazor.web.js` with `autostart="false"` and calls
+  `Blazor.start()`.
+- **Anything missing** — it reveals the `LegacyGate` component's markup: a
+  full-page explanation in plain language, what to do next, the list of missing
+  features, and a read-only diagnostics block (result, problems, page, time,
+  user agent, platform, language, viewport, screen, secure context, cookies,
+  online) with **Copy details** and **Reload** buttons. Copy uses the async
+  clipboard where allowed and falls back to select-and-copy.
+- **Blazor fails to download or start** — the same page with a "couldn't
+  start" message and the error in the diagnostics.
+
+A `<noscript>` block covers browsers with JavaScript disabled.
 
 ## The geolocation contract
 
-Browser geolocation can fail in several ways, and the W3C API reports them by
-rejecting a callback. To keep "the user said no" off the C# exception path, the
-JS helper in [`wwwroot/js/geolocation.js`](wwwroot/js/geolocation.js) **never
-rejects** — it always resolves an object:
+[`wwwroot/js/geolocation.js`](wwwroot/js/geolocation.js) is an ES module that
+`GeolocationService` imports on demand (no globals). `getCurrentPosition()`
+**never rejects** — it always resolves an object:
 
 ```js
 { success, latitude, longitude, accuracy, errorCode }
-// errorCode ∈ "PermissionDenied" | "PositionUnavailable" | "Timeout" | "NotSupported" | null
+// errorCode ∈ "PermissionDenied" | "PositionUnavailable" | "Timeout" | "NotSupported" | "InsecureContext" | null
 ```
 
-`GeolocationService` maps that object onto a typed `GeolocationResult` with a
-`GeolocationError` enum. The component then branches on the result:
+Browsers only expose geolocation to secure contexts (HTTPS or `localhost`). The
+module checks `window.isSecureContext` first so a phone opening
+`http://192.168.x.x:5080` gets a clear explanation instead of a generic denial.
 
 | Outcome | State shown | Fallback offered |
 | --- | --- | --- |
 | Position obtained | forecast loads | — |
 | Permission denied | "Location is off" | manual entry + sample |
+| Plain-HTTP page | "Location needs a secure connection" | manual entry + sample |
 | Position unavailable / timeout / unsupported / JS fault | "Couldn't pin down where you are" | manual entry + sample |
 | Coordinate outside NWS coverage (API 404) | "No coverage for that spot" | manual entry + sample |
 | API/network error | "The forecast didn't load" | retry + sample |
 
-Because geolocation needs JS interop, it runs in `OnAfterRenderAsync(firstRender:
-true)` — never during prerender, where interop isn't available.
+Geolocation needs JS interop, so it runs in `OnAfterRenderAsync(firstRender:
+true)` — never during prerender.
 
 ## Talking to the API
 
-`IWeatherApiClient` / `WeatherApiClient` is a typed `HttpClient`. Its base address
-comes from configuration:
+`IWeatherApiClient` / `WeatherApiClient` is a typed `HttpClient` with its own
+standard resilience handler. Its base address is `https+http://api`
+(`WeatherApi:BaseUrl`), resolved by service discovery:
 
-- **Under .NET Aspire** the value is `https+http://api`, resolved by service
-  discovery (wired up in `Weather.ServiceDefaults`).
-- **Standalone**, set `WeatherApi:BaseUrl` (or the `services__api__https__0`
-  environment variable) to the API's real URL.
+- **Under Aspire** the AppHost injects `services__api__http__0`.
+- **Standalone in Development** `appsettings.Development.json` supplies
+  `Services:api:http` = `http://localhost:5180`, the API's default port.
 
 A `404` from the API is mapped to `null` (an expected "no coverage" outcome),
 not an exception.
 
+## Running
+
+`Properties/launchSettings.json` binds `http://0.0.0.0:5080`, so
+`dotnet run --project src/Weather.Web` is reachable from other devices on the
+same network at `http://<laptop-ip>:5080`.
+
 ## The signature element
 
-The hero panel paints the sky implied by the current period: the gradient is
-derived at runtime from whether the period is day or night and from keywords in
-its short forecast (clear / cloud / rain / storms / snow / fog). That logic lives
-in [`Services/SkyPalette.cs`](Services/SkyPalette.cs). Foreground colours are
-chosen per sky-state so text stays legible against every gradient. Everything
-else — cool haze-blue paper, white cards, one amber accent reused for focus
-rings — stays deliberately quiet.
+The hero (`Components/Forecast/SkyHero.razor`) paints the sky implied by the
+current period; the gradient comes from day/night and keywords in the short
+forecast (`Services/SkyPalette.cs`). Upcoming periods are `PeriodCard`
+components. Styles use native CSS nesting, cascade layers, container queries and
+`color-mix()`; keyboard focus is visible and `prefers-reduced-motion` is
+respected.
 
-The quality floor is built in, not bolted on: responsive to mobile, visible
-keyboard focus, and `prefers-reduced-motion` respected.
+Circuit reconnection uses the .NET 10+ `ReconnectModal` pattern (a `<dialog>`
+plus a collocated JS module), styled to match.
 
 ## Testability
 
-The component depends only on the `IGeolocationService` and `IWeatherApiClient`
-abstractions, so [`Weather.Web.Tests`](../../tests/Weather.Web.Tests/README.md)
-renders it with bUnit using fakes — no real browser, JS runtime, or HTTP server
-required.
+The page depends only on `IGeolocationService` and `IWeatherApiClient`, so
+[`Weather.Web.Tests`](../../tests/Weather.Web.Tests/) renders it with bUnit 2
+using fakes — no browser, JS runtime or HTTP server required.
 
 ## Layout
 
-```
+```text
 Weather.Web/
 ├─ Components/
-│  ├─ App.razor              # document, fonts, script + style references
-│  ├─ Routes.razor           # router + not-found
+│  ├─ App.razor              # document, styles, gate script
+│  ├─ Routes.razor           # router with NotFoundPage
 │  ├─ _Imports.razor
+│  ├─ Forecast/
+│  │  ├─ SkyHero.razor       # the hero panel
+│  │  └─ PeriodCard.razor    # one upcoming period
 │  ├─ Layout/
-│  │  ├─ MainLayout.razor    # header, brand, nav, footer
-│  │  └─ NavMenu.razor
+│  │  ├─ MainLayout.razor
+│  │  ├─ NavMenu.razor
+│  │  ├─ LegacyGate.razor    # markup revealed by gate.js
+│  │  └─ ReconnectModal.razor (+ .razor.js)
 │  └─ Pages/
 │     ├─ Home.razor          # the dashboard + state machine
 │     ├─ About.razor
-│     └─ Error.razor
+│     ├─ Error.razor
+│     └─ NotFound.razor
 ├─ Services/
 │  ├─ IGeolocationService.cs / GeolocationService.cs
 │  ├─ IWeatherApiClient.cs   / WeatherApiClient.cs
-│  ├─ WeatherViewModels.cs   # ForecastDto, ForecastPeriodDto, NeighborhoodDto
-│  └─ SkyPalette.cs          # the signature gradient logic
+│  ├─ WeatherViewModels.cs
+│  ├─ PeriodFormat.cs
+│  └─ SkyPalette.cs
 ├─ wwwroot/
-│  ├─ app.css                # sky-state design system
-│  └─ js/geolocation.js      # never-rejecting geolocation bridge
+│  ├─ app.css
+│  ├─ css/gate.css
+│  └─ js/
+│     ├─ gate.js             # legacy-safe browser gate
+│     └─ geolocation.js      # never-rejecting geolocation module
 └─ Program.cs
 ```

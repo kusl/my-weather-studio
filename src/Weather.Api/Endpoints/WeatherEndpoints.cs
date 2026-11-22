@@ -5,11 +5,6 @@ using Weather.Core.Models;
 
 namespace Weather.Api.Endpoints;
 
-/// <summary>
-/// Minimal-API endpoints for forecasts. Coordinate validation happens here at
-/// the edge; everything else is delegated to <see cref="IWeatherService"/>,
-/// for which caching and resilience are an implementation detail.
-/// </summary>
 public static class WeatherEndpoints
 {
     public static IEndpointRouteBuilder MapWeatherEndpoints(this IEndpointRouteBuilder endpoints)
@@ -40,13 +35,9 @@ public static class WeatherEndpoints
             return InvalidCoordinates();
         }
 
-        var forecast = await weatherService
-            .GetForecastAsync(new GeoCoordinate(latitude, longitude), cancellationToken)
-            .ConfigureAwait(false);
-
-        return forecast is null
-            ? TypedResults.NotFound()
-            : TypedResults.Ok(ForecastResponse.FromDomain(forecast));
+        return await weatherService.GetForecastAsync(new GeoCoordinate(latitude, longitude), cancellationToken) is { } forecast
+            ? TypedResults.Ok(ForecastResponse.FromDomain(forecast))
+            : TypedResults.NotFound();
     }
 
     private static async Task<Results<Ok<NeighborhoodResponse>, ProblemHttpResult, NotFound>> GetNeighborhoodForecastAsync(
@@ -60,13 +51,9 @@ public static class WeatherEndpoints
             return InvalidCoordinates();
         }
 
-        var neighborhood = await weatherService
-            .GetNeighborhoodForecastAsync(new GeoCoordinate(latitude, longitude), cancellationToken)
-            .ConfigureAwait(false);
-
-        return neighborhood is null
-            ? TypedResults.NotFound()
-            : TypedResults.Ok(NeighborhoodResponse.FromDomain(neighborhood));
+        return await weatherService.GetNeighborhoodForecastAsync(new GeoCoordinate(latitude, longitude), cancellationToken) is { } neighborhood
+            ? TypedResults.Ok(NeighborhoodResponse.FromDomain(neighborhood))
+            : TypedResults.NotFound();
     }
 
     private static ProblemHttpResult InvalidCoordinates() => TypedResults.Problem(

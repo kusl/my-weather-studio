@@ -1,15 +1,6 @@
-<Router AppAssembly="@typeof(Program).Assembly">
+<Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(Pages.NotFound)">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
     </Found>
-    <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <PageTitle>Not found</PageTitle>
-            <section class="panel">
-                <h1 class="panel__title">That page isn't here</h1>
-                <p class="panel__body">Head back to the <a href="/">forecast</a>.</p>
-            </section>
-        </LayoutView>
-    </NotFound>
 </Router>

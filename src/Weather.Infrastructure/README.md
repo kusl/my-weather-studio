@@ -9,6 +9,12 @@ Most types are **`internal`** — the public surface is one extension method,
 `AddWeatherInfrastructure`, plus a few options and connection types. Internals
 are made visible to the test project via `InternalsVisibleTo`.
 
+The project references the ASP.NET Core shared framework, which already ships
+hosting, options, logging and `System.Threading.RateLimiting`, so the only
+packages are Dapper, `Microsoft.Data.Sqlite` and
+`Microsoft.Extensions.Http.Resilience`. All logging uses `[LoggerMessage]` source
+generation (`Logging/InfrastructureLog.cs`).
+
 ## The NWS client (`Nws/`)
 
 `NwsApiClient` is a typed `HttpClient` over `api.weather.gov`. It owns HTTP
@@ -19,19 +25,24 @@ concerns only — it does **no caching**.
 - **Conditional GETs**: a known ETag is sent as `If-None-Match` (added without
   validation so weak/quoted tags round-trip exactly); a `304` becomes a
   `NotModified` result carrying the new `max-age`.
-- **Defensive parsing**: the wire DTOs (`NwsJsonModels`) mirror only the fields
-  consumed and are fully nullable, because the upstream API is outside our
-  control. A null probability-of-precipitation maps to `null`, not `0`.
+- **Defensive parsing**: the wire DTOs (`NwsJsonModels`) are positional records
+  that mirror only the fields consumed and are fully nullable, because the
+  upstream API is outside our control. A null probability-of-precipitation maps
+  to `null`, not `0`. Parsing goes through the source-generated
+  `WeatherJsonContext` (no reflection).
 - **Failure mapping**: `404` → `NotFound`; `429` → throttled + `Unavailable`;
-  other non-success or a transport exception → `Unavailable`. Cancellation is
-  never swallowed.
-- Every call is timed and tagged for telemetry.
+  other non-success, a transport exception, an unparseable payload, or a Polly rejection (attempt/total
+  timeout, open circuit) → `Unavailable`. Cancellation is never swallowed.
+- Every call is timed, tagged for metrics, and wrapped in a `Weather.Nws`
+  tracing span.
 
 The `HttpClient` itself — base address, infinite client-side timeout (the
 resilience pipeline owns timeouts), required `User-Agent`, and
 `Accept: application/geo+json` — is configured in the composition root, with
 `AddStandardResilienceHandler()` (retry with jitter, circuit breaker, timeout)
-layered on.
+layered on. `Nws:RequestTimeout` sets the per-attempt timeout; the total timeout
+and circuit-breaker sampling window are derived from it so the pipeline's
+validation rules always hold.
 
 ## The caches (`Caching/`)
 
@@ -53,6 +64,13 @@ Supporting pieces:
   from `SqliteCacheOptions.ConnectionString`.
 - **`TimestampText`** centralises ISO-8601 round-trip ("O") formatting/parsing
   with the invariant culture, so writes and reads can never drift.
+- Rows are materialised into small mutable row classes, which lets Dapper
+  convert SQLite's 64-bit `INTEGER` columns to `int` (constructor-based mapping
+  of positional records requires exact type matches and fails on SQLite).
+
+The schema, the coordinate key format and the JSON payload shape are stable:
+existing cache databases keep working unchanged, and tests pin compatibility
+with payloads written by earlier versions.
 
 ## The orchestrator (`Services/WeatherService.cs`)
 
@@ -62,8 +80,9 @@ only it knows the *semantic* outcome of a lookup. For a coordinate it:
 1. resolves metadata (cache → NWS `/points`), serving stale metadata if NWS
    can't be reached;
 2. reads the forecast cache; if fresh, returns it (and records a cache hit);
-3. otherwise calls NWS with any known ETag and acts on the result:
-   - **Success** → store and return;
+3. otherwise calls NWS with any known ETag and switches over the closed
+   `ForecastFetchResult` hierarchy:
+   - **Fetched** → store and return;
    - **NotModified** → extend the TTL and return the cached payload (the cheapest
      path — no transfer, no re-parse);
    - **Unavailable** with a cached copy → serve it **stale** (no write);
@@ -108,6 +127,7 @@ background service.
 
 [`Weather.Infrastructure.Tests`](../../tests/Weather.Infrastructure.Tests/) — the
 client against a stub HTTP handler (parsing, conditional GET, every failure
-mapping), the caches against a **real temp SQLite database**, the full
+mapping), the caches against a **real temp SQLite database** (including
+backward compatibility of the cached payload), the full
 `WeatherService` cache-aside policy (with controllable time), and the background
 warmer's fan-out and skip-fresh behaviour.

@@ -1,17 +1,11 @@
 using Dapper;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Weather.Infrastructure.Logging;
 
 namespace Weather.Infrastructure.Caching;
 
-/// <summary>
-/// Creates the cache schema on startup. Idempotent: every statement uses
-/// <c>IF NOT EXISTS</c>, so it is safe to run on every boot. Enables
-/// Write-Ahead Logging for better read/write concurrency under load.
-/// </summary>
-public sealed class DatabaseInitializer(
-    ISqliteConnectionFactory connectionFactory,
-    ILogger<DatabaseInitializer> logger) : IHostedService
+public sealed class DatabaseInitializer(ISqliteConnectionFactory connectionFactory, ILogger<DatabaseInitializer> logger) : IHostedService
 {
     internal const string SchemaSql =
         """
@@ -55,14 +49,9 @@ public sealed class DatabaseInitializer(
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        await using var connection = await connectionFactory
-            .CreateOpenConnectionAsync(cancellationToken)
-            .ConfigureAwait(false);
-
-        await connection.ExecuteAsync(new CommandDefinition(SchemaSql, cancellationToken: cancellationToken))
-            .ConfigureAwait(false);
-
-        logger.LogInformation("SQLite cache schema initialised (WAL enabled).");
+        await using var connection = await connectionFactory.CreateOpenConnectionAsync(cancellationToken);
+        await connection.ExecuteAsync(new CommandDefinition(SchemaSql, cancellationToken: cancellationToken));
+        logger.SchemaInitialised();
     }
 
     public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;

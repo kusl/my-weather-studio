@@ -1,4 +1,5 @@
 <Project>
+
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
@@ -6,24 +7,23 @@
     <OpenTelemetryVersion>1.21.0</OpenTelemetryVersion>
   </PropertyGroup>
 
-  <ItemGroup Label="Data access (SQLite + Dapper)">
+  <ItemGroup Label="Data access">
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="11.0.0" />
     <PackageVersion Include="Dapper" Version="2.1.100" />
   </ItemGroup>
 
-  <ItemGroup Label="Resilience, hosting, service discovery, rate limiting (first-party)">
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="11.0.0" />
+  <ItemGroup Label="HTTP resilience and service discovery">
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="11.0.1" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="11.0.1" />
-    <PackageVersion Include="System.Threading.RateLimiting" Version="11.0.0" />
   </ItemGroup>
 
-  <ItemGroup Label="ASP.NET Core add-ons (first-party)">
+  <ItemGroup Label="ASP.NET Core add-ons">
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="11.0.0" />
   </ItemGroup>
 
-  <ItemGroup Label=".NET Aspire orchestration">
+  <ItemGroup Label="Aspire">
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
+    <PackageVersion Include="Aspire.Hosting.Dotnet" Version="$(AspireVersion)" />
   </ItemGroup>
 
   <ItemGroup Label="OpenTelemetry">
@@ -31,14 +31,13 @@
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="$(OpenTelemetryVersion)" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="$(OpenTelemetryVersion)" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryVersion)" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="$(OpenTelemetryVersion)" />
   </ItemGroup>
 
-  <ItemGroup Label="Testing (TUnit runner + Shouldly + bUnit + NSubstitute)">
+  <ItemGroup Label="Testing">
     <PackageVersion Include="TUnit" Version="1.87.12" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
-    <PackageVersion Include="NSubstitute" Version="6.2.0 " />
-    <PackageVersion Include="bunit.web" Version="1.40.0" />
+    <PackageVersion Include="NSubstitute" Version="6.2.0" />
+    <PackageVersion Include="bunit" Version="2.15.2" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="11.0.0" />
   </ItemGroup>
 

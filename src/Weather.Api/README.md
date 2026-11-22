@@ -41,28 +41,39 @@ records with `FromDomain(...)` mappers, so the public API and the internal
 ## How it's wired (`Program.cs`)
 
 ```csharp
-builder.AddServiceDefaults();                 // Aspire: OTel, health, discovery, resilient HTTP
+builder.AddServiceDefaults();
 builder.Services.AddProblemDetails();
 builder.Services.AddOpenApi();
 builder.Services.AddWeatherInfrastructure(builder.Configuration);
-
-// Register the app's own meter/trace source with OpenTelemetry. Done here (not
-// in ServiceDefaults) so ServiceDefaults stays app-agnostic.
-builder.Services.ConfigureOpenTelemetryMeterProvider(m => m.AddMeter(WeatherTelemetry.MeterName));
-builder.Services.ConfigureOpenTelemetryTracerProvider(t => t.AddSource(WeatherTelemetry.ActivitySourceName));
+builder.Services.ConfigureOpenTelemetryMeterProvider(static m => m.AddMeter(WeatherTelemetry.MeterName));
+builder.Services.ConfigureOpenTelemetryTracerProvider(static t => t.AddSource(WeatherTelemetry.ActivitySourceName));
 ```
+
+The app's own meter and trace source are registered here rather than in
+ServiceDefaults, so ServiceDefaults stays app-agnostic.
 
 The pipeline uses `UseExceptionHandler` + `UseStatusCodePages` (so failures come
 back as `ProblemDetails`), maps the default health endpoints, exposes an OpenAPI
 document at `/openapi/v1.json` in Development, and maps the forecast endpoints.
 
-`Program` ends with `public partial class Program;` so the test project can
-drive it with `WebApplicationFactory<Program>`.
+Since .NET 10 the top-level `Program` class is generated as public, so the test
+project drives it with `WebApplicationFactory<Program>` without a hand-written
+`public partial class Program;`.
+
+## Running
+
+`Properties/launchSettings.json` binds `http://0.0.0.0:5180`, so
+`dotnet run --project src/Weather.Api` is reachable from other devices on the
+network. Under Aspire the port comes from the same profile.
+
+The SQLite cache defaults to `Data Source=weather-cache.db` relative to the
+working directory (the project directory under `dotnet run` and Aspire). Change
+it with `Cache:ConnectionString`.
 
 ## Observability
 
 Because of `AddServiceDefaults()` plus the meter/source registration above, the
-API emits ASP.NET Core, `HttpClient`, and runtime metrics **and** the app's cache
+API emits ASP.NET Core, `HttpClient`, and runtime (`System.Runtime`) metrics **and** the app's cache
 hit/miss and NWS latency/throttling signals over OTLP — visible in the Aspire
 dashboard when run under the [AppHost](../Weather.AppHost/README.md). See
 [`docs/ARCHITECTURE.md`](../../docs/ARCHITECTURE.md#decision-3--observability).

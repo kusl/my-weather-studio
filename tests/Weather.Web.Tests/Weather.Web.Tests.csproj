@@ -3,14 +3,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <IsTestProject>true</IsTestProject>
-    <IsPackable>false</IsPackable>
-    <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="TUnit" />
     <PackageReference Include="Shouldly" />
-    <PackageReference Include="bunit.web" />
+    <PackageReference Include="bunit" />
   </ItemGroup>
 
   <ItemGroup>

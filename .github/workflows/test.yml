@@ -20,16 +20,21 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Check out
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
-          global-json-file: global.json
+          dotnet-version: "11.0.x"
+          dotnet-quality: ga
 
-      # TUnit runs on Microsoft.Testing.Platform; `dotnet test` drives it via
-      # the TestingPlatformDotnetTestSupport flag set in each test .csproj. We
-      # let `dotnet test` build the test projects so the runner and build stay
-      # in lock-step.
       - name: Test
-        run: dotnet test weather.slnx --configuration Release
+        run: dotnet test --solution weather.slnx --configuration Release --report-trx --results-directory TestResults
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results
+          path: TestResults
+          if-no-files-found: ignore

@@ -1,0 +1,42 @@
+<div id="legacy-gate" class="gate" role="alert" aria-live="assertive">
+    <div class="gate__card">
+        <div class="gate__mark" aria-hidden="true"></div>
+        <h1 id="legacy-gate-title" class="gate__title">This browser can't run Weather</h1>
+        <p id="legacy-gate-lead" class="gate__lead">
+            Weather is built for current browsers and yours is missing a few things it relies on.
+        </p>
+
+        <h2 class="gate__heading">What you can do</h2>
+        <ul class="gate__list">
+            <li>Update your browser to its latest version, then reload this page.</li>
+            <li>Or open this page in the latest Chrome, Edge, Firefox, Safari or Samsung Internet.</li>
+            <li>On an older phone or tablet that can no longer update its browser, try another device.</li>
+        </ul>
+
+        <h2 class="gate__heading">What's missing</h2>
+        <ul id="legacy-gate-missing" class="gate__list gate__list--mono"></ul>
+
+        <h2 class="gate__heading">Details to share</h2>
+        <p class="gate__hint">
+            If you need help, copy these details and send them along. They describe your browser, not you.
+        </p>
+        <textarea id="legacy-gate-diagnostics" class="gate__diagnostics" rows="10" readonly="readonly" spellcheck="false" aria-label="Diagnostic details"></textarea>
+        <p class="gate__actions">
+            <button id="legacy-gate-copy" type="button" class="gate__button">Copy details</button>
+            <button id="legacy-gate-reload" type="button" class="gate__button gate__button--ghost">Reload</button>
+            <span id="legacy-gate-status" class="gate__status" aria-live="polite"></span>
+        </p>
+    </div>
+</div>
+
+<noscript>
+    <div class="gate gate--noscript">
+        <div class="gate__card">
+            <h1 class="gate__title">Weather needs JavaScript</h1>
+            <p class="gate__lead">
+                JavaScript is turned off or blocked in this browser. Turn it on for this site, or open the
+                page in the latest Chrome, Edge, Firefox, Safari or Samsung Internet, then reload.
+            </p>
+        </div>
+    </div>
+</noscript>

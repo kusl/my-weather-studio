@@ -1,6 +1,5 @@
 namespace Weather.Core.Models;
 
-/// <summary>One named forecast period (e.g. "This Afternoon", "Tonight").</summary>
 public sealed record ForecastPeriod(
     int Number,
     string Name,

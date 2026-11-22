@@ -1,39 +1,12 @@
 namespace Weather.Core.Models;
 
-/// <summary>The four ways an attempt to fetch a forecast from NWS can resolve.</summary>
-public enum NwsFetchOutcome
+public closed record ForecastFetchResult
 {
-    /// <summary>A fresh forecast payload was returned (HTTP 200).</summary>
-    Success,
+    public sealed record Fetched(Forecast Forecast, string? ETag, TimeSpan? MaxAge) : ForecastFetchResult;
 
-    /// <summary>The cached copy is still current (HTTP 304 Not Modified).</summary>
-    NotModified,
+    public sealed record NotModified(string? ETag, TimeSpan? MaxAge) : ForecastFetchResult;
 
-    /// <summary>NWS does not cover this location/grid (HTTP 404).</summary>
-    NotFound,
+    public sealed record NotFound : ForecastFetchResult;
 
-    /// <summary>NWS could not be reached or kept failing (throttled, 5xx, timeout).</summary>
-    Unavailable,
-}
-
-/// <summary>
-/// Result of an <see cref="Abstractions.INwsApiClient.GetForecastAsync"/> call.
-/// Models conditional-GET semantics explicitly so the caller can keep serving a
-/// stale-but-valid cached copy when appropriate.
-/// </summary>
-public sealed record ForecastFetchResult
-{
-    public required NwsFetchOutcome Outcome { get; init; }
-    public Forecast? Forecast { get; init; }
-    public string? ETag { get; init; }
-    public TimeSpan? MaxAge { get; init; }
-
-    public static ForecastFetchResult Success(Forecast forecast, string? etag, TimeSpan? maxAge) =>
-        new() { Outcome = NwsFetchOutcome.Success, Forecast = forecast, ETag = etag, MaxAge = maxAge };
-
-    public static ForecastFetchResult NotModified(string? etag, TimeSpan? maxAge) =>
-        new() { Outcome = NwsFetchOutcome.NotModified, ETag = etag, MaxAge = maxAge };
-
-    public static readonly ForecastFetchResult NotFound = new() { Outcome = NwsFetchOutcome.NotFound };
-    public static readonly ForecastFetchResult Unavailable = new() { Outcome = NwsFetchOutcome.Unavailable };
+    public sealed record Unavailable : ForecastFetchResult;
 }

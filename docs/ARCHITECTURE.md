@@ -9,7 +9,7 @@ how the whole thing is made observable.
 
 ```mermaid
 flowchart LR
-    Browser["Browser<br/>(geolocation)"] -->|lat, lon| Web["Weather.Web<br/>Blazor Server"]
+    Browser["Browser<br/>(legacy gate + geolocation)"] -->|lat, lon| Web["Weather.Web<br/>Blazor (interactive server)"]
     Web -->|GET /api/forecast| Api["Weather.Api<br/>Minimal API"]
     Api --> Svc["WeatherService<br/>(cache-aside)"]
     Svc --> MetaCache[("PointMetadata<br/>cache (SQLite)")]
@@ -19,7 +19,7 @@ flowchart LR
     Svc -. enqueue origin .-> Warmer["NeighborhoodWarmer<br/>(bounded channel)"]
     Warmer --> Bg["Warming BackgroundService<br/>(rate-limited)"]
     Bg --> Svc
-    AppHost[".NET Aspire AppHost"] -. orchestrates .-> Api
+    AppHost["Aspire AppHost"] -. orchestrates .-> Api
     AppHost -. orchestrates .-> Web
 ```
 
@@ -34,11 +34,14 @@ The projects map onto clean layers:
   is the public surface.
 - **Weather.Api** — a thin Minimal-API edge. It validates coordinates and
   delegates to `IWeatherService`; caching and resilience are invisible to it.
-- **Weather.Web** — the Blazor Server dashboard. It owns the browser-geolocation
-  flow and the graceful fallbacks.
+- **Weather.Web** — the Blazor dashboard (interactive server rendering). It owns
+  the browser gate, the browser-geolocation flow and the graceful fallbacks.
 - **Weather.ServiceDefaults** — the shared Aspire wiring (OpenTelemetry, health
-  checks, service discovery, resilient `HttpClient` defaults).
-- **Weather.AppHost** — the Aspire orchestrator that runs API + Web together.
+  checks, service discovery). Resilience is deliberately *not* applied globally:
+  each typed `HttpClient` owns its own policy, so no client ends up with two
+  stacked resilience pipelines.
+- **Weather.AppHost** — the Aspire orchestrator that runs API + Web together via
+  `AddDotnetProject`.
 
 ## The request flow
 
@@ -87,6 +90,12 @@ Key choices:
   forecast payload is stored as JSON in one column with ETag and timestamps
   alongside for cheap inspection; timestamps are ISO-8601 round-trip ("O")
   strings parsed with the invariant culture so they never drift.
+- **Compatibility**: the schema, the cache keys (`0.####` coordinates) and the
+  JSON payload shape are stable contracts. The payload is now written by a
+  System.Text.Json source-generated context configured to produce exactly the
+  shape earlier versions wrote, and a test pins both directions (old payloads
+  load, new payloads match the old shape). Existing `weather-cache.db` files are
+  used as-is; no cache rebuild is needed.
 
 Freshness is decided in one place — `WeatherService` — because only that layer
 knows the *semantic* outcome (hit, conditional renew, stale-served, miss).
@@ -153,11 +162,24 @@ signals appear in the Aspire dashboard with no extra configuration.
 
 - **Time** is taken from the BCL `TimeProvider` everywhere, so freshness logic is
   deterministic under test (a controllable provider replaces the system clock).
-- **JSON** uses a single shared `System.Text.Json` options instance for both the
-  NWS wire format and the cache round-trip (camelCase, case-insensitive).
-- **Resilience** is `Microsoft.Extensions.Http.Resilience` (the supported wrapper
-  over Polly v8): retry with jitter, a circuit breaker, and timeouts on the NWS
-  client, configured in the infrastructure composition root.
+- **JSON** uses one System.Text.Json source-generated context
+  (`WeatherJsonContext`) for both the NWS wire format and the cache round-trip
+  (web defaults: camelCase, case-insensitive, nulls omitted). No reflection.
+- **Outcomes** of an NWS forecast fetch are a C# 15 closed hierarchy
+  (`ForecastFetchResult.Fetched | NotModified | NotFound | Unavailable`), so the
+  compiler checks that every caller handles every case.
+- **Logging** uses `[LoggerMessage]` source generation throughout the
+  infrastructure layer (no boxing or array allocation when a level is off).
+- **Resilience** is `Microsoft.Extensions.Http.Resilience` (Polly v8): retry with
+  jitter, a circuit breaker, and timeouts on the NWS client, with the attempt
+  timeout taken from `Nws:RequestTimeout`. Polly rejections (timeouts, an open
+  circuit) are mapped to `Unavailable` so stale data is served instead of a 500.
 - **Geolocation failure is a normal path, not an exception**: the browser bridge
   always resolves a result object, and the UI branches to a manual-entry fallback
-  for every failure mode. See [Weather.Web](../src/Weather.Web/README.md).
+  for every failure mode, including pages served over plain HTTP on a LAN, where
+  browsers refuse geolocation. See [Weather.Web](../src/Weather.Web/README.md).
+- **Browser support** is the latest evergreen browsers only. The single
+  exception is the first HTML response, which carries a legacy-safe gate script
+  (ES3 syntax, no build step) that feature-detects what the app needs and either
+  starts Blazor or shows a self-contained explanation page with copyable
+  diagnostics.

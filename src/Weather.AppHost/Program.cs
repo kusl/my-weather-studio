@@ -1,13 +1,12 @@
-// .NET Aspire orchestration. The dashboard depends on the API, so the API is
-// declared first and the web front end references it — that reference is what
-// makes service discovery resolve "https+http://api" inside Weather.Web, and it
-// also injects the API's URL into the web app's configuration automatically.
+using Aspire.Hosting;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
-var api = builder.AddProject<Projects.Weather_Api>("api");
+var api = builder.AddDotnetProject("api", "../Weather.Api/Weather.Api.csproj");
 
-builder.AddProject<Projects.Weather_Web>("web")
+builder.AddDotnetProject("web", "../Weather.Web/Weather.Web.csproj")
     .WithReference(api)
-    .WaitFor(api);
+    .WaitFor(api)
+    .WithExternalHttpEndpoints();
 
 builder.Build().Run();

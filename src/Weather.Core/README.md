@@ -26,9 +26,12 @@ database, or a web host. Implementations live in
 - **`CachedForecast`** / **`CachedPointMetadata`** — cache envelopes carrying the
   payload, ETag (forecasts), and retrieved/expiry timestamps, with an
   `IsFresh(now)` test.
-- **`ForecastFetchResult`** — the outcome of an NWS fetch as a small state
-  machine: `Success`, `NotModified`, `NotFound`, `Unavailable`. This is how the
-  HTTP layer tells the orchestrator what happened without leaking HTTP details.
+- **`ForecastFetchResult`** — the outcome of an NWS fetch as a C# 15 **closed
+  record hierarchy**: `Fetched(Forecast, ETag, MaxAge)`, `NotModified(ETag,
+  MaxAge)`, `NotFound`, `Unavailable`. Each case carries only the data that makes
+  sense for it, and because the hierarchy is closed the compiler checks that a
+  `switch` over it handles every case. This is how the HTTP layer tells the
+  orchestrator what happened without leaking HTTP details.
 
 ### Abstractions (`Abstractions/`)
 
@@ -56,5 +59,6 @@ database, or a web host. Implementations live in
 ## Tested by
 
 [`Weather.Core.Tests`](../../tests/Weather.Core.Tests/) — validation and
-boundary behaviour, neighbourhood geometry, fetch-result factories, and the
+boundary behaviour, neighbourhood geometry, exhaustive matching over the fetch
+result hierarchy, and the
 telemetry instruments (verified with a `MeterListener`).
