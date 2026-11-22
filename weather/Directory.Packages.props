@@ -1,23 +1,4 @@
 <Project>
-
-  <!--
-    ============================================================================
-    Central Package Management (CPM)
-    ============================================================================
-    Every package version used anywhere in the solution is declared ONCE here.
-    Individual .csproj files reference packages WITHOUT a Version attribute.
-
-    IMPORTANT — versions are a baseline captured when this repo was generated.
-    They are intentionally centralised so you can update them in a single place.
-    To pull the genuine latest:
-        dotnet list package --outdated
-    or let the bundled Dependabot config (.github/dependabot.yml) open PRs.
-    The CI workflows are the source of truth for "does it build & test".
-
-    NOTE: the .NET Aspire AppHost MSBuild SDK version is NOT a NuGet package and
-    therefore cannot live here. It is pinned inline in Weather.AppHost.csproj and
-    MUST be kept in lock-step with the Aspire.Hosting.AppHost version below.
-  -->
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
