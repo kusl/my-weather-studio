@@ -7,18 +7,18 @@
 
 DUMP METADATA
 ═════════════════════════════════════════════════════════════════════════════════
-  Generated at   : 2026-11-22T16:13:38-05:00
+  Generated at   : 2026-11-24T00:57:21-05:00
   Generator      : export.sh
 
 REPOSITORY METADATA
 ═════════════════════════════════════════════════════════════════════════════════
   Repository root: /home/kushal/src/dotnet/MyWeatherStudio
   Branch         : main
-  Commit (full)  : 18ca23f0e57906780224ff6e5cdfcf84e9b8001d
-  Commit (short) : 18ca23f
-  Commit date    : 2026-11-22 16:13:29 -0500
-  Commit message : run scripts
-  Remote origin  : none
+  Commit (full)  : 2aa518a8f5cc9a017a2f4579d9abd481a3eb6e6c
+  Commit (short) : 2aa518a
+  Commit date    : 2026-11-24 00:57:18 -0500
+  Commit message : update repository in readme
+  Remote origin  : git@github.com:kusl/my-weather-studio.git
   Files included : 130
   Withheld paths : docs/llm/, docs/progress/
   Excluded files : export.sh
@@ -1161,8 +1161,8 @@ Thumbs.db
 
 --- METADATA ---
   Relative path:         README.md
-  Size:                  8.2 KiB (8425 bytes)
-  SHA-256:               e1f7b4ddfb2dea8e589d829e2d4a9b09dabd9630dff766f412a12880939ce4fb
+  Size:                  8.2 KiB (8429 bytes)
+  SHA-256:               02daca2c2d6db19e01811051ddf6afe11026b168d67f0067dfe584cc77e48a13
 
 --- CONTENT ---
 # Weather
@@ -1173,7 +1173,7 @@ server rendering) with an **ASP.NET Core Minimal API** backend, caches forecasts
 in **SQLite** (via **Dapper**), is wired for observability with
 **OpenTelemetry**, and is orchestrated with **Aspire**.
 
-Repository: <https://github.com/collabskus/weather.git>
+Repository: <https://github.com/kusl/my-weather-studio.git>
 
 ## What it does
 
@@ -8897,9 +8897,9 @@ public sealed class SkyPaletteTests
 # DUMP SUMMARY
 ################################################################################
   Files dumped   : 130
-  Total size     : 236.1 KiB (241774 bytes)
+  Total size     : 236.1 KiB (241778 bytes)
   Output file    : /home/kushal/src/dotnet/MyWeatherStudio/docs/llm/dump.txt
-  Completed at   : 2026-11-22T16:13:40-05:00
+  Completed at   : 2026-11-24T00:57:23-05:00
 ################################################################################
 # END OF DUMP
 ################################################################################

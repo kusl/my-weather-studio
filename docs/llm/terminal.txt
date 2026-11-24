@@ -1,10 +1,52 @@
+kushal@fedora:~/src/bash$ date; free -h && swapon --show; ps aux --sort=-%mem | head -n 15; for f in /proc/[0-9]*/status; do awk '/^Name:/{n=$2} /^VmSwap:/{s=$2} END{if(s>0) printf "%8.1f MB  %s\n", s/1024, n}' "$f" 2>/dev/null; done | sort -nr | head -n 15; date;
+Tue Nov 24 12:56:59 AM EST 2026
+               total        used        free      shared  buff/cache   available
+Mem:            14Gi       9.0Gi       741Mi       102Mi       5.2Gi       5.9Gi
+Swap:          8.0Gi       803Mi       7.2Gi
+NAME       TYPE      SIZE   USED PRIO
+/dev/zram0 partition   8G 803.7M  100
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+kushal      8586 10.2  4.9 13848628 775496 ?     Sl   Nov23   5:58 /usr/lib64/firefox/firefox
+kushal      8422  2.6  3.7 1525791388 581428 ?   Sl   Nov23   1:33 /app/extra/chrome --type=zygote --crashpad-handler-pid=18 --enable-crash-reporter=, --change-stack-guard-on-fork=enable
+kushal      8948  0.8  3.6 8101908 569900 ?      Sl   Nov23   0:29 /usr/lib64/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:37412 -prefMapHandle 1:307119 -jsInitHandle 2:161360 -parentBuildID 20261110113206 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {d51a4d74-1df3-4598-a3f0-526760476309} -parentPid 8586 -crashHelperPid 8595 -crashHelper 6 -crashReporter 7 -greomni /usr/lib64/firefox/omni.ja -appomni /usr/lib64/firefox/browser/omni.ja -appDir /usr/lib64/firefox/browser 8 tab
+kushal     16033  3.0  3.5 4330024 554588 ?      Sl   00:51   0:10 /usr/lib64/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:56765 -prefMapHandle 1:307119 -jsInitHandle 2:161360 -parentBuildID 20261110113206 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {99df175e-8d2e-4cbc-a1cb-0e15c31bcdbd} -parentPid 8586 -crashHelperPid 8595 -crashHelper 6 -crashReporter 7 -greomni /usr/lib64/firefox/omni.ja -appomni /usr/lib64/firefox/browser/omni.ja -appDir /usr/lib64/firefox/browser 56 tab
+kushal      9222  0.4  3.3 8201472 519484 ?      Sl   Nov23   0:14 /usr/lib64/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:37412 -prefMapHandle 1:307119 -jsInitHandle 2:161360 -parentBuildID 20261110113206 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {231f71a0-ac34-4709-97f7-21ad3c7ece2f} -parentPid 8586 -crashHelperPid 8595 -crashHelper 6 -crashReporter 7 -greomni /usr/lib64/firefox/omni.ja -appomni /usr/lib64/firefox/browser/omni.ja -appDir /usr/lib64/firefox/browser 17 tab
+kushal      9246  0.2  2.8 3771344 445880 ?      Sl   Nov23   0:08 /usr/lib64/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:37412 -prefMapHandle 1:307119 -jsInitHandle 2:161360 -parentBuildID 20261110113206 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {252b4656-c430-457e-890f-75bc97cecee3} -parentPid 8586 -crashHelperPid 8595 -crashHelper 6 -crashReporter 7 -greomni /usr/lib64/firefox/omni.ja -appomni /usr/lib64/firefox/browser/omni.ja -appDir /usr/lib64/firefox/browser 18 tab
+kushal      9190  0.2  2.8 3643776 444440 ?      Sl   Nov23   0:07 /usr/lib64/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:37412 -prefMapHandle 1:307119 -jsInitHandle 2:161360 -parentBuildID 20261110113206 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {e74c8a9c-9496-438e-ba50-1d78ce45a347} -parentPid 8586 -crashHelperPid 8595 -crashHelper 6 -crashReporter 7 -greomni /usr/lib64/firefox/omni.ja -appomni /usr/lib64/firefox/browser/omni.ja -appDir /usr/lib64/firefox/browser 16 tab
+kushal      8970  0.2  2.6 3527160 418356 ?      Sl   Nov23   0:08 /usr/lib64/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:37412 -prefMapHandle 1:307119 -jsInitHandle 2:161360 -parentBuildID 20261110113206 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {75548211-a62a-44cc-9633-394bd7a677a5} -parentPid 8586 -crashHelperPid 8595 -crashHelper 6 -crashReporter 7 -greomni /usr/lib64/firefox/omni.ja -appomni /usr/lib64/firefox/browser/omni.ja -appDir /usr/lib64/firefox/browser 9 tab
+kushal     16824 13.1  2.6 1522908536 411944 ?   Sl   00:55   0:15 /opt/VSCode-linux-x64/code --type=renderer --enable-crash-reporter=d7543a3b-1b9b-4bdc-ac73-84177d882a41,no_channel --user-data-dir=/home/kushal/.config/Code --standard-schemes=vscode-webview,vscode-file --enable-sandbox --secure-schemes=vscode-webview,vscode-file,vscode-remote-resource,vscode-managed-remote-resource --cors-schemes=vscode-webview,vscode-file,vscode-remote-resource,vscode-managed-remote-resource --fetch-schemes=vscode-webview,vscode-file,vscode-remote-resource,vscode-managed-remote-resource --service-worker-schemes=vscode-webview --code-cache-schemes=vscode-webview,vscode-file --app-path=/opt/VSCode-linux-x64/resources/app --enable-sandbox --enable-blink-features=HighlightAPI --max-active-webgl-contexts=32 --ozone-platform=wayland --disable-blink-features=FontMatchingCTMigration, --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=4 --time-ticks-at-unix-epoch=-1795496081995093 --launch-time-ticks=3623224960 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,16885228860243680321,15641964225128853649,262144 --enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,EarlyEstablishGpuChannel,EstablishGpuChannelAsync,GlobalShortcutsPortal,GlobalShortcutsPortalPreferredTrigger,PdfUseShowSaveFilePicker,UpdateCompositorMemoryPolicyOnScreenChange --disable-features=CalculateNativeWinOcclusion,DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=7,i,7383707670014552371,3023311827212168355,4 --trace-process-track-uuid=3190708990060038890 --vscode-window-config=vscode:e1758a4d-baba-4f12-a146-59ceb21dc13c
+kushal      9537  0.9  2.2 16209536 351976 ?     Sl   Nov23   0:33 /usr/lib64/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:43209 -prefMapHandle 1:307119 -jsInitHandle 2:161360 -parentBuildID 20261110113206 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {2c7c6601-3564-4b6d-9c16-50b79de75d39} -parentPid 8586 -crashHelperPid 8595 -crashHelper 6 -crashReporter 7 -greomni /usr/lib64/firefox/omni.ja -appomni /usr/lib64/firefox/browser/omni.ja -appDir /usr/lib64/firefox/browser 23 tab
+kushal      8389  0.2  2.2 1523513276 344468 ?   Sl   Nov23   0:10 /app/extra/chrome --type=zygote --crashpad-handler-pid=18 --enable-crash-reporter=, --change-stack-guard-on-fork=enable
+kushal      4668  0.7  1.8 2283056 297000 ?      SNsl Nov23   0:28 /usr/bin/gnome-software --gapplication-service
+kushal      9160  0.1  1.8 8953848 289308 ?      Sl   Nov23   0:04 /usr/lib64/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:37412 -prefMapHandle 1:307119 -jsInitHandle 2:161360 -parentBuildID 20261110113206 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {667061c0-ee1d-4c5f-948d-aae3d74c981a} -parentPid 8586 -crashHelperPid 8595 -crashHelper 6 -crashReporter 7 -greomni /usr/lib64/firefox/omni.ja -appomni /usr/lib64/firefox/browser/omni.ja -appDir /usr/lib64/firefox/browser 15 tab
+kushal      8906  0.2  1.7 3710996 271236 ?      Sl   Nov23   0:08 /usr/lib64/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:37412 -prefMapHandle 1:307119 -jsInitHandle 2:161360 -parentBuildID 20261110113206 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {3aba56d3-8ce0-4d55-8e3a-2042024dc72d} -parentPid 8586 -crashHelperPid 8595 -crashHelper 6 -crashReporter 7 -greomni /usr/lib64/firefox/omni.ja -appomni /usr/lib64/firefox/browser/omni.ja -appDir /usr/lib64/firefox/browser 5 tab
+   102.3 MB  firefox
+    62.3 MB  dnf5daemon-serv
+    53.3 MB  chrome
+    46.2 MB  gnome-shell
+    45.0 MB  Isolated
+    41.9 MB  Isolated
+    39.7 MB  Isolated
+    34.6 MB  gnome-software
+    34.2 MB  chrome
+    30.3 MB  Isolated
+    27.8 MB  chrome
+    22.9 MB  chrome
+    21.7 MB  firewalld
+    20.0 MB  ibus-engine-tb
+    19.1 MB  chrome
+Tue Nov 24 12:57:00 AM EST 2026
 kushal@fedora:~/src/bash$ cd /home/kushal/src/dotnet/MyWeatherStudio; git status; git remote show; time bash export.sh > docs/llm/vendor/claude/output.txt; cd weather; time dotnet --info; time dotnet clean; time dotnet restore; time dotnet build; time dotnet test; time dotnet list package; time dotnet list package --outdated;
 On branch main
-nothing to commit, working tree clean
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
 
-real	0m1.696s
-user	0m0.842s
-sys	0m1.135s
+nothing to commit, working tree clean
+origin
+
+real	0m1.667s
+user	0m0.829s
+sys	0m1.105s
 bash: cd: weather: No such file or directory
 .NET SDK:
  Version:           11.0.100-rc.3.26522.148
@@ -54,276 +96,49 @@ Learn more:
 Download .NET:
   https://aka.ms/dotnet/download
 
-real	0m0.013s
-user	0m0.008s
-sys	0m0.006s
+real	0m0.044s
+user	0m0.007s
+sys	0m0.021s
     info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
 
 Build succeeded in 0.8s
 
-real	0m1.022s
-user	0m0.111s
-sys	0m0.028s
+real	0m1.089s
+user	0m0.113s
+sys	0m0.055s
 Restore complete (0.5s)
 
-Build succeeded in 0.5s
+Build succeeded in 0.6s
 
-real	0m0.628s
-user	0m0.118s
-sys	0m0.026s
+real	0m0.687s
+user	0m0.110s
+sys	0m0.034s
 Restore complete (0.3s)
     info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
-  Weather.Core net11.0 succeeded (2.0s) → src/Weather.Core/bin/Debug/net11.0/Weather.Core.dll
-  Weather.ServiceDefaults net11.0 succeeded (2.0s) → src/Weather.ServiceDefaults/bin/Debug/net11.0/Weather.ServiceDefaults.dll
-  Weather.AppHost net11.0 succeeded (2.0s) → src/Weather.AppHost/bin/Debug/net11.0/Weather.AppHost.dll
-  Weather.Core.Tests net11.0 succeeded (1.1s) → tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll
-  Weather.Infrastructure net11.0 succeeded (1.3s) → src/Weather.Infrastructure/bin/Debug/net11.0/Weather.Infrastructure.dll
-  Weather.Infrastructure.Tests net11.0 succeeded (0.8s) → tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll
-  Weather.Web net11.0 succeeded (2.3s) → src/Weather.Web/bin/Debug/net11.0/Weather.Web.dll
-  Weather.Api net11.0 succeeded (1.1s) → src/Weather.Api/bin/Debug/net11.0/Weather.Api.dll
-  Weather.Web.Tests net11.0 succeeded (0.6s) → tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll
-  Weather.Api.Tests net11.0 succeeded (0.6s) → tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll
-
-Build succeeded in 5.3s
-
-real	0m5.539s
-user	0m0.509s
-sys	0m0.066s
-Running tests from tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64)
-Running tests from tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64)
-Running tests from tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64)
-Running tests from tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64)
-tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) passed [✓41/x0/↓0] (773ms)
-tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (902ms)
-tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (1s 162ms)
-tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (1s 259ms)
-
-  In process file artifacts produced:
-    - TestResults/Weather.Core.Tests-linux-net11.0-report.html
-    - TestResults/Weather.Infrastructure.Tests-linux-net11.0-report.html
-    - TestResults/Weather.Web.Tests-linux-net11.0-report.html
-    - TestResults/Weather.Api.Tests-linux-net11.0-report.html
-
-Test run summary: Passed!
-  tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (902ms)
-  tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) passed [✓41/x0/↓0] (773ms)
-  tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (1s 162ms)
-  tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (1s 259ms)
-
-  total: 120
-  failed: 0
-  succeeded: 120
-  skipped: 0
-  duration: 1s 694ms
-
-real	0m3.395s
-user	0m7.809s
-sys	0m0.980s
-Restore complete (0.2s)
-
-Build succeeded in 0.2s
-Project 'Weather.Api' has the following package references
-   [net11.0]: 
-   Top-level Package                   Requested   Resolved
-   > Microsoft.AspNetCore.OpenApi      11.0.0      11.0.0  
-
-Project 'Weather.AppHost' has the following package references
-   [net11.0]: 
-   Top-level Package             Requested   Resolved
-   > Aspire.Hosting.AppHost      17.0.0      17.0.0  
-   > Aspire.Hosting.Dotnet       17.0.0      17.0.0  
-
-Project 'Weather.Core' has the following package references
-   [net11.0]: No packages were found for this framework.
-Project 'Weather.Infrastructure' has the following package references
-   [net11.0]: 
-   Top-level Package                           Requested   Resolved
-   > Dapper                                    2.1.100     2.1.100 
-   > Microsoft.Data.Sqlite                     11.0.0      11.0.0  
-   > Microsoft.Extensions.Http.Resilience      11.0.1      11.0.1  
-
-Project 'Weather.ServiceDefaults' has the following package references
-   [net11.0]: 
-   Top-level Package                                   Requested   Resolved
-   > Microsoft.Extensions.ServiceDiscovery             11.0.1      11.0.1  
-   > OpenTelemetry.Exporter.OpenTelemetryProtocol      1.21.0      1.21.0  
-   > OpenTelemetry.Extensions.Hosting                  1.21.0      1.21.0  
-   > OpenTelemetry.Instrumentation.AspNetCore          1.21.0      1.21.0  
-   > OpenTelemetry.Instrumentation.Http                1.21.0      1.21.0  
-
-Project 'Weather.Web' has the following package references
-   [net11.0]: 
-   Top-level Package                                  Requested                   Resolved             
-   > Microsoft.AspNetCore.App.Internal.Assets   (A)   [11.0.0-rc.3.26522.148, )   11.0.0-rc.3.26522.148
-   > Microsoft.Extensions.Http.Resilience             11.0.1                      11.0.1               
-
-Project 'Weather.Api.Tests' has the following package references
-   [net11.0]: 
-   Top-level Package                       Requested   Resolved
-   > Microsoft.AspNetCore.Mvc.Testing      11.0.0      11.0.0  
-   > Shouldly                              4.3.0       4.3.0   
-   > TUnit                                 1.87.12     1.87.12 
-
-Project 'Weather.Core.Tests' has the following package references
-   [net11.0]: 
-   Top-level Package      Requested   Resolved
-   > Shouldly             4.3.0       4.3.0   
-   > TUnit                1.87.12     1.87.12 
-
-Project 'Weather.Infrastructure.Tests' has the following package references
-   [net11.0]: 
-   Top-level Package      Requested   Resolved
-   > NSubstitute          6.2.0       6.2.0   
-   > Shouldly             4.3.0       4.3.0   
-   > TUnit                1.87.12     1.87.12 
-
-Project 'Weather.Web.Tests' has the following package references
-   [net11.0]: 
-   Top-level Package      Requested   Resolved
-   > bunit                2.15.2      2.15.2  
-   > Shouldly             4.3.0       4.3.0   
-   > TUnit                1.87.12     1.87.12 
-
-(A) : Auto-referenced package.
-
-real	0m1.620s
-user	0m1.183s
-sys	0m0.310s
-Restore complete (0.2s)
-
-Build succeeded in 0.2s
-
-The following sources were used:
-   https://api.nuget.org/v3/index.json
-
-The given project `Weather.Api` has no updates given the current sources.
-The given project `Weather.AppHost` has no updates given the current sources.
-The given project `Weather.Core` has no updates given the current sources.
-The given project `Weather.Infrastructure` has no updates given the current sources.
-The given project `Weather.ServiceDefaults` has no updates given the current sources.
-The given project `Weather.Web` has no updates given the current sources.
-The given project `Weather.Api.Tests` has no updates given the current sources.
-The given project `Weather.Core.Tests` has no updates given the current sources.
-The given project `Weather.Infrastructure.Tests` has no updates given the current sources.
-The given project `Weather.Web.Tests` has no updates given the current sources.
-
-real	0m4.969s
-user	0m3.467s
-sys	0m0.390s
-kushal@fedora:~/src/dotnet/MyWeatherStudio$ cd ~/src/dotnet/MyWeatherStudio/src/Weather.AppHost && aspire run
-bash: aspire: command not found...
-kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ export PATH="$PATH:/home/kushal/.dotnet/tools"
-kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ cd ~/src/dotnet/MyWeatherStudio/src/Weather.AppHost && aspire run
-🚨 Developer certificates may not be fully trusted (trust exit code was: PartiallyFailedToTrustTheCertificate).
-
-     AppHost:  Weather.AppHost.csproj                                            
-                                                                                 
-   Dashboard:  http://localhost:15080/login?t=6069be3e56f0926fcc1f052e858ec792   
-                                                                                 
-        Logs:  /home/kushal/.aspire/logs/cli_20261122T170552_cf91e5e6.log        
-                                                            
-               Press CTRL+C to stop the AppHost and exit.   
-^C
-🛑 Stopping Aspire.
-kushal@fedora:~/src/dotnet/MyWeatherStudio/src/Weather.AppHost$ cd /home/kushal/src/dotnet/MyWeatherStudio; git status; git remote show; time bash export.sh > docs/llm/vendor/claude/output.txt; cd weather; time dotnet --info; time dotnet clean; time dotnet restore; time dotnet build; time dotnet test; time dotnet list package; time dotnet list package --outdated;
-On branch main
-nothing to commit, working tree clean
-
-real	0m1.740s
-user	0m0.890s
-sys	0m1.116s
-bash: cd: weather: No such file or directory
-.NET SDK:
- Version:           11.0.100-rc.3.26522.148
- Commit:            5254d8bcf5
- Workload version:  11.0.100-manifests.2c46f3cc
- MSBuild version:   18.12.0-1.26522.148+5254d8bcf
-
-Runtime Environment:
- OS Name:     fedora
- OS Version:  45
- OS Platform: Linux
- RID:         fedora.45-x64
- Base Path:   /usr/lib64/dotnet/sdk/11.0.100-rc.3.26522.148
-
-.NET workloads installed:
-There are no installed workloads to display.
-Configured to use workload sets when installing new manifests.
-No workload sets are installed. Run "dotnet workload restore" to install a workload set.
-
-Host:
-  Version:      11.0.0-rc.3.26522.148
-  Architecture: x64
-  Commit:       5254d8bcf5
-
-.NET SDKs installed:
-  10.0.113 [/usr/lib64/dotnet/sdk]
-  11.0.100-rc.3.26522.148 [/usr/lib64/dotnet/sdk]
-
-.NET runtimes installed:
-  Microsoft.AspNetCore.App 10.0.13 [/usr/lib64/dotnet/shared/Microsoft.AspNetCore.App]
-  Microsoft.AspNetCore.App 11.0.0-rc.3.26522.148 [/usr/lib64/dotnet/shared/Microsoft.AspNetCore.App]
-  Microsoft.NETCore.App 10.0.13 [/usr/lib64/dotnet/shared/Microsoft.NETCore.App]
-  Microsoft.NETCore.App 11.0.0-rc.3.26522.148 [/usr/lib64/dotnet/shared/Microsoft.NETCore.App]
-
-Other architectures found:
-  None
-
-Environment variables:
-  Not set
-
-global.json file:
-  /home/kushal/src/dotnet/MyWeatherStudio/global.json
-
-Learn more:
-  https://aka.ms/dotnet/info
-
-Download .NET:
-  https://aka.ms/dotnet/download
-
-real	0m0.047s
-user	0m0.007s
-sys	0m0.020s
-    info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
-
-Build succeeded in 0.9s
-
-real	0m1.111s
-user	0m0.140s
-sys	0m0.050s
-Restore complete (0.5s)
-
-Build succeeded in 0.5s
-
-real	0m0.674s
-user	0m0.111s
-sys	0m0.037s
-Restore complete (0.2s)
-    info NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy
   Weather.Core net11.0 succeeded (2.1s) → src/Weather.Core/bin/Debug/net11.0/Weather.Core.dll
-  Weather.ServiceDefaults net11.0 succeeded (2.2s) → src/Weather.ServiceDefaults/bin/Debug/net11.0/Weather.ServiceDefaults.dll
-  Weather.AppHost net11.0 succeeded (2.2s) → src/Weather.AppHost/bin/Debug/net11.0/Weather.AppHost.dll
+  Weather.ServiceDefaults net11.0 succeeded (2.1s) → src/Weather.ServiceDefaults/bin/Debug/net11.0/Weather.ServiceDefaults.dll
+  Weather.AppHost net11.0 succeeded (2.1s) → src/Weather.AppHost/bin/Debug/net11.0/Weather.AppHost.dll
   Weather.Core.Tests net11.0 succeeded (1.2s) → tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll
   Weather.Infrastructure net11.0 succeeded (1.3s) → src/Weather.Infrastructure/bin/Debug/net11.0/Weather.Infrastructure.dll
   Weather.Infrastructure.Tests net11.0 succeeded (0.8s) → tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll
-  Weather.Web net11.0 succeeded (2.4s) → src/Weather.Web/bin/Debug/net11.0/Weather.Web.dll
+  Weather.Web net11.0 succeeded (2.3s) → src/Weather.Web/bin/Debug/net11.0/Weather.Web.dll
   Weather.Api net11.0 succeeded (1.2s) → src/Weather.Api/bin/Debug/net11.0/Weather.Api.dll
   Weather.Web.Tests net11.0 succeeded (0.6s) → tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll
-  Weather.Api.Tests net11.0 succeeded (0.7s) → tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll
+  Weather.Api.Tests net11.0 succeeded (0.6s) → tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll
 
 Build succeeded in 5.5s
 
-real	0m5.648s
-user	0m0.492s
-sys	0m0.061s
+real	0m5.597s
+user	0m0.961s
+sys	0m0.172s
 Running tests from tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64)
-Running tests from tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64)
 Running tests from tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64)
+Running tests from tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64)
 Running tests from tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64)
-tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) passed [✓41/x0/↓0] (640ms)
-tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (860ms)
-tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (1s 182ms)
-tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (1s 305ms)
+tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) passed [✓41/x0/↓0] (757ms)
+tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (1s 042ms)
+tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (1s 263ms)
+tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (1s 390ms)
 
   In process file artifacts produced:
     - TestResults/Weather.Core.Tests-linux-net11.0-report.html
@@ -332,20 +147,20 @@ tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) pa
     - TestResults/Weather.Api.Tests-linux-net11.0-report.html
 
 Test run summary: Passed!
-  tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (1s 305ms)
-  tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (1s 182ms)
-  tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (860ms)
-  tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) passed [✓41/x0/↓0] (640ms)
+  tests/Weather.Api.Tests/bin/Debug/net11.0/Weather.Api.Tests.dll (net11.0|x64) passed [✓4/x0/↓0] (1s 390ms)
+  tests/Weather.Infrastructure.Tests/bin/Debug/net11.0/Weather.Infrastructure.Tests.dll (net11.0|x64) passed [✓36/x0/↓0] (1s 042ms)
+  tests/Weather.Web.Tests/bin/Debug/net11.0/Weather.Web.Tests.dll (net11.0|x64) passed [✓39/x0/↓0] (1s 263ms)
+  tests/Weather.Core.Tests/bin/Debug/net11.0/Weather.Core.Tests.dll (net11.0|x64) passed [✓41/x0/↓0] (757ms)
 
   total: 120
   failed: 0
   succeeded: 120
   skipped: 0
-  duration: 1s 785ms
+  duration: 1s 852ms
 
-real	0m3.385s
-user	0m8.150s
-sys	0m1.037s
+real	0m3.608s
+user	0m8.142s
+sys	0m1.124s
 Restore complete (0.2s)
 
 Build succeeded in 0.2s
@@ -413,9 +228,9 @@ Project 'Weather.Web.Tests' has the following package references
 
 (A) : Auto-referenced package.
 
-real	0m1.748s
-user	0m1.283s
-sys	0m0.345s
+real	0m1.823s
+user	0m1.300s
+sys	0m0.356s
 Restore complete (0.2s)
 
 Build succeeded in 0.2s
@@ -434,7 +249,7 @@ The given project `Weather.Core.Tests` has no updates given the current sources.
 The given project `Weather.Infrastructure.Tests` has no updates given the current sources.
 The given project `Weather.Web.Tests` has no updates given the current sources.
 
-real	0m4.806s
-user	0m2.943s
-sys	0m0.408s
+real	0m5.311s
+user	0m3.998s
+sys	0m0.439s
 kushal@fedora:~/src/dotnet/MyWeatherStudio$ 
