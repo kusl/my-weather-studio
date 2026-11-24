@@ -6,7 +6,7 @@ server rendering) with an **ASP.NET Core Minimal API** backend, caches forecasts
 in **SQLite** (via **Dapper**), is wired for observability with
 **OpenTelemetry**, and is orchestrated with **Aspire**.
 
-Repository: <https://github.com/collabskus/weather.git>
+Repository: <https://github.com/kusl/my-weather-studio.git>
 
 ## What it does
 
